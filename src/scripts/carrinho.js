@@ -350,7 +350,7 @@
     const confirmar = c.porConfirmar || (estado.zona !== 'levantamento' && c.portesPorConfirmar);
     linhas.push(confirmar ? '*Total: a confirmar consigo*' : `*Total: ${euros(c.total)}*`);
     linhas.push('');
-    linhas.push(`Nome: ${dados.nome}`);
+    linhas.push(`Cliente: ${dados.nome}`);
     if (dados.dataCelebracao) linhas.push(`Data da celebração: ${dataPorExtenso(dados.dataCelebracao)}`);
     if (z.morada) linhas.push(`Morada: ${dados.morada}, ${dados.codigoPostal} ${dados.localidade}`);
     if (dados.nif) linhas.push(`NIF: ${dados.nif}`);

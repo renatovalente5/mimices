@@ -186,14 +186,14 @@
       const cor = cores ? $('input[name="cor"]:checked', cores) : null;
       if (cores && !cor) { errar($('input[name="cor"]', cores), 'Escolha o tom de linho (o número da amostra).'); return; }
       for (const f of $$('[data-escolha]', form)) {
-        if (!$('input:checked', f)) { errar($('input', f), `Escolha ${$('legend', f).textContent.trim().toLowerCase()}.`); return; }
+        if (!$('input:checked', f)) { errar($('input', f), `Falta escolher: ${$('legend', f).textContent.trim()}.`); return; }
       }
       const pers = {};
       for (const k of ['nome', 'data', 'frase']) {
         const i = form.elements[k];
         if (!i) continue;
         const v = i.value.trim();
-        if (i.required && !v) { errar(i, k === 'data' ? 'Escolha a data que vai na peça.' : `Escreva ${$(`label[for="${i.id}"]`, form).textContent.trim().toLowerCase()} como quer que fique na peça.`); return; }
+        if (i.required && !v) { errar(i, k === 'data' ? 'Escolha a data que vai na peça.' : `Escreva o ${$(`label[for="${i.id}"]`, form).textContent.trim().toLowerCase()} como quer que fique na peça.`); return; }
         if (k === 'data' && v && v < hojeLisboa()) { errar(i, 'Essa data já passou: escolha a data da celebração.'); return; }
         if (v) pers[k] = v;
       }
