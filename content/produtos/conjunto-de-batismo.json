@@ -1,0 +1,39 @@
+{
+  "nome": "Conjunto de Batismo: vela, toalha e concha",
+  "nomeCurto": "Vela, toalha e concha",
+  "fotos": [
+    "conjunto-mariana-rosa",
+    "conjunto-daniel-verde",
+    "conjunto-tomas-azul",
+    "conjunto-bernardo-bege",
+    "conjunto-eva-rosa",
+    "conjunto-duarte-verde",
+    "conjunto-frederica-cru",
+    "conjunto-isabel-rosa"
+  ],
+  "resumo": "Vela de batismo, toalha bordada e concha, com o nome e a data, nos laços de linho do tom que escolher.",
+  "descricao": "As três peças da cerimónia, a condizer: a vela com o nome, o laço de linho e a corda, a toalha bordada com o nome e a data, e a concha com o mesmo laço.\n\nEscolha o tom do linho: o bordado da toalha acompanha-o.",
+  "preco": null,
+  "precoAnterior": null,
+  "promocaoAte": "",
+  "inclui": [
+    "Vela de batismo com o nome, laço de linho e corda",
+    "Toalha bordada com o nome e a data",
+    "Concha natural com laço de linho"
+  ],
+  "medidas": [],
+  "composicao": "",
+  "cores": true,
+  "opcoes": [],
+  "personalizacao": {
+    "nome": true,
+    "data": true,
+    "frase": false
+  },
+  "quantidadeMinima": 1,
+  "categoria": "batismo",
+  "video": "conjunto-mariana",
+  "novidade": false,
+  "publicado": true,
+  "ordem": 2
+}

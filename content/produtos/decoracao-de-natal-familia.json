@@ -1,0 +1,27 @@
+{
+  "nome": "Decoração de Natal «Família»",
+  "nomeCurto": "Decoração «Família»",
+  "fotos": [
+    "decoracao-natal-familia"
+  ],
+  "resumo": "Decoração em madeira com a frase «Família: aqueles que estão mesmo não estando».",
+  "descricao": "«Família: aqueles que estão mesmo não estando. Aqueles que são mesmo não sendo.» Uma decoração de Natal para oferecer, ou para ter em casa.",
+  "preco": null,
+  "precoAnterior": null,
+  "promocaoAte": "",
+  "inclui": [],
+  "medidas": [],
+  "cores": false,
+  "opcoes": [],
+  "personalizacao": {
+    "nome": false,
+    "data": false,
+    "frase": false
+  },
+  "quantidadeMinima": 1,
+  "categoria": "natal",
+  "video": "",
+  "novidade": false,
+  "publicado": true,
+  "ordem": 6
+}

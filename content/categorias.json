@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "batismo",
+    "nome": "Batismo",
+    "titulo": "Conjuntos de Batismo",
+    "resumo": "Vela, toalha bordada, concha e caixa de madeira, com o nome e a data do batismo, nos tons de linho que escolher. Cada conjunto é feito à mão, peça a peça, e pensado consigo até ao último laço.",
+    "foto": "conjunto-caixa-tomas-azul",
+    "nomeMenu": "Conjuntos de Batismo"
+  },
+  {
+    "slug": "lembrancas",
+    "nome": "Lembranças",
+    "titulo": "Lembranças para os convidados",
+    "resumo": "Ímanes e lembranças em madeira, acrílico espelhado e gesso perfumado, com os nomes e a data, para agradecer a quem esteve presente no batismo, na comunhão ou no casamento.",
+    "foto": "iman-acrilico-dourado-caetana",
+    "nomeMenu": "Lembranças"
+  },
+  {
+    "slug": "natal",
+    "nome": "Natal",
+    "titulo": "Coleção de Natal",
+    "resumo": "Velas do Advento, presentes para a professora e enfeites com o nome de cada um. Uma coleção pequena, feita à mão para este Natal.",
+    "foto": "velas-advento-quatro-semanas",
+    "nomeMenu": "Natal"
+  }
+]

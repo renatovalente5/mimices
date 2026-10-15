@@ -1,0 +1,50 @@
+{
+  "nome": "Caixa de Batismo em madeira",
+  "nomeCurto": "Caixa de batismo",
+  "fotos": [
+    "caixa-salvador-sol-e-lua",
+    "caixa-aberta-camila",
+    "caixas-de-batismo-tampas",
+    "caixa-tampa-vidro-xavier"
+  ],
+  "resumo": "Caixa de madeira com o nome e a data, para guardar a vela, a toalha e a concha do batismo.",
+  "descricao": "Para guardar as recordações do batismo: a tampa leva o nome e a data, e por dentro há um lugar para a vela, a toalha e a concha.",
+  "preco": null,
+  "precoAnterior": null,
+  "promocaoAte": "",
+  "inclui": [
+    "Caixa de madeira com o nome e a data na tampa"
+  ],
+  "medidas": [],
+  "cores": false,
+  "opcoes": [
+    {
+      "nome": "Desenho da caixa",
+      "valores": [
+        {
+          "nome": "Sol e lua",
+          "suplemento": 0
+        },
+        {
+          "nome": "Ramos",
+          "suplemento": 0
+        },
+        {
+          "nome": "Simples",
+          "suplemento": 0
+        }
+      ]
+    }
+  ],
+  "personalizacao": {
+    "nome": true,
+    "data": true,
+    "frase": false
+  },
+  "quantidadeMinima": 1,
+  "categoria": "batismo",
+  "video": "",
+  "novidade": false,
+  "publicado": true,
+  "ordem": 6
+}

@@ -1,0 +1,32 @@
+{
+  "nome": "Velas do Advento: 4 semanas",
+  "nomeCurto": "Velas do Advento",
+  "fotos": [
+    "velas-advento-quatro-semanas"
+  ],
+  "resumo": "Quatro velas ilustradas, uma para cada domingo do Advento: Esperança, Paz, Alegria e Amor.",
+  "descricao": "Quatro semanas, quatro velas: Esperança, Paz, Alegria e Amor. Velas com ilustrações delicadas, para acender em família em cada domingo do Advento.",
+  "preco": null,
+  "precoAnterior": null,
+  "promocaoAte": "",
+  "inclui": [
+    "1.ª semana: Esperança",
+    "2.ª semana: Paz",
+    "3.ª semana: Alegria",
+    "4.ª semana: Amor"
+  ],
+  "medidas": [],
+  "cores": false,
+  "opcoes": [],
+  "personalizacao": {
+    "nome": false,
+    "data": false,
+    "frase": false
+  },
+  "quantidadeMinima": 1,
+  "categoria": "natal",
+  "video": "",
+  "novidade": false,
+  "publicado": true,
+  "ordem": 1
+}

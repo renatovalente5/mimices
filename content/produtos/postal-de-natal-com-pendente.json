@@ -1,0 +1,28 @@
+{
+  "nome": "Postal de Natal com pendente em gesso perfumado",
+  "nomeCurto": "Postal com pendente",
+  "fotos": [
+    "postal-natal-gesso"
+  ],
+  "resumo": "Postal de Natal com um pendente em gesso perfumado, que depois vai para a árvore.",
+  "descricao": "Dois presentes num só: o postal leva um pendente em gesso perfumado que, tirado do cartão, se pendura na árvore de Natal.",
+  "preco": null,
+  "precoAnterior": null,
+  "promocaoAte": "",
+  "inclui": [],
+  "medidas": [],
+  "cores": false,
+  "opcoes": [],
+  "personalizacao": {
+    "nome": false,
+    "data": false,
+    "frase": true,
+    "rotuloFrase": "Mensagem"
+  },
+  "quantidadeMinima": 1,
+  "categoria": "natal",
+  "video": "",
+  "novidade": false,
+  "publicado": true,
+  "ordem": 5
+}

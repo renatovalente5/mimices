@@ -1,0 +1,76 @@
+# Mimices — o site
+
+Loja da **Mimices** (Susana; Quinta do Conde e Azeitão, distrito de Setúbal): conjuntos de batismo
+personalizados (vela, toalha bordada, concha e caixa de madeira, nos tons de linho que a cliente
+escolhe), lembranças para os convidados e uma coleção de Natal.
+
+**Não há pagamentos no site.** O carrinho junta as peças (com o tom de linho, as escolhas e o nome e a
+data de cada uma), soma os portes da entrega escolhida e acaba no WhatsApp, com a encomenda escrita
+numa mensagem para a Susana. A encomenda fica feita quando a Mimices a confirma por lá.
+
+- Pré-visualização: **https://renatovalente5.github.io/mimices/** (fechada aos motores de busca).
+  O domínio será **mimices.pt**, comprado quando o site estiver pronto; aí o site passa para a
+  Cloudflare (`wrangler.jsonc`), como a Pokóto Wood.
+- Estrutura de desenho escolhida pela cliente: a do **https://ithos-cathelier.pt/** («o site dos
+  candeeiros»), com as cores e as letras da Mimices.
+- Plano, decisões e perguntas em aberto: [`docs/PLANO.md`](docs/PLANO.md)
+- A base do código é a da Pokóto Wood (`~/Websites/pokoto-wood`), adaptada.
+
+## Como se constrói
+
+Node 22 e Python 3 com Pillow. Sem dependências npm.
+
+```bash
+node scripts/build.mjs                        # local → _site/ (servir em http://localhost:4830)
+python3 -m http.server 4830 --directory _site
+node scripts/build.mjs --base=/mimices         # a pré-visualização no GitHub Pages
+node scripts/build.mjs --producao              # mimices.pt (recusa dados legais, preços e composições por preencher)
+```
+
+O GitHub Actions (`.github/workflows/publicar.yml`) constrói a pré-visualização e publica-a no GitHub
+Pages a cada push e todos os dias à meia-noite de Lisboa.
+
+## Onde está cada coisa
+
+| | |
+|---|---|
+| `content/site.json` | marca, contactos, dados legais, aviso do topo, **tons de linho**, zonas de entrega, portes, prazos, pagamento |
+| `content/produtos/*.json` | um ficheiro por artigo (o nome do ficheiro é o endereço) |
+| `content/categorias.json` | Batismo, Lembranças, Natal |
+| `content/inicio.json` | os textos e as fotografias da página inicial |
+| `content/paginas/*.md` | páginas de texto (sobre nós, como encomendar, legais…), com marcadores `{{…}}` |
+| `content/fotos.json` | texto alternativo e ponto de foco de cada fotografia |
+| `media/fotos/` | as fotografias (as versões web faz o `scripts/imagens.py`) |
+| `media/video/` | vídeos (MP4 sem som) e a imagem de capa de cada um |
+| `media/marca/logo.png` | o logótipo (o do Facebook da Mimices, só com o branco tirado) |
+| `src/lib/regras.mjs` | as regras dos dados: as mesmas no gerador e (quando existir) no painel |
+| `scripts/preparar-fotos.py` | a importação inicial das fotografias e do logótipo, a partir de `_cliente/` |
+
+O material do cliente (conversa do WhatsApp, fotografias originais, vídeos, áudios, publicações das
+redes) está em `_cliente/`, fora do git. As notas de pesquisa (concorrência, UX, legal) estão em
+`~/Websites/research_notes/Mimices/`.
+
+## O modelo de um artigo
+
+Além do nome, das fotografias, dos textos e do preço (com promoção):
+
+- `inclui` — a lista do que vem (num conjunto);
+- `composicao` — a composição dos tecidos (obrigatória por lei nos artigos com toalha);
+- `cores: true` — a ficha pede o tom de linho (os 14 tons de `site.json`, pelo número);
+- `opcoes` — até 3 escolhas com valores e acréscimo (ex.: «Desenho da caixa»: Sol e lua, Ramos, Simples);
+- `personalizacao` — os campos que a ficha pede: `nome`, `data` (obrigatórios quando ligados) e `frase`
+  (opcional), com rótulos próprios (`rotuloNome`: «Nome da professora»);
+- `quantidadeMinima` — nas lembranças (o preço passa a ser «/ unidade»).
+
+## Regras que o gerador faz cumprir
+
+- Os dados legais (identificação, NIF, morada, WhatsApp, prazos, pagamento) vêm só de
+  `content/site.json`, por marcadores. Em pré-visualização o que falta aparece «[por confirmar: …]»;
+  em produção a construção pára.
+- Sem preço, um artigo aparece na pré-visualização com «Preço por confirmar» e fica escondido em
+  produção. O mesmo para a composição de uma toalha.
+- Sem alegações ambientais genéricas nem certificações que não temos (Diretiva (UE) 2024/825).
+- As velas mostram os avisos de segurança (EN 15494) e todas as fichas dizem quem fabrica, com a
+  morada e o email (Regulamento (UE) 2023/988, art. 19.º).
+- Toda a ligação interna, imagem e cartão de partilha tem de existir; nenhuma página sai com
+  `undefined`, `NaN` ou `{{`.

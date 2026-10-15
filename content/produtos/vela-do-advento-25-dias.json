@@ -1,0 +1,28 @@
+{
+  "nome": "Vela do Advento: 25 dias",
+  "nomeCurto": "Vela de 25 dias",
+  "fotos": [
+    "vela-advento-25-dias"
+  ],
+  "resumo": "Uma vela para acender de 1 a 25 de dezembro, com uma intenção para cada dia e o nome da família.",
+  "descricao": "De 1 a 25 de dezembro, acende-se a vela e lê-se a intenção do dia: agradecer, partilhar, perdoar, ajudar. Leva o nome da família.",
+  "preco": null,
+  "precoAnterior": null,
+  "promocaoAte": "",
+  "inclui": [],
+  "medidas": [],
+  "cores": false,
+  "opcoes": [],
+  "personalizacao": {
+    "nome": true,
+    "data": false,
+    "frase": false,
+    "rotuloNome": "Nome da família"
+  },
+  "quantidadeMinima": 1,
+  "categoria": "natal",
+  "video": "",
+  "novidade": false,
+  "publicado": true,
+  "ordem": 2
+}

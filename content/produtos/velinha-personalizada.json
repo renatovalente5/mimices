@@ -1,0 +1,27 @@
+{
+  "nome": "Velinha personalizada",
+  "nomeCurto": "Velinha",
+  "fotos": [
+    "velinhas-lembranca-anjo"
+  ],
+  "resumo": "Pequena vela com o nome e a data, para oferecer aos convidados.",
+  "descricao": "Uma velinha decorada, com o nome e a data, para levar para casa um pedacinho do dia.",
+  "preco": null,
+  "precoAnterior": null,
+  "promocaoAte": "",
+  "inclui": [],
+  "medidas": [],
+  "cores": false,
+  "opcoes": [],
+  "personalizacao": {
+    "nome": true,
+    "data": true,
+    "frase": false
+  },
+  "quantidadeMinima": 1,
+  "categoria": "lembrancas",
+  "video": "",
+  "novidade": false,
+  "publicado": true,
+  "ordem": 7
+}

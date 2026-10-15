@@ -1,0 +1,27 @@
+{
+  "nome": "Íman Ursinho com nome",
+  "nomeCurto": "Íman ursinho",
+  "fotos": [
+    "iman-ursinho-mathieu"
+  ],
+  "resumo": "Ursinho em madeira com o nome em acrílico e a data.",
+  "descricao": "Um ursinho em madeira natural, com o nome em acrílico e a data. Uma lembrança doce para os convidados.",
+  "preco": null,
+  "precoAnterior": null,
+  "promocaoAte": "",
+  "inclui": [],
+  "medidas": [],
+  "cores": false,
+  "opcoes": [],
+  "personalizacao": {
+    "nome": true,
+    "data": true,
+    "frase": false
+  },
+  "quantidadeMinima": 1,
+  "categoria": "lembrancas",
+  "video": "",
+  "novidade": false,
+  "publicado": true,
+  "ordem": 4
+}

@@ -1,0 +1,286 @@
+{
+  "caixa-aberta-camila": {
+    "alt": "Caixa de batismo aberta, com um lugar para a toalha, a vela e a concha, e a tampa gravada com o nome Camila",
+    "foco": "50% 50%"
+  },
+  "caixa-padrinhos": {
+    "alt": "Caixa para os padrinhos com porta-chaves gravado e coração em gesso perfumado",
+    "foco": "50% 50%"
+  },
+  "caixa-salvador-sol-e-lua": {
+    "alt": "Tampa da caixa de batismo do Salvador, com sol, lua e estrelas",
+    "foco": "50% 50%"
+  },
+  "caixa-tampa-vidro-xavier": {
+    "alt": "Caixa de batismo com tampa de vidro, inspirada no convite do Xavier",
+    "foco": "50% 50%"
+  },
+  "caixas-de-batismo-tampas": {
+    "alt": "Várias caixas de batismo em madeira, cada uma com o nome e a data na tampa",
+    "foco": "50% 50%"
+  },
+  "capa-velas-de-batismo": {
+    "alt": "Oito velas de batismo com laços de linho em rosa, branco, bege, verde e taupe, deitadas sobre linho",
+    "foco": "50% 50%"
+  },
+  "conjunto-angelique": {
+    "alt": "Conjunto de batismo em tons natura, com caixa de madeira gravada",
+    "foco": "50% 50%"
+  },
+  "conjunto-bernardo-bege": {
+    "alt": "Vela, toalha bordada e concha de batismo em linho bege, com o nome Bernardo",
+    "foco": "50% 50%"
+  },
+  "conjunto-caixa-camila-bege": {
+    "alt": "Conjunto de batismo da Camila em linho bege: caixa de madeira, toalha bordada, vela e concha",
+    "foco": "50% 45%"
+  },
+  "conjunto-caixa-julia-rosa": {
+    "alt": "Conjunto de batismo da Júlia em rosa: caixa de madeira com ramos, toalha bordada e vela",
+    "foco": "50% 45%"
+  },
+  "conjunto-caixa-lourenco-verde": {
+    "alt": "Conjunto de batismo do Lourenço em verde sálvia, com caixa de madeira gravada",
+    "foco": "50% 45%"
+  },
+  "conjunto-caixa-maria-eduarda-rosa": {
+    "alt": "Conjunto de batismo da Maria Eduarda em rosa, com caixa de madeira «O meu batizado»",
+    "foco": "50% 45%"
+  },
+  "conjunto-caixa-maria-eduarda-rosa-2": {
+    "alt": "Conjunto de batismo da Maria Eduarda: caixa de madeira, toalha bordada e vela rosa",
+    "foco": "50% 45%"
+  },
+  "conjunto-caixa-salvador-verde": {
+    "alt": "Conjunto de batismo verde sálvia do Salvador: caixa com sol e lua, toalha bordada, vela e concha",
+    "foco": "50% 50%"
+  },
+  "conjunto-caixa-tomas-azul": {
+    "alt": "Conjunto de batismo azul do Tomás: caixa de madeira com sol e lua, toalha bordada, vela com laço de linho e concha",
+    "foco": "50% 45%"
+  },
+  "conjunto-caixa-tomas-azul-2": {
+    "alt": "Conjunto de batismo do Tomás em azul bebé, com a caixa de madeira ao fundo",
+    "foco": "50% 50%"
+  },
+  "conjunto-constanca-rosa": {
+    "alt": "Vela, toalha bordada e concha de batismo em rosa, com o nome Constança",
+    "foco": "50% 50%"
+  },
+  "conjunto-daniel-verde": {
+    "alt": "Vela, toalha bordada e concha de batismo em verde água, com o nome Daniel",
+    "foco": "50% 50%"
+  },
+  "conjunto-duarte-verde": {
+    "alt": "Vela com medalha dourada, toalha bordada e concha de batismo em verde sálvia, com o nome Duarte",
+    "foco": "50% 50%"
+  },
+  "conjunto-eva-rosa": {
+    "alt": "Vela, toalha bordada e concha de batismo em rosa, com o nome Eva",
+    "foco": "50% 50%"
+  },
+  "conjunto-frederica-cru": {
+    "alt": "Vela, toalha bordada e concha de batismo em linho cru, com o nome Frederica",
+    "foco": "50% 50%"
+  },
+  "conjunto-isabel-rosa": {
+    "alt": "Vela, toalha bordada e concha de batismo em rosa antigo, com o nome Isabel",
+    "foco": "50% 50%"
+  },
+  "conjunto-julia-rosa": {
+    "alt": "Vela e toalha bordada de batismo em rosa, com o nome Júlia",
+    "foco": "50% 50%"
+  },
+  "conjunto-linho-azul": {
+    "alt": "Conjunto de batismo em linho azul",
+    "foco": "50% 50%"
+  },
+  "conjunto-linho-classico": {
+    "alt": "Conjunto de batismo em linho clássico bege",
+    "foco": "50% 50%"
+  },
+  "conjunto-lourenco-verde": {
+    "alt": "Vela, toalha bordada e concha de batismo em verde sálvia, com o nome Lourenço",
+    "foco": "50% 50%"
+  },
+  "conjunto-maria-eduarda-blush": {
+    "alt": "Vela e toalha bordada de batismo em rosa antigo, com o nome Maria Eduarda",
+    "foco": "50% 50%"
+  },
+  "conjunto-maria-eduarda-malva": {
+    "alt": "Vela, toalha bordada e concha de batismo em rosa velho, com o nome Maria Eduarda",
+    "foco": "50% 50%"
+  },
+  "conjunto-maria-eduarda-rosa": {
+    "alt": "Vela, toalha bordada e concha de batismo em rosa, com o nome Maria Eduarda",
+    "foco": "50% 50%"
+  },
+  "conjunto-mariana-bege": {
+    "alt": "Vela, toalha bordada e concha de batismo em linho bege, com o nome Mariana",
+    "foco": "50% 50%"
+  },
+  "conjunto-mariana-rosa": {
+    "alt": "Vela, toalha bordada e concha de batismo em rosa, com o nome Mariana",
+    "foco": "50% 50%"
+  },
+  "conjunto-salvador-verde": {
+    "alt": "Vela e toalha bordada de batismo em verde sálvia, com o nome Salvador",
+    "foco": "50% 50%"
+  },
+  "conjunto-tiago-verde": {
+    "alt": "Conjunto de batismo verde do Tiago, com caixa de madeira",
+    "foco": "50% 50%"
+  },
+  "conjunto-tomas-azul": {
+    "alt": "Vela, toalha bordada e concha de batismo em azul bebé, com o nome Tomás",
+    "foco": "50% 50%"
+  },
+  "convite-batismo-azul": {
+    "alt": "Convite de batismo em azul, com laço de linho e selo de lacre",
+    "foco": "50% 50%"
+  },
+  "convites-batismo": {
+    "alt": "Convites de batismo personalizados, com selo de lacre",
+    "foco": "50% 50%"
+  },
+  "decoracao-natal-familia": {
+    "alt": "Decoração de Natal em madeira com a frase «Família»",
+    "foco": "50% 50%"
+  },
+  "disco-anjo-tomas": {
+    "alt": "Lembrança de batismo em madeira gravada com um anjo, o nome Tomás e a data",
+    "foco": "50% 50%"
+  },
+  "disco-ilustracao-santiago-carolina": {
+    "alt": "Lembrança em madeira gravada com um desenho de dois irmãos e os nomes Santiago e Carolina",
+    "foco": "50% 50%"
+  },
+  "disco-letra-beatriz": {
+    "alt": "Lembrança em madeira com a letra B em acrílico lilás e flores gravadas, para o batismo da Beatriz",
+    "foco": "50% 50%"
+  },
+  "enfeite-linho-bordado": {
+    "alt": "Enfeite de Natal em linho, bordado com o nome André e aro de madeira",
+    "foco": "50% 50%"
+  },
+  "enfeites-natal-nomes": {
+    "alt": "Enfeites de Natal com nomes, pendurados na árvore",
+    "foco": "50% 50%"
+  },
+  "gesso-anjos-cartao": {
+    "alt": "Lembranças em gesso perfumado: anjos em cartões com o nome",
+    "foco": "50% 50%"
+  },
+  "iman-acrilico-dourado-caetana": {
+    "alt": "Íman de madeira recortado, com o nome Caetana em acrílico dourado espelhado e um anjo gravado",
+    "foco": "50% 50%"
+  },
+  "iman-acrilico-dourado-lucas": {
+    "alt": "Íman de madeira recortado, com o nome Lucas em acrílico dourado espelhado",
+    "foco": "50% 50%"
+  },
+  "iman-madeira-anjo-gesso": {
+    "alt": "Ímanes de madeira com um anjo em gesso perfumado",
+    "foco": "50% 50%"
+  },
+  "iman-pomba-branca": {
+    "alt": "Ímanes de madeira com uma pomba em acrílico branco e os nomes gravados",
+    "foco": "50% 50%"
+  },
+  "iman-pomba-dourada": {
+    "alt": "Íman de madeira com uma pomba em acrílico dourado espelhado, para o batismo da Francisca",
+    "foco": "50% 50%"
+  },
+  "iman-pomba-dourada-maria": {
+    "alt": "Íman de madeira com uma pomba em acrílico dourado, para a profissão de fé da Maria",
+    "foco": "50% 50%"
+  },
+  "iman-ursinho-mathieu": {
+    "alt": "Íman em forma de ursinho, de madeira, com o nome Mathieu em acrílico azul",
+    "foco": "50% 50%"
+  },
+  "lacos-de-linho": {
+    "alt": "Laços de linho em vários tons, prontos para os conjuntos de batismo",
+    "foco": "50% 50%"
+  },
+  "lembranca-comunhao-gustavo": {
+    "alt": "Lembrança da Primeira Comunhão em madeira com o nome Gustavo em acrílico branco",
+    "foco": "50% 50%"
+  },
+  "lembranca-oracao-salvador": {
+    "alt": "Lembrança de batismo em madeira, com o nome Salvador em acrílico dourado e uma oração",
+    "foco": "50% 50%"
+  },
+  "lembranca-otavio-acrilico-branco": {
+    "alt": "Lembrança de madeira recortada com o nome Otávio em acrílico branco, numa igreja",
+    "foco": "50% 50%"
+  },
+  "oracao-anjo-da-guarda": {
+    "alt": "Placa de madeira com a oração do Anjo da Guarda gravada e asas em gesso",
+    "foco": "50% 50%"
+  },
+  "oracao-asas-gesso": {
+    "alt": "Lembrança em madeira com a oração do Anjo da Guarda e asas em gesso perfumado",
+    "foco": "50% 50%"
+  },
+  "porta-chaves-comunhao": {
+    "alt": "Porta-chaves em acrílico dourado e transparente, para a Primeira Comunhão",
+    "foco": "50% 50%"
+  },
+  "postal-natal-gesso": {
+    "alt": "Postal de Natal com um pendente em gesso perfumado",
+    "foco": "50% 50%"
+  },
+  "toalha-frederica": {
+    "alt": "Toalha de batismo bordada com «O meu batismo», o nome Frederica e a data",
+    "foco": "50% 50%"
+  },
+  "toalha-maria-eduarda": {
+    "alt": "Toalha de batismo bordada em rosa com «O meu batismo», o nome Maria Eduarda e a data",
+    "foco": "50% 50%"
+  },
+  "toalha-mariana": {
+    "alt": "Toalha de batismo bordada com «O meu batismo», o nome Mariana e a data, com renda",
+    "foco": "50% 50%"
+  },
+  "tons-de-linho": {
+    "alt": "Os catorze tons de linho da Mimices para o batismo, de azul denim a azul bebé, e as sugestões para menino, menina e neutro",
+    "foco": "50% 50%"
+  },
+  "vela-advento-25-dias": {
+    "alt": "Vela do Advento com o presépio e o nome da família, junto à árvore de Natal",
+    "foco": "50% 50%"
+  },
+  "vela-concha-rosa": {
+    "alt": "Vela de batismo e concha com laços de linho rosa",
+    "foco": "50% 50%"
+  },
+  "vela-concha-verde-agua": {
+    "alt": "Vela de batismo e concha com laços de linho verde água e corda bege",
+    "foco": "50% 50%"
+  },
+  "vela-natal-professora-pai-natal": {
+    "alt": "Vela de Natal com um Pai Natal ilustrado e o nome da professora",
+    "foco": "50% 50%"
+  },
+  "vela-natal-professora-presepio": {
+    "alt": "Vela de Natal com o presépio ilustrado e o nome da professora",
+    "foco": "50% 50%"
+  },
+  "vela-toalha-beatriz-rosa": {
+    "alt": "Vela e toalha de batismo em rosa, com flores secas, para a Beatriz",
+    "foco": "50% 50%"
+  },
+  "velas-advento-quatro-semanas": {
+    "alt": "Quatro velas do Advento ilustradas: esperança, paz, alegria e amor",
+    "foco": "50% 50%"
+  },
+  "velas-quatro-cores": {
+    "alt": "Quatro velas de batismo com laços de linho em azul, malva, rosa e verde água",
+    "foco": "50% 50%"
+  },
+  "velinhas-lembranca-anjo": {
+    "alt": "Velinhas de lembrança com um anjo e o nome",
+    "foco": "50% 50%"
+  }
+}

@@ -1,0 +1,164 @@
+{
+  "marca": "Mimices",
+  "descricao": "Conjuntos de batismo e lembranças personalizadas, feitos à mão: velas, toalhas bordadas, conchas e caixas de madeira com o nome e a data, nos tons de linho que escolher.",
+  "assinatura": "Feito à mão, com carinho, para dias que ficam para sempre.",
+  "fundadores": "Susana",
+  "contactos": {
+    "whatsapp": "961 022 575",
+    "telefone": "961 022 575",
+    "email": "mimices1720@gmail.com",
+    "instagram": "_mimices",
+    "facebook": "mimicesdospequenotes",
+    "horario": ""
+  },
+  "local": {
+    "localidade": "Quinta do Conde",
+    "distrito": "Setúbal"
+  },
+  "empresa": {
+    "nome": "",
+    "tipo": "",
+    "nif": "",
+    "morada": "",
+    "codigoPostal": "",
+    "localidade": "",
+    "concelho": "",
+    "iva": ""
+  },
+  "aviso": {
+    "texto": "",
+    "ate": "",
+    "ligacao": ""
+  },
+  "cores": [
+    {
+      "numero": 1,
+      "nome": "Azul denim",
+      "hex": "#648AA7"
+    },
+    {
+      "numero": 2,
+      "nome": "Verde sálvia",
+      "hex": "#8E9483"
+    },
+    {
+      "numero": 3,
+      "nome": "Bege / taupe claro",
+      "hex": "#B7A89B"
+    },
+    {
+      "numero": 4,
+      "nome": "Cru / marfim",
+      "hex": "#E5DBD0"
+    },
+    {
+      "numero": 5,
+      "nome": "Verde água / menta",
+      "hex": "#A9C1BC"
+    },
+    {
+      "numero": 6,
+      "nome": "Rosa antigo (blush)",
+      "hex": "#D9C6BD"
+    },
+    {
+      "numero": 7,
+      "nome": "Rosa velho / malva",
+      "hex": "#BC8D97"
+    },
+    {
+      "numero": 8,
+      "nome": "Verde seco / verde oliva",
+      "hex": "#7F7E6A"
+    },
+    {
+      "numero": 9,
+      "nome": "Taupe / bege acinzentado",
+      "hex": "#B1A498"
+    },
+    {
+      "numero": 10,
+      "nome": "Rosa bebé / rosa pó",
+      "hex": "#E5BAB2"
+    },
+    {
+      "numero": 11,
+      "nome": "Azul turquesa suave",
+      "hex": "#8AB7BD"
+    },
+    {
+      "numero": 12,
+      "nome": "Rosa claro / rosa nude",
+      "hex": "#DDBDB8"
+    },
+    {
+      "numero": 13,
+      "nome": "Rosa coral / salmão suave",
+      "hex": "#E3988C"
+    },
+    {
+      "numero": 14,
+      "nome": "Azul bebé",
+      "hex": "#ADC8E1"
+    }
+  ],
+  "sugestoesCores": [
+    {
+      "titulo": "Menino",
+      "texto": "Delicado, elegante e intemporal.",
+      "cores": [
+        14,
+        5,
+        3
+      ]
+    },
+    {
+      "titulo": "Menina",
+      "texto": "Feminino, suave e cheio de charme.",
+      "cores": [
+        6,
+        7,
+        13
+      ]
+    },
+    {
+      "titulo": "Neutro",
+      "texto": "Natural, versátil e muito elegante.",
+      "cores": [
+        4,
+        2,
+        9
+      ]
+    }
+  ],
+  "entrega": {
+    "zonas": [
+      {
+        "id": "levantamento",
+        "nome": "Levantamento na Quinta do Conde",
+        "curto": "Levantamento (grátis)",
+        "morada": false
+      },
+      {
+        "id": "continente",
+        "nome": "Envio para Portugal Continental",
+        "curto": "Portugal Continental",
+        "morada": true
+      },
+      {
+        "id": "ilhas",
+        "nome": "Envio para a Madeira e os Açores",
+        "curto": "Madeira e Açores",
+        "morada": true
+      }
+    ],
+    "portes": {
+      "continente": null,
+      "ilhas": null,
+      "gratisAPartirDe": null
+    },
+    "prazo": "",
+    "pagamento": "O pagamento é feito por MB WAY ou por transferência bancária. Quando confirmarmos a encomenda pelo WhatsApp, enviamos-lhe os dados para o pagamento.",
+    "levantamento": "Na Quinta do Conde, sem custos. Combinamos o dia e a hora pelo WhatsApp."
+  }
+}

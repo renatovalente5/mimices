@@ -1,0 +1,32 @@
+{
+  "nome": "Vela de Batismo personalizada",
+  "nomeCurto": "Vela de batismo",
+  "fotos": [
+    "velas-quatro-cores",
+    "capa-velas-de-batismo",
+    "vela-toalha-beatriz-rosa"
+  ],
+  "resumo": "Vela de batismo com o nome, laço de linho e corda, no tom que escolher.",
+  "descricao": "A vela que se acende no batismo, com o nome escrito ao alto, o laço de linho e a corda a envolver.\n\nEscolha o tom do linho entre os catorze que temos.",
+  "preco": null,
+  "precoAnterior": null,
+  "promocaoAte": "",
+  "inclui": [
+    "Vela com o nome",
+    "Laço de linho e corda"
+  ],
+  "medidas": [],
+  "cores": true,
+  "opcoes": [],
+  "personalizacao": {
+    "nome": true,
+    "data": true,
+    "frase": false
+  },
+  "quantidadeMinima": 1,
+  "categoria": "batismo",
+  "video": "",
+  "novidade": false,
+  "publicado": true,
+  "ordem": 3
+}

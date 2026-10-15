@@ -1,0 +1,29 @@
+{
+  "nome": "Convite de Batismo",
+  "nomeCurto": "Convite",
+  "fotos": [
+    "convites-batismo",
+    "convite-batismo-azul"
+  ],
+  "resumo": "Convites de batismo personalizados, com o nome, a data e o local da cerimónia.",
+  "descricao": "O convite para o dia do batismo, desenhado consigo, com o nome, a data, a hora e o local. Pode condizer com as lembranças.",
+  "preco": null,
+  "precoAnterior": null,
+  "promocaoAte": "",
+  "inclui": [],
+  "medidas": [],
+  "cores": false,
+  "opcoes": [],
+  "personalizacao": {
+    "nome": true,
+    "data": true,
+    "frase": true,
+    "rotuloFrase": "Hora e local da cerimónia"
+  },
+  "quantidadeMinima": 1,
+  "categoria": "batismo",
+  "video": "",
+  "novidade": false,
+  "publicado": true,
+  "ordem": 7
+}

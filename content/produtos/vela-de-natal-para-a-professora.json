@@ -1,0 +1,30 @@
+{
+  "nome": "Vela de Natal para a Professora",
+  "nomeCurto": "Vela da professora",
+  "fotos": [
+    "vela-natal-professora-presepio",
+    "vela-natal-professora-pai-natal"
+  ],
+  "resumo": "Vela de Natal ilustrada, com o nome da professora.",
+  "descricao": "Um presente para quem acompanha os mais pequenos todos os dias: uma vela de Natal ilustrada, com o nome da professora e uma mensagem.",
+  "preco": null,
+  "precoAnterior": null,
+  "promocaoAte": "",
+  "inclui": [],
+  "medidas": [],
+  "cores": false,
+  "opcoes": [],
+  "personalizacao": {
+    "nome": true,
+    "data": false,
+    "frase": true,
+    "rotuloNome": "Nome da professora",
+    "rotuloFrase": "Mensagem"
+  },
+  "quantidadeMinima": 1,
+  "categoria": "natal",
+  "video": "",
+  "novidade": false,
+  "publicado": true,
+  "ordem": 3
+}

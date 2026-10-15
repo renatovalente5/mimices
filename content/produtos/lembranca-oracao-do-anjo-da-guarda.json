@@ -1,0 +1,28 @@
+{
+  "nome": "Lembrança com a Oração do Anjo da Guarda",
+  "nomeCurto": "Oração do Anjo da Guarda",
+  "fotos": [
+    "oracao-anjo-da-guarda",
+    "oracao-asas-gesso"
+  ],
+  "resumo": "Placa em madeira com a oração do Anjo da Guarda, o nome e a data, e asas em gesso perfumado.",
+  "descricao": "A oração do Anjo da Guarda gravada em madeira, com o nome e a data, e umas asas em gesso perfumado. Para guardar no quarto.",
+  "preco": null,
+  "precoAnterior": null,
+  "promocaoAte": "",
+  "inclui": [],
+  "medidas": [],
+  "cores": false,
+  "opcoes": [],
+  "personalizacao": {
+    "nome": true,
+    "data": true,
+    "frase": false
+  },
+  "quantidadeMinima": 1,
+  "categoria": "lembrancas",
+  "video": "",
+  "novidade": false,
+  "publicado": true,
+  "ordem": 6
+}

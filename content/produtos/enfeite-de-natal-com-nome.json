@@ -1,0 +1,28 @@
+{
+  "nome": "Enfeite de Natal com nome",
+  "nomeCurto": "Enfeite com nome",
+  "fotos": [
+    "enfeites-natal-nomes",
+    "enfeite-linho-bordado"
+  ],
+  "resumo": "Enfeite para a árvore de Natal, com o nome de cada um.",
+  "descricao": "Um lugar na árvore para cada um: enfeites de Natal com o nome, feitos à mão.",
+  "preco": null,
+  "precoAnterior": null,
+  "promocaoAte": "",
+  "inclui": [],
+  "medidas": [],
+  "cores": false,
+  "opcoes": [],
+  "personalizacao": {
+    "nome": true,
+    "data": false,
+    "frase": false
+  },
+  "quantidadeMinima": 1,
+  "categoria": "natal",
+  "video": "",
+  "novidade": false,
+  "publicado": true,
+  "ordem": 4
+}

@@ -1,0 +1,43 @@
+{
+  "nome": "Íman em madeira com pomba",
+  "nomeCurto": "Íman com pomba",
+  "fotos": [
+    "iman-pomba-dourada-maria",
+    "iman-pomba-dourada",
+    "iman-pomba-branca"
+  ],
+  "resumo": "Lembrança em madeira natural com uma pomba em acrílico, os nomes e a data gravados.",
+  "descricao": "Uma pomba em acrílico sobre madeira natural, com os nomes e a data gravados. Para o batismo, a primeira comunhão ou a profissão de fé.",
+  "preco": null,
+  "precoAnterior": null,
+  "promocaoAte": "",
+  "inclui": [],
+  "medidas": [],
+  "cores": false,
+  "opcoes": [
+    {
+      "nome": "Acrílico",
+      "valores": [
+        {
+          "nome": "Dourado espelhado",
+          "suplemento": 0
+        },
+        {
+          "nome": "Branco",
+          "suplemento": 0
+        }
+      ]
+    }
+  ],
+  "personalizacao": {
+    "nome": true,
+    "data": true,
+    "frase": true
+  },
+  "quantidadeMinima": 1,
+  "categoria": "lembrancas",
+  "video": "",
+  "novidade": false,
+  "publicado": true,
+  "ordem": 2
+}

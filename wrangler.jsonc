@@ -1,0 +1,34 @@
+// O SITE EM PRODUÇÃO, NA CLOUDFLARE: um Worker com os ficheiros que o
+// `node scripts/build.mjs --producao` escreve em _site/, em mimices.pt (quando o domínio for comprado).
+//
+// PORQUÊ: os termos do GitHub Pages proíbem usá-lo para uma loja online («not
+// intended for or allowed to be used … to run your online business, e-commerce
+// site»), como na ithos e na Pokóto Wood. Até haver domínio, a pré-visualização fica no
+// GitHub Pages, fechada aos motores de busca.
+//
+// QUANDO HOUVER DOMÍNIO (como na Pokóto Wood, 11 out 2026): o CI publica SEM AS ROTAS, e os
+// dois Custom Domains ligam-se UMA vez, com um `wrangler deploy` à mão, da pasta do site,
+// depois de `node scripts/build.mjs --producao` (nunca com o _site/ da pré-visualização, nem
+// a partir da pasta-mãe: a autoconfiguração do wrangler inventa um Worker com o conteúdo de
+// outro projecto). Os comentários são linhas inteiras: o CI tira-os assim.
+{
+  "name": "mimices-site",
+  "compatibility_date": "2026-09-01",
+  "main": "worker/www.js",
+  "assets": {
+    "directory": "./_site",
+    "binding": "ASSETS",
+    // O script corre primeiro em todos os pedidos, só para mandar o www para o
+    // domínio sem www; o resto passa logo para os ficheiros.
+    "run_worker_first": true,
+    // Uma morada que não existe mostra a 404.html do site.
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash"
+  },
+  "routes": [
+    { "pattern": "mimices.pt", "custom_domain": true },
+    { "pattern": "www.mimices.pt", "custom_domain": true }
+  ],
+  "workers_dev": false,
+  "preview_urls": false
+}

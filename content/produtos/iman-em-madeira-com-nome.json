@@ -1,0 +1,44 @@
+{
+  "nome": "Íman em madeira com nome em acrílico",
+  "nomeCurto": "Íman com nome",
+  "fotos": [
+    "iman-acrilico-dourado-caetana",
+    "iman-acrilico-dourado-lucas",
+    "lembranca-otavio-acrilico-branco",
+    "lembranca-oracao-salvador"
+  ],
+  "resumo": "Lembrança em madeira natural, com o nome em acrílico e a data gravada.",
+  "descricao": "Para agradecer a presença de quem esteve no dia: um íman em madeira natural, com o nome em acrílico e a data gravada. Pode levar também uma frase de agradecimento.",
+  "preco": null,
+  "precoAnterior": null,
+  "promocaoAte": "",
+  "inclui": [],
+  "medidas": [],
+  "cores": false,
+  "opcoes": [
+    {
+      "nome": "Acrílico",
+      "valores": [
+        {
+          "nome": "Dourado espelhado",
+          "suplemento": 0
+        },
+        {
+          "nome": "Branco",
+          "suplemento": 0
+        }
+      ]
+    }
+  ],
+  "personalizacao": {
+    "nome": true,
+    "data": true,
+    "frase": true
+  },
+  "quantidadeMinima": 1,
+  "categoria": "lembrancas",
+  "video": "",
+  "novidade": false,
+  "publicado": true,
+  "ordem": 1
+}

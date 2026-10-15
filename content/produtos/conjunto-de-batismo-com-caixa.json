@@ -1,0 +1,58 @@
+{
+  "nome": "Conjunto de Batismo com Caixa",
+  "nomeCurto": "Conjunto com caixa",
+  "fotos": [
+    "conjunto-caixa-tomas-azul",
+    "caixa-aberta-camila",
+    "conjunto-caixa-salvador-verde",
+    "conjunto-caixa-julia-rosa",
+    "conjunto-caixa-lourenco-verde",
+    "conjunto-caixa-camila-bege",
+    "conjunto-caixa-maria-eduarda-rosa",
+    "caixa-salvador-sol-e-lua"
+  ],
+  "resumo": "Caixa de madeira com o nome e a data, vela de batismo, toalha bordada e concha, nos laços de linho do tom que escolher.",
+  "descricao": "O conjunto completo para o dia do batismo, e uma caixa para guardar tudo depois.\n\nA caixa de madeira leva o nome e a data na tampa e, por dentro, um lugar para cada peça. A vela tem o nome escrito ao alto, o laço de linho e a corda; a toalha é bordada com o nome e a data, e a concha leva o mesmo laço.\n\nPensamos cada conjunto consigo: o tom do linho, o desenho da caixa e os pormenores.",
+  "preco": null,
+  "precoAnterior": null,
+  "promocaoAte": "",
+  "inclui": [
+    "Caixa de madeira com o nome e a data na tampa",
+    "Vela de batismo com o nome, laço de linho e corda",
+    "Toalha bordada com o nome e a data",
+    "Concha natural com laço de linho"
+  ],
+  "medidas": [],
+  "composicao": "",
+  "cores": true,
+  "opcoes": [
+    {
+      "nome": "Desenho da caixa",
+      "valores": [
+        {
+          "nome": "Sol e lua",
+          "suplemento": 0
+        },
+        {
+          "nome": "Ramos",
+          "suplemento": 0
+        },
+        {
+          "nome": "Simples",
+          "suplemento": 0
+        }
+      ]
+    }
+  ],
+  "personalizacao": {
+    "nome": true,
+    "data": true,
+    "frase": false
+  },
+  "quantidadeMinima": 1,
+  "categoria": "batismo",
+  "video": "conjunto-tomas",
+  "novidade": false,
+  "publicado": true,
+  "ordem": 1
+}

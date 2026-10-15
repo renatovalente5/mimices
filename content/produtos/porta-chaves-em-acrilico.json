@@ -1,0 +1,27 @@
+{
+  "nome": "Porta-chaves em acrílico",
+  "nomeCurto": "Porta-chaves",
+  "fotos": [
+    "porta-chaves-comunhao"
+  ],
+  "resumo": "Porta-chaves em acrílico dourado e transparente, com o nome e a data.",
+  "descricao": "Um porta-chaves em acrílico dourado e transparente, com o nome e a data. Para a Primeira Comunhão, o batismo ou os padrinhos.",
+  "preco": null,
+  "precoAnterior": null,
+  "promocaoAte": "",
+  "inclui": [],
+  "medidas": [],
+  "cores": false,
+  "opcoes": [],
+  "personalizacao": {
+    "nome": true,
+    "data": true,
+    "frase": false
+  },
+  "quantidadeMinima": 1,
+  "categoria": "lembrancas",
+  "video": "",
+  "novidade": false,
+  "publicado": true,
+  "ordem": 8
+}
