@@ -325,7 +325,7 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
    largas ficam com margem de linho dos lados. */
 .galeria__foto { position: relative; flex: 0 0 100%; margin: 0; scroll-snap-align: start; aspect-ratio: var(--forma, .8); max-height: min(80vh, 860px); }
 .galeria__foto picture, .galeria__foto .video { position: absolute; inset: 0; }
-.galeria__foto img, .galeria__foto video { width: 100%; height: 100%; object-fit: contain; }
+.galeria__foto img, .galeria__foto video, .galeria__foto .video video { width: 100%; height: 100%; object-fit: contain; }
 .galeria__miniaturas { list-style: none; margin: 12px 0 0; padding: 0; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
 .galeria__miniaturas button { position: relative; display: block; width: 64px; height: 80px; padding: 0; border: 1px solid var(--linha); border-radius: 2px; overflow: hidden; cursor: pointer; background: var(--linho); }
 .galeria__miniaturas button[aria-current] { border: 2px solid var(--tinta); }
@@ -356,11 +356,12 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
    ouve-o na própria amostra); a escolhida tem um anel escuro e um visto (não depende só da cor:
    WCAG 1.4.1) */
 .cores__escolhido { font-weight: 400; color: var(--tinta-2); }
-/* Os 14 tons em duas filas de 7 (7 × 40 px + 6 × 12 cabem nos 358 px de um telemóvel de 390). */
-.cores__lista { display: grid; grid-template-columns: repeat(7, 40px); gap: 12px; }
+/* Os 14 tons em duas filas de 7, até aos 320 px: as amostras encolhem (até ~34 px) e os espaços
+   também (7 × 40 + 6 × 12 = 352 px fixos fugiam para o lado a menos de 384 px). */
+.cores__lista { display: grid; grid-template-columns: repeat(7, minmax(0, 40px)); gap: clamp(6px, 2.5vw, 12px); }
 .cor { position: relative; display: block; cursor: pointer; }
 .cor input { position: absolute; opacity: 0; width: 1px; height: 1px; }
-.cor__amostra { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--cor); box-shadow: inset 0 0 0 1px var(--contorno-cor); outline: 2px solid transparent; outline-offset: 3px; transition: outline-color .15s; }
+.cor__amostra { display: grid; place-items: center; width: 100%; aspect-ratio: 1; border-radius: 50%; background: var(--cor); box-shadow: inset 0 0 0 1px var(--contorno-cor); outline: 2px solid transparent; outline-offset: 3px; transition: outline-color .15s; }
 .cor__amostra .icone { width: 20px; height: 20px; color: var(--branco); filter: drop-shadow(0 0 1.5px rgba(0, 0, 0, .55)); opacity: 0; }
 @media (hover: hover) { .cor:hover .cor__amostra { outline-color: var(--linha-forte); } }
 .cor input:checked + .cor__amostra { outline-color: var(--tinta); }
@@ -384,6 +385,7 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
 .comprar__total { margin: -8px 0 0; font-weight: 500; }
 .comprar__total:empty { display: none; }
 .comprar__erro { margin: 0; color: #A3352C; font-weight: 500; }
+.campo > .comprar__erro { margin-top: 4px; font-size: .9375rem; }
 .aviso-pers { margin: 2px 0 0; font-size: .8125rem; color: var(--tinta-2); }
 .composicao { margin: 10px 0 0; font-size: .875rem; color: var(--tinta-2); }
 .seguranca { margin: 22px 0 0; font-size: .8125rem; color: var(--tinta-2); }

@@ -230,8 +230,12 @@
     form.addEventListener('input', mostrarTotal);
     form.addEventListener('change', mostrarTotal);
     mostrarTotal();
+    /* A frase do erro aparece junto ao campo que falta (o tom, uma escolha, o nome…): por baixo do
+       botão ficava fora do ecrã, porque a página salta para o campo. */
     const errar = (campo, texto) => {
       erro.textContent = texto;
+      const sitio = campo && campo.closest('.campo');
+      if (sitio) sitio.append(erro);
       erro.hidden = false;
       if (campo) { campo.setAttribute('aria-invalid', 'true'); campo.focus(); }
     };
@@ -242,7 +246,7 @@
       $$('[aria-invalid]', form).forEach((i) => i.removeAttribute('aria-invalid'));
       const cores = $('[data-cores]', form);
       const cor = cores ? $('input[name="cor"]:checked', cores) : null;
-      if (cores && !cor) { errar($('input[name="cor"]', cores), 'Escolha o tom de linho (o número da amostra).'); return; }
+      if (cores && !cor) { errar($('input[name="cor"]', cores), 'Escolha o tom de linho.'); return; }
       for (const f of $$('[data-escolha]', form)) {
         if (!$('input:checked', f)) { errar($('input', f), `Falta escolher: ${$('legend', f).textContent.trim()}.`); return; }
       }
