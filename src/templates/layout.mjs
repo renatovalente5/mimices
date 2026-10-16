@@ -64,7 +64,7 @@ function menu(ctx) {
     `<span class="menu__mini">${imagem(ctx, c.foto, { tamanhos: '64px', alt: '' })}</span><span class="menu__texto"><span class="menu__nome">${esc(c.nomeMenu || c.nome)}</span><span class="menu__conta">${quantosArtigos(ctx.produtos.filter((p) => p.categoria === c.slug).length)}</span></span>`)).join('');
   const c = ctx.site.contactos;
   return `<dialog class="menu" id="menu" aria-label="Menu">
-  <div class="menu__corpo">
+  <div class="menu__corpo" tabindex="-1">
     <div class="menu__topo">
       <a class="menu__marca" href="${ctx.url('/')}">${logotipo(ctx, { alto: 52 })}</a>
       <button class="menu__fechar" type="button" data-fechar>${icones.fechar}<span class="visualmente-escondido">Fechar o menu</span></button>
@@ -140,7 +140,7 @@ function rodape(ctx) {
 
 function gavetaCarrinho() {
   return `<dialog class="gaveta" id="carrinho" aria-labelledby="carrinho-titulo">
-  <div class="gaveta__corpo">
+  <div class="gaveta__corpo" tabindex="-1">
     <div class="gaveta__topo">
       <h2 id="carrinho-titulo">O seu carrinho</h2>
       <button class="gaveta__fechar" type="button" data-fechar>${icones.fechar}<span class="visualmente-escondido">Fechar o carrinho</span></button>

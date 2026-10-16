@@ -51,6 +51,12 @@
     const d = document.getElementById(id);
     if (!d || d.open) return;
     d.showModal();
+    /* O showModal() põe o foco no primeiro elemento que o aceita (no menu, o logótipo; no carrinho,
+       o X), e o Safari do iPhone mostra-o com o anel do foco mesmo depois de um toque («quando abro
+       o menu está a ficar com high light no icon», 16 out 2026). O foco vai para o corpo da gaveta
+       (tabindex=-1, sem anel): quem usa o teclado continua a entrar nos links com o Tab. */
+    const corpo = d.querySelector('.menu__corpo, .gaveta__corpo');
+    if (corpo) corpo.focus({ preventScroll: true });
     d._origem = origem || null;
     if (id === 'carrinho' && window.MimicesCarrinho) window.MimicesCarrinho.desenharGaveta();
   }

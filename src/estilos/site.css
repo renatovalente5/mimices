@@ -62,6 +62,8 @@
 @media (min-width: 900px) { :root { --topo: 100px; } }
 
 /* --- base ------------------------------------------------------------------- */
+/* Os «:hover» vão todos dentro de @media (hover: hover): num ecrã de toque o Safari deixa-os presos
+   no último elemento tocado (no menu, «Sobre a Mimices» ficava cor-de-rosa ao voltar). */
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: calc(var(--topo) + 16px); }
 html:has(dialog[open]) { overflow: hidden; }
@@ -71,7 +73,7 @@ img, picture, video, svg { display: block; max-width: 100%; }
 [hidden] { display: none !important; }
 img { height: auto; }
 a { color: var(--acento); text-underline-offset: .18em; text-decoration-thickness: 1px; }
-a:hover { color: var(--acento-escuro); }
+@media (hover: hover) { a:hover { color: var(--acento-escuro); } }
 button, input, select, textarea { font: inherit; color: inherit; }
 h1, h2, h3 { line-height: 1.15; margin: 0 0 .5em; }
 p { margin: 0 0 1em; }
@@ -96,11 +98,11 @@ mark.por-confirmar { background: #FFF1B8; color: #5C4A00; padding: 0 .25em; bord
 .botao { display: inline-flex; align-items: center; justify-content: center; gap: .6em; min-height: 48px; padding: .75em 1.6em; border-radius: 999px; border: 1px solid transparent; font: 500 .9375rem/1.2 var(--sans); letter-spacing: .02em; text-decoration: none; cursor: pointer; transition: background-color .2s, color .2s, border-color .2s; }
 .botao .icone { width: 1.15em; height: 1.15em; }
 .botao--cheio { background: var(--acento); color: var(--branco); }
-.botao--cheio:hover { background: var(--acento-escuro); color: var(--branco); }
+@media (hover: hover) { .botao--cheio:hover { background: var(--acento-escuro); color: var(--branco); } }
 .botao--contorno { background: transparent; color: var(--tinta); border-color: var(--tinta); }
-.botao--contorno:hover { background: var(--tinta); color: var(--branco); }
+@media (hover: hover) { .botao--contorno:hover { background: var(--tinta); color: var(--branco); } }
 .botao--whatsapp { background: var(--verde); color: var(--branco); }
-.botao--whatsapp:hover { background: var(--verde-escuro); color: var(--branco); }
+@media (hover: hover) { .botao--whatsapp:hover { background: var(--verde-escuro); color: var(--branco); } }
 .botao--texto { background: none; border: 0; padding: .4em .2em; min-height: 44px; color: var(--acento); text-decoration: underline; text-underline-offset: .2em; }
 .botao--largo { width: 100%; }
 
@@ -123,7 +125,7 @@ mark.por-confirmar { background: #FFF1B8; color: #5C4A00; padding: 0 .25em; bord
 @media (min-width: 900px) { .topo__marca .logo { height: 82px; } }
 .topo__direita { justify-self: end; display: flex; align-items: center; gap: .25rem; }
 .topo__whatsapp { display: inline-flex; align-items: center; gap: .5em; min-height: 44px; padding: 0 .6em; color: var(--tinta); text-decoration: none; font-size: .8125rem; font-weight: 500; }
-.topo__whatsapp:hover { color: var(--tinta); text-decoration: underline; }
+@media (hover: hover) { .topo__whatsapp:hover { color: var(--tinta); text-decoration: underline; } }
 .topo__whatsapp .icone { width: 24px; height: 24px; color: var(--verde); }
 .topo__whatsapp-texto { display: none; }
 @media (min-width: 64rem) { .topo__whatsapp-texto { display: inline; } }
@@ -136,6 +138,7 @@ dialog { padding: 0; border: 0; color: var(--tinta); background: var(--papel); m
 dialog::backdrop { background: rgba(46, 42, 40, .45); }
 .menu { width: 100%; height: 100dvh; margin: 0; }
 @media (min-width: 48rem) { .menu { width: min(26rem, 48vw); box-shadow: var(--sombra); } }
+.menu__corpo:focus, .gaveta__corpo:focus, dialog:focus { outline: none; }
 .menu__corpo { display: flex; flex-direction: column; min-height: 100%; padding: 0 var(--margem) calc(24px + env(safe-area-inset-bottom)); }
 .menu__topo { display: flex; align-items: center; justify-content: space-between; height: var(--topo); }
 .menu__marca .logo { height: 48px; width: auto; }
@@ -146,7 +149,7 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
 .menu__lista { list-style: none; margin: 0; padding: 0; }
 .menu__lista li + li { border-top: 1px solid var(--linha); }
 .menu__linha { display: flex; align-items: center; gap: 14px; min-height: 64px; padding: 8px 0; color: var(--tinta); text-decoration: none; }
-.menu__linha:hover { color: var(--acento); }
+@media (hover: hover) { .menu__linha:hover { color: var(--acento); } }
 .menu__linha > .icone { margin-left: auto; color: var(--tinta-2); width: 20px; height: 20px; }
 .menu__mini { width: 52px; height: 52px; border-radius: var(--raio-pequeno); overflow: hidden; flex: none; background: var(--linho); }
 .menu__mini img { width: 100%; height: 100%; object-fit: cover; }
@@ -219,7 +222,7 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
 .capa__botao { min-height: 52px; padding-inline: 2em; }
 .capa__pausa { position: absolute; z-index: 2; right: max(16px, calc((100% - var(--largura)) / 2)); bottom: 18px; display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; border: 0; background: rgba(255, 255, 255, .88); color: var(--tinta); cursor: pointer; box-shadow: 0 1px 4px rgba(46, 42, 40, .12); }
 .capa__pausa .icone { width: 22px; height: 22px; }
-.capa__pausa:hover { background: var(--branco); }
+@media (hover: hover) { .capa__pausa:hover { background: var(--branco); } }
 
 /* --- montras (grelhas de artigos) --------------------------------------------------------- */
 .montra, .relacionados { width: min(100% - 2 * var(--margem), var(--largura)); margin: clamp(56px, 8vw, 96px) auto; }
@@ -299,13 +302,13 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
 .migalhas ol { list-style: none; margin: 18px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: .4em; font-size: .8125rem; color: var(--tinta-2); }
 .migalhas li + li::before { content: '/'; margin-right: .4em; color: var(--linha-forte); }
 .migalhas a { color: var(--tinta-2); text-decoration: none; }
-.migalhas a:hover { color: var(--acento); text-decoration: underline; }
+@media (hover: hover) { .migalhas a:hover { color: var(--acento); text-decoration: underline; } }
 .loja__topo { max-width: 48rem; margin-bottom: 18px; }
 .loja__texto { color: var(--tinta-2); }
 .chips ul { list-style: none; margin: 0 0 28px; padding: 0 0 4px; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
 .chips ul::-webkit-scrollbar { display: none; }
 .chip { display: inline-flex; align-items: center; gap: .55em; min-height: 42px; padding: 0 1em; border: 1px solid var(--linha-forte); border-radius: 999px; color: var(--tinta); text-decoration: none; font-size: .875rem; font-weight: 500; white-space: nowrap; background: var(--branco); }
-.chip:hover { border-color: var(--tinta); color: var(--tinta); }
+@media (hover: hover) { .chip:hover { border-color: var(--tinta); color: var(--tinta); } }
 .chip[aria-current] { background: var(--tinta); border-color: var(--tinta); color: var(--branco); }
 .chip__n { font-size: .75rem; opacity: .75; }
 .loja .grelha { margin-bottom: clamp(56px, 8vw, 96px); }
@@ -359,7 +362,7 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
 .cor input { position: absolute; opacity: 0; width: 1px; height: 1px; }
 .cor__amostra { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--cor); box-shadow: inset 0 0 0 1px var(--contorno-cor); outline: 2px solid transparent; outline-offset: 3px; transition: outline-color .15s; }
 .cor__amostra .icone { width: 20px; height: 20px; color: var(--branco); filter: drop-shadow(0 0 1.5px rgba(0, 0, 0, .55)); opacity: 0; }
-.cor:hover .cor__amostra { outline-color: var(--linha-forte); }
+@media (hover: hover) { .cor:hover .cor__amostra { outline-color: var(--linha-forte); } }
 .cor input:checked + .cor__amostra { outline-color: var(--tinta); }
 .cor input:checked + .cor__amostra .icone { opacity: 1; }
 .cor input:focus-visible + .cor__amostra { outline: 2px dashed var(--acento); }
@@ -472,7 +475,7 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
 .rodape h2 { font: 600 .75rem/1.2 var(--sans); letter-spacing: .16em; text-transform: uppercase; margin: 0 0 16px; }
 .rodape ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
 .rodape__coluna a { display: inline-flex; align-items: center; gap: .55em; min-height: 36px; color: var(--tinta); text-decoration: none; font-size: .9rem; }
-.rodape__coluna a:hover { color: var(--tinta); text-decoration: underline; }
+@media (hover: hover) { .rodape__coluna a:hover { color: var(--tinta); text-decoration: underline; } }
 .rodape__contactos .icone { width: 1.1em; height: 1.1em; color: var(--tinta); }
 .rodape__nota { display: block; font-size: .75rem; color: var(--tinta-2); margin: -6px 0 6px 1.65em; }
 .rodape__local { display: inline-flex; align-items: center; gap: .55em; min-height: 36px; font-size: .9rem; }
@@ -480,7 +483,7 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
 .rodape__fim p { margin: 0; }
 .redes { list-style: none; margin: 14px 0 0; padding: 0; display: flex; gap: 8px; }
 .redes a { display: inline-grid; place-items: center; width: 44px; height: 44px; border: 1px solid rgba(46, 42, 40, .25); border-radius: 50%; color: var(--tinta); }
-.redes a:hover { border-color: var(--tinta); color: var(--tinta); }
+@media (hover: hover) { .redes a:hover { border-color: var(--tinta); color: var(--tinta); } }
 .rodape .redes { display: flex; gap: 10px; }
 .redes--menu { justify-content: center; }
 
