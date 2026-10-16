@@ -4,10 +4,13 @@
 //
 //   node scripts/build.mjs                       local, em http://localhost:4830/
 //   node scripts/build.mjs --base=/mimices       pré-visualização no GitHub Pages
-//   node scripts/build.mjs --producao            o domínio (mimices.pt, na Cloudflare): abre
-//                                                aos motores de busca, escreve o _headers (a
-//                                                cache) e RECUSA publicar com dados legais por
-//                                                preencher
+//   node scripts/build.mjs --dominio             o domínio (mimices.pt, na Cloudflare) ANTES de
+//                                                abrir: na raiz, com o _headers (a cache), mas
+//                                                fechado aos motores de busca e com o que falta
+//                                                «[por confirmar]» (16 out 2026: o domínio chegou
+//                                                antes dos dados legais da Susana)
+//   node scripts/build.mjs --producao            o domínio aberto: aos motores de busca, e
+//                                                RECUSA publicar com dados legais por preencher
 //   node scripts/build.mjs --sem-imagens         não corre o scripts/imagens.py (usa a cache)
 //
 // Os textos que a lei manda ter certos (identificação, NIF, morada, contactos, prazos) vêm todos
@@ -30,13 +33,14 @@ const args = process.argv.slice(2);
 const CONTEUDO = path.resolve(args.find((a) => a.startsWith('--conteudo='))?.slice(11) || path.join(RAIZ, 'content'));
 const SAIDA = path.resolve(args.find((a) => a.startsWith('--saida='))?.slice(8) || path.join(RAIZ, '_site'));
 const producao = args.includes('--producao');
-const base = producao ? '' : (args.find((a) => a.startsWith('--base='))?.slice(7) || '').replace(/\/$/, '');
+const dominio = producao || args.includes('--dominio');   // na raiz de mimices.pt (aberto ou ainda não)
+const base = dominio ? '' : (args.find((a) => a.startsWith('--base='))?.slice(7) || '').replace(/\/$/, '');
 const semImagens = args.includes('--sem-imagens');
 
 // O domínio (o Renato compra-o quando o site estiver feito, 15 out 2026): o canonical, o
 // sitemap e os cartões de partilha seguem-no em produção.
 const DOMINIO = 'mimices.pt';
-const ORIGEM = producao ? `https://${DOMINIO}` : (base ? 'https://renatovalente5.github.io' : 'http://localhost:4830');
+const ORIGEM = dominio ? `https://${DOMINIO}` : (base ? 'https://renatovalente5.github.io' : 'http://localhost:4830');
 
 const erros = [];
 const avisos = [];
@@ -342,7 +346,7 @@ fs.writeFileSync(path.join(SAIDA, 'robots.txt'), producao
 // conteúdo, porque o nome muda com ele. Só grupos que não se tocam: duas regras para o
 // mesmo ficheiro JUNTAM os valores (as miniaturas do painel, assets/img/miniatura-*.webp,
 // não têm resumo e ficam fora — por isso as imagens não levam regra).
-if (producao) {
+if (dominio) {
   const umAno = '  Cache-Control: public, max-age=31536000, immutable\n';
   fs.writeFileSync(path.join(SAIDA, '_headers'), ['/assets/site-*', '/assets/catalogo-*', '/assets/video/*'].map((r) => `${r}\n${umAno}`).join(''));
 }
@@ -379,4 +383,4 @@ for (const f of todosHtml) {
 if (problemas.length) parar(`A publicação parou: o site saiu com ${problemas.length} problemas.`, [...new Set(problemas)].slice(0, 60).map((p) => `Gerador: ${p}`), { tecnico: true });
 
 for (const a of avisos) console.warn(`  ! ${a}`);
-console.log(`site: ${saidas.length} páginas em _site/ (${producao ? `produção, ${DOMINIO}` : base ? `pré-visualização, ${ORIGEM}${base}/` : 'local'}), ${produtos.length} artigos, hoje ${hoje}`);
+console.log(`site: ${saidas.length} páginas em _site/ (${producao ? `produção, ${DOMINIO}` : dominio ? `${DOMINIO}, ainda fechado aos motores de busca` : base ? `pré-visualização, ${ORIGEM}${base}/` : 'local'}), ${produtos.length} artigos, hoje ${hoje}`);

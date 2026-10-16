@@ -8,9 +8,12 @@ escolhe), lembranças para os convidados e uma coleção de Natal.
 data de cada uma), soma os portes da entrega escolhida e acaba no WhatsApp, com a encomenda escrita
 numa mensagem para a Susana. A encomenda fica feita quando a Mimices a confirma por lá.
 
-- Pré-visualização: **https://renatovalente5.github.io/mimices/** (fechada aos motores de busca).
-  O domínio será **mimices.pt**, comprado quando o site estiver pronto; aí o site passa para a
-  Cloudflare (`wrangler.jsonc`), como a Pokóto Wood.
+- **https://mimices.pt** (comprado a 16 out 2026 na Hostinger; zona na Cloudflare do Renato,
+  kelly/toby): o Worker `mimices-site` (`wrangler.jsonc`, `worker/www.js`), publicado pelo CI. Por
+  agora com `--dominio`: na raiz, mas fechado aos motores de busca e com o que falta «[por
+  confirmar]», até a Susana dar os dados legais (nome, NIF, morada, IVA), o prazo e os portes —
+  aí passa a `--producao`. A antiga pré-visualização (renatovalente5.github.io/mimices/)
+  reencaminha cada morada para o domínio.
 - Estrutura de desenho escolhida pela cliente: a do **https://ithos-cathelier.pt/** («o site dos
   candeeiros»), com as cores e as letras da Mimices. Refeita a 16 out 2026 a pedido do Renato
   («cores melhores», «um vídeo na capa como no ithos», «poucas secções»): fundo branco, a capa com
@@ -25,12 +28,14 @@ Node 22 e Python 3 com Pillow. Sem dependências npm.
 ```bash
 node scripts/build.mjs                        # local → _site/ (servir em http://localhost:4830)
 python3 -m http.server 4830 --directory _site
-node scripts/build.mjs --base=/mimices         # a pré-visualização no GitHub Pages
-node scripts/build.mjs --producao              # mimices.pt (recusa dados legais, preços e composições por preencher)
+node scripts/build.mjs --dominio               # mimices.pt ainda fechado aos motores de busca (o CI, por agora)
+node scripts/build.mjs --producao              # mimices.pt aberto (recusa dados legais por preencher)
+node scripts/build.mjs --base=/mimices         # a antiga pré-visualização no GitHub Pages
 ```
 
-O GitHub Actions (`.github/workflows/publicar.yml`) constrói a pré-visualização e publica-a no GitHub
-Pages a cada push e todos os dias à meia-noite de Lisboa.
+O GitHub Actions (`.github/workflows/publicar.yml`) constrói o site e publica-o na Cloudflare a cada
+push e todos os dias à meia-noite de Lisboa (o segredo `CLOUDFLARE_API_TOKEN`, criado pelo Renato, e
+a variável `CLOUDFLARE_ACCOUNT_ID`).
 
 ## Onde está cada coisa
 
