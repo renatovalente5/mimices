@@ -354,6 +354,11 @@ if (dominio) {
   fs.writeFileSync(path.join(SAIDA, '_headers'), seguranca + ['/assets/site-*', '/assets/catalogo-*', '/assets/video/*'].map((r) => `${r}\n${umAno}`).join(''));
 }
 fs.writeFileSync(path.join(SAIDA, '.nojekyll'), '');
+// A chave do IndexNow (o aviso ao Bing, ao Yandex e aos outros de que uma página mudou; o ChatGPT
+// pesquisa sobretudo pelo índice do Bing): é pública por desenho, e prova que o domínio é nosso. Só
+// no site aberto (--producao): avisar de páginas com noindex não serve de nada.
+const INDEXNOW = '3cb4f7a67561f88e800496793392287d';
+if (producao) fs.writeFileSync(path.join(SAIDA, `${INDEXNOW}.txt`), INDEXNOW);
 
 // ---------------------------------------------------------------- verificação do que saiu
 const problemas = [];

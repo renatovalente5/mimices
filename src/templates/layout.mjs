@@ -164,6 +164,7 @@ export function pagina(ctx, { titulo, descricao, caminho, conteudo, partilha, ti
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>${esc(tituloCompleto)}</title>
 <meta name="description" content="${esc(descricao)}">
+<meta name="google-site-verification" content="v8PPLKIhMn_2B8I_KIt1AeTOFtCoW2oASKByuSwryBs">
 <link rel="canonical" href="${ctx.absoluto(caminho)}">
 ${!ctx.producao ? '<meta name="robots" content="noindex, nofollow">\n' : indexar === false ? '<meta name="robots" content="noindex">\n' : ''}<meta property="og:type" content="${tipo}">
 <meta property="og:site_name" content="${esc(ctx.site.marca)}">

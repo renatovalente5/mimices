@@ -133,6 +133,9 @@ export function organizacao(ctx) {
     logo: ctx.absoluto(`/assets/img/${ctx.manifesto.logo.altura[256].png}`),
     image: ctx.absoluto(`/assets/img/${ctx.manifesto.partilha._site}`),
     address: { '@type': 'PostalAddress', addressLocality: ctx.site.local.localidade, addressRegion: ctx.site.local.distrito, addressCountry: 'PT' },
+    areaServed: { '@type': 'Country', name: 'Portugal' },
+    currenciesAccepted: 'EUR',
+    paymentAccepted: 'MB WAY, transferência bancária',
     sameAs: [c.instagram && `https://www.instagram.com/${c.instagram}/`, c.facebook && `https://www.facebook.com/${c.facebook}`].filter(Boolean),
   };
   if (ctx.site.fundadores) ld.founder = { '@type': 'Person', name: ctx.site.fundadores };
@@ -365,6 +368,11 @@ export function produto(ctx, p) {
       availability: 'https://schema.org/MadeToOrder',   // tudo é feito por encomenda
       itemCondition: 'https://schema.org/NewCondition',
       seller: { '@id': ctx.absoluto('/#loja') },
+      /* A devolução, como os termos a dizem: uma peça personalizada (com o nome ou a data) não tem
+         livre resolução; as outras têm 14 dias, com os custos da devolução a cargo do cliente. */
+      hasMerchantReturnPolicy: campos.length
+        ? { '@type': 'MerchantReturnPolicy', applicableCountry: 'PT', returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted' }
+        : { '@type': 'MerchantReturnPolicy', applicableCountry: 'PT', returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow', merchantReturnDays: 14, returnMethod: 'https://schema.org/ReturnByMail', returnFees: 'https://schema.org/ReturnFeesCustomerResponsibility' },
       ...(v.ate ? { priceValidUntil: v.ate } : {}),
     };
   }
