@@ -97,6 +97,58 @@
     desenhar();
   });
 
+  // ---------------------------------------------------------------- o filme da capa
+  // O que está na página por defeito é a imagem parada (o primeiro fotograma do filme): sem
+  // JavaScript, com «reduzir movimento», a poupar dados, ou com o telemóvel a recusar o vídeo, fica
+  // ela. Nada se descarrega até aqui se decidir que o filme pode tocar (o <video> não tem src).
+  // Três perguntas, feitas sempre que alguma coisa muda (o ecrã roda, a pessoa muda as definições,
+  // a capa sai do ecrã, o separador fica escondido): pode tocar? que corte (alto no telemóvel, largo
+  // a partir de 48rem — data-filme-a, a mesma largura do CSS)? está à vista? E um botão de pausa
+  // (WCAG 2.2.2: um movimento com mais de 5 segundos tem de se poder parar), que só aparece quando
+  // há filme. O filme entra por cima da imagem só no «playing» (um fotograma pintado).
+  const filme = $('.capa__filme');
+  if (filme && filme.dataset.filmeLargo && filme.dataset.filmeAlto && filme.dataset.filmeA) {
+    const botao = $('[data-filme-botao]');
+    const largo = window.matchMedia(`(min-width: ${filme.dataset.filmeA})`);
+    const poupa = () => { const c = navigator.connection; return !!c && (c.saveData === true || /(^|-)2g$/.test(c.effectiveType || '')); };
+    const pode = () => !menosMovimento.matches && !poupa();
+    const corte = () => (largo.matches ? filme.dataset.filmeLargo : filme.dataset.filmeAlto);
+    let parado = false;      // a pessoa carregou na pausa (ou o telemóvel recusou o arranque)
+    let noEcra = true;
+    const desenhar = () => {
+      if (!botao) return;
+      botao.hidden = !pode();
+      botao.setAttribute('aria-pressed', String(parado));
+      botao.firstElementChild.outerHTML = parado ? ICONE_TOCAR : ICONE_PAUSA;
+      $('.visualmente-escondido', botao).textContent = parado ? 'Ver o filme' : 'Parar o filme';
+    };
+    const acertar = () => {
+      desenhar();
+      if (!pode()) { delete filme.dataset.aTocar; if (filme.getAttribute('src')) filme.pause(); return; }
+      // getAttribute, e não .src (que devolve o endereço absoluto e nunca seria igual): senão o src
+      // mudava a cada chamada e o filme recomeçava a descarregar.
+      if (filme.getAttribute('src') !== corte()) {
+        delete filme.dataset.aTocar;
+        filme.muted = true;    // o atributo já o diz; o Safari quer os dois
+        filme.setAttribute('src', corte());
+      }
+      if (parado || !noEcra || document.visibilityState === 'hidden') { filme.pause(); return; }
+      // Um arranque recusado (o iPhone em poupança de energia, ou sem «pré-visualizações de vídeo
+      // automáticas») é uma resposta: fica a imagem, e o botão passa a «ver o filme» — o toque da
+      // pessoa já o deixa arrancar.
+      filme.play().catch(() => { parado = true; desenhar(); });
+    };
+    filme.addEventListener('playing', () => { if (pode()) filme.dataset.aTocar = ''; });
+    if (botao) botao.addEventListener('click', () => { parado = !parado; acertar(); });
+    largo.addEventListener('change', acertar);
+    menosMovimento.addEventListener('change', acertar);
+    document.addEventListener('visibilitychange', acertar);
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((es) => { noEcra = es.some((e) => e.isIntersecting); acertar(); }).observe(filme.closest('.capa') || filme);
+    }
+    acertar();
+  }
+
   // ---------------------------------------------------------------- loja: a categoria aberta à vista
   // No telemóvel a fila das categorias desliza: a categoria aberta fica centrada, sem mexer na página.
   const fila = $('.chips ul');

@@ -4,63 +4,26 @@
     "descricao": "Conjuntos de batismo personalizados (vela, toalha bordada, concha e caixa de madeira) e lembranças para batizados, comunhões e casamentos, feitos à mão. Encomendas pelo WhatsApp."
   },
   "capa": {
-    "etiqueta": "Feito à mão, peça a peça",
-    "titulo": "Conjuntos de batismo e lembranças personalizadas",
-    "texto": "Com o nome, a data e o tom de linho que escolher.",
+    "titulo": "Conjuntos de batismo feitos à mão",
     "botao": "Ver os conjuntos",
     "ligacao": "/loja/batismo/",
+    "filme": true,
     "foto": "capa-velas-de-batismo"
   },
   "destaque": {
-    "titulo": "Conjuntos de Batismo",
-    "texto": "A vela, a toalha bordada, a concha e a caixa para guardar tudo, a condizer.",
+    "titulo": "Conjuntos de batismo",
     "categoria": "batismo",
     "botao": "Ver todos os conjuntos"
   },
   "apresentacao": {
     "titulo": "Olá, eu sou a Susana",
-    "texto": "A Mimices nasceu do meu gosto por criar coisas bonitas e com significado. Gosto de pensar que cada peça que sai das minhas mãos vai fazer parte de um dia importante na vida de uma família.\n\nEntre todos os trabalhos, os conjuntos de batismo têm um lugar especial no meu coração: cada nome, cada data e cada laço são pensados consigo, para ficar uma recordação para a vida.",
+    "texto": "A Mimices nasceu do meu gosto por criar coisas bonitas e com significado. Cada peça é feita à mão, com o nome, a data e o tom de linho que escolher.\n\nOs conjuntos de batismo têm um lugar especial no meu coração: pensamo-los consigo, para ficarem uma recordação para a vida.",
     "assinatura": "Susana",
-    "foto": "caixas-de-batismo-tampas",
-    "botao": "Conhecer a Mimices"
-  },
-  "cores": {
-    "titulo": "Catorze tons de linho",
-    "texto": "Cores naturais, elegantes e intemporais. Escolha o seu ao encomendar; se tiver dúvidas, ajudamos a escolher."
+    "foto": "caixas-de-batismo-tampas"
   },
   "lembrancas": {
     "titulo": "Lembranças para os convidados",
-    "texto": "Para agradecer a quem esteve presente: em madeira, acrílico espelhado e gesso perfumado, com os nomes e a data.",
     "categoria": "lembrancas",
     "botao": "Ver todas as lembranças"
-  },
-  "sazonal": {
-    "titulo": "Coleção de Natal",
-    "texto": "Velas do Advento, presentes para a professora e enfeites com o nome de cada um.",
-    "categoria": "natal",
-    "foto": "velas-advento-quatro-semanas",
-    "botao": "Ver a coleção de Natal"
-  },
-  "comoEncomendar": {
-    "titulo": "Como encomendar",
-    "passos": [
-      {
-        "titulo": "Escolha e personalize",
-        "texto": "Escolha a peça e o tom de linho, e escreva o nome e a data."
-      },
-      {
-        "titulo": "Envie pelo WhatsApp",
-        "texto": "No carrinho, carregue em «Enviar encomenda»: a mensagem segue pronta para nós."
-      },
-      {
-        "titulo": "Confirmamos consigo",
-        "texto": "Respondemos com o total, o prazo e os dados para o pagamento, por MB WAY ou transferência."
-      }
-    ]
-  },
-  "instagram": {
-    "titulo": "Todas as semanas, conjuntos novos",
-    "texto": "Os conjuntos e as lembranças que vão saindo para dias muito especiais, no nosso Instagram.",
-    "botao": "Seguir @_mimices"
   }
 }

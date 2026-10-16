@@ -709,15 +709,17 @@ export function problemasDasCategorias(valor, { fotos = null } = {}) {
 /* content/inicio.json                                                 */
 /* ------------------------------------------------------------------ */
 
-/* As secções da página inicial, pela ordem da página. As que mostram artigos
-   apontam para uma categoria (destaque, lembranças, sazonal). */
-export const SECCOES_INICIO = Object.freeze(['seo', 'capa', 'destaque', 'apresentacao', 'cores', 'lembrancas', 'sazonal', 'comoEncomendar', 'instagram']);
+/* As secções da página inicial, pela ordem da página (16 out 2026: só as do ithos, a pedido do
+   Renato — «poucas secções, às vezes simples é mais»): a capa com o filme, os conjuntos, o «Olá»
+   da Susana e as lembranças. As que mostram artigos apontam para uma categoria. */
+export const SECCOES_INICIO = Object.freeze(['seo', 'capa', 'destaque', 'apresentacao', 'lembrancas']);
 
-/* As fotografias que a página inicial usa (para saber se uma se pode apagar). */
+/* As fotografias que a página inicial usa (para saber se uma se pode apagar). A da capa é a que
+   aparece com o filme desligado. */
 export function fotosDoInicio(h) {
   if (!eObjecto(h)) return [];
   const out = [];
-  for (const k of ['capa', 'apresentacao', 'sazonal']) if (eObjecto(h[k])) out.push(h[k].foto);
+  for (const k of ['capa', 'apresentacao']) if (eObjecto(h[k])) out.push(h[k].foto);
   return out.filter((x) => typeof x === 'string');
 }
 
@@ -735,17 +737,14 @@ export function problemasDoInicio(valor, { fotos = null, categorias = null } = {
     if (!seccao(k)) bloqueia(`${k}:forma`, k, `A secção «${k}» da página inicial não está gravada. Só o Renato a pode repor.`);
   }
   if (out.length) return out;
-  /* Os textos todos: obrigatórios onde o gerador os escreve sem perguntar. */
+  /* Os textos todos: obrigatórios onde o gerador os escreve sem perguntar. Poucos e curtos: a
+     capa diz uma frase e um botão (como a do ithos). */
   const textos = [
     ['seo.titulo', TAMANHOS.inicioTitulo, true], ['seo.descricao', TAMANHOS.inicioTexto, true],
-    ['capa.etiqueta', TAMANHOS.inicioCurto, false], ['capa.titulo', TAMANHOS.inicioTitulo, true], ['capa.texto', TAMANHOS.inicioTexto, false], ['capa.botao', TAMANHOS.inicioCurto, true],
-    ['destaque.titulo', TAMANHOS.inicioTitulo, true], ['destaque.texto', TAMANHOS.inicioTexto, false], ['destaque.botao', TAMANHOS.inicioCurto, true],
-    ['apresentacao.titulo', TAMANHOS.inicioTitulo, true], ['apresentacao.texto', TAMANHOS.inicioLongo, true], ['apresentacao.assinatura', TAMANHOS.inicioCurto, false], ['apresentacao.botao', TAMANHOS.inicioCurto, true],
-    ['cores.titulo', TAMANHOS.inicioTitulo, true], ['cores.texto', TAMANHOS.inicioTexto, false],
-    ['lembrancas.titulo', TAMANHOS.inicioTitulo, true], ['lembrancas.texto', TAMANHOS.inicioTexto, false], ['lembrancas.botao', TAMANHOS.inicioCurto, true],
-    ['sazonal.titulo', TAMANHOS.inicioTitulo, true], ['sazonal.texto', TAMANHOS.inicioTexto, false], ['sazonal.botao', TAMANHOS.inicioCurto, true],
-    ['comoEncomendar.titulo', TAMANHOS.inicioTitulo, true],
-    ['instagram.titulo', TAMANHOS.inicioTitulo, true], ['instagram.texto', TAMANHOS.inicioTexto, false], ['instagram.botao', TAMANHOS.inicioCurto, true],
+    ['capa.titulo', TAMANHOS.inicioTitulo, true], ['capa.botao', TAMANHOS.inicioCurto, true],
+    ['destaque.titulo', TAMANHOS.inicioTitulo, true], ['destaque.botao', TAMANHOS.inicioCurto, true],
+    ['apresentacao.titulo', TAMANHOS.inicioTitulo, true], ['apresentacao.texto', TAMANHOS.inicioLongo, true], ['apresentacao.assinatura', TAMANHOS.inicioCurto, false],
+    ['lembrancas.titulo', TAMANHOS.inicioTitulo, true], ['lembrancas.botao', TAMANHOS.inicioCurto, true],
   ];
   const valorEm = (caminho) => caminho.split('.').reduce((o, k) => (eObjecto(o) || Array.isArray(o) ? o[k] : undefined), h);
   const umTexto = (caminho, max, obrigatorio) => {
@@ -759,28 +758,21 @@ export function problemasDoInicio(valor, { fotos = null, categorias = null } = {
   };
   for (const [c, max, ob] of textos) umTexto(c, max, ob);
   if (!vazio(h.capa.ligacao) && (typeof h.capa.ligacao !== 'string' || !/^\/[a-z0-9/-]*$/.test(h.capa.ligacao))) avisa('capa.ligacao', 'capa.ligacao', 'A ligação do botão tem de ser uma página do site (ex.: /loja/).');
-  /* Os passos de «Como encomendar». */
-  const passos = h.comoEncomendar.passos;
-  if (!Array.isArray(passos) || passos.length < 2 || passos.length > 5) bloqueia('comoEncomendar.passos:lista', 'comoEncomendar.passos', 'Os passos de «Como encomendar» têm de ser de 2 a 5.');
-  else passos.forEach((b, i) => {
-    if (!eObjecto(b)) { bloqueia(`comoEncomendar.passos.${i}:forma`, `comoEncomendar.passos.${i}`, `O passo ${i + 1} não tem a forma certa.`); return; }
-    umTexto(`comoEncomendar.passos.${i}.titulo`, TAMANHOS.inicioCurto, true);
-    umTexto(`comoEncomendar.passos.${i}.texto`, TAMANHOS.inicioTexto, true);
-  });
-  /* As categorias que as secções mostram. Uma que já não existe deixa a secção
-     de fora (o gerador não a escreve); na sazonal é o normal fora de época. */
-  for (const k of ['destaque', 'lembrancas', 'sazonal']) {
+  /* O filme da capa (media/capa/, feito pelo scripts/filme.py): ligado ou desligado. Desligado, a
+     capa mostra a fotografia. */
+  if (!vazio(h.capa.filme) && typeof h.capa.filme !== 'boolean') bloqueia('capa.filme:tipo', 'capa.filme', 'O «filme na capa» tem de estar ligado ou desligado.');
+  /* As categorias que as secções mostram. Uma que já não existe deixa a secção de fora (o gerador
+     não a escreve). */
+  for (const k of ['destaque', 'lembrancas']) {
     const cat = h[k].categoria;
     if (vazio(cat) || (categorias && !categorias.includes(cat))) avisa(`${k}.categoria`, `${k}.categoria`, `A secção «${h[k].titulo || k}» aponta para uma categoria que não existe: não aparece na página inicial.`, { lembrete: true });
   }
   /* As fotografias. */
-  const umaFoto = (caminho, f, obrigatoria = true) => {
-    if (!obrigatoria && vazio(f)) return;
+  const umaFoto = (caminho, f) => {
     if (!nomeDeFotoValido(f) || (fotos && !fotos.has(f))) bloqueia(`${caminho}:foto`, caminho, 'Esta fotografia já não está na biblioteca: escolha outra.');
   };
   umaFoto('capa.foto', h.capa.foto);
   umaFoto('apresentacao.foto', h.apresentacao.foto);
-  umaFoto('sazonal.foto', h.sazonal.foto, false);
   return out;
 }
 

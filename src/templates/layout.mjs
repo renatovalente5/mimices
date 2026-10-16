@@ -177,7 +177,7 @@ ${!ctx.producao ? '<meta name="robots" content="noindex, nofollow">\n' : indexar
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="${esc(ctx.site.marca)}">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#FBF7F2">
+<meta name="theme-color" content="#FFFFFF">
 <link rel="icon" type="image/png" sizes="32x32" href="${ctx.asset(`img/${l.icones[32]}`)}">
 <link rel="icon" type="image/png" sizes="48x48" href="${ctx.asset(`img/${l.icones[48]}`)}">
 <link rel="apple-touch-icon" href="${ctx.asset(`img/${l.icones.apple}`)}">

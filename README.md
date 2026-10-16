@@ -12,7 +12,9 @@ numa mensagem para a Susana. A encomenda fica feita quando a Mimices a confirma 
   O domínio será **mimices.pt**, comprado quando o site estiver pronto; aí o site passa para a
   Cloudflare (`wrangler.jsonc`), como a Pokóto Wood.
 - Estrutura de desenho escolhida pela cliente: a do **https://ithos-cathelier.pt/** («o site dos
-  candeeiros»), com as cores e as letras da Mimices.
+  candeeiros»), com as cores e as letras da Mimices. Refeita a 16 out 2026 a pedido do Renato
+  («cores melhores», «um vídeo na capa como no ithos», «poucas secções»): fundo branco, a capa com
+  um filme, e na página inicial só os conjuntos, o «Olá» da Susana e as lembranças.
 - Plano, decisões e perguntas em aberto: [`docs/PLANO.md`](docs/PLANO.md)
 - A base do código é a da Pokóto Wood (`~/Websites/pokoto-wood`), adaptada.
 
@@ -43,8 +45,17 @@ Pages a cada push e todos os dias à meia-noite de Lisboa.
 | `media/fotos/` | as fotografias (as versões web faz o `scripts/imagens.py`) |
 | `media/video/` | vídeos (MP4 sem som) e a imagem de capa de cada um |
 | `media/marca/logo.png` | o logótipo (o do Facebook da Mimices, só com o branco tirado) |
+| `media/capa/` | o filme da capa (dois cortes: largo 16:9 e alto 2:3) e o primeiro fotograma de cada um |
+| `scripts/filme.py` | faz o filme da capa a partir de seis fotografias (`/usr/bin/python3 scripts/filme.py`) |
 | `src/lib/regras.mjs` | as regras dos dados: as mesmas no gerador e (quando existir) no painel |
 | `scripts/preparar-fotos.py` | a importação inicial das fotografias e do logótipo, a partir de `_cliente/` |
+
+O FILME DA CAPA é feito das fotografias da Susana, com um movimento de câmara lento e
+transições suaves, em ciclo (22,8 s). Os seis vídeos que ela mandou foram medidos e postos de parte:
+filmados à mão, tremem, e têm 480 px. Para mudar os planos: a lista `PLANOS` no `scripts/filme.py`
+(`--amostra` mostra o início e o fim de cada um), e depois correr o script outra vez. Na página, o
+filme só arranca com JavaScript, sem «reduzir movimento» e sem poupança de dados, e tem um botão de
+pausa; por baixo está sempre a imagem parada.
 
 O material do cliente (conversa do WhatsApp, fotografias originais, vídeos, áudios, publicações das
 redes) está em `_cliente/`, fora do git. As notas de pesquisa (concorrência, UX, legal) estão em

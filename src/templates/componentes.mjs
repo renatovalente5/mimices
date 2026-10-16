@@ -43,26 +43,15 @@ export function promocaoAte(ctx, p) {
   return v.anterior && v.ate ? `Promoção até ${dataPorExtenso(v.ate)}` : '';
 }
 
-/* As amostras dos tons de linho num cartão: uma fila de bolinhas (as primeiras e «+ n»), como as
-   miniaturas por baixo dos cartões do ithos. Decorativas: o cartão já diz o nome do artigo, e a
-   ficha tem o seletor com os nomes. */
-export function bolinhasDeCor(ctx, { max = 7 } = {}) {
-  const cores = ctx.site.cores || [];
-  const mostradas = cores.slice(0, max);
-  const resto = cores.length - mostradas.length;
-  return `<p class="bolinhas" aria-hidden="true">${mostradas.map((c) => `<span class="bolinha" style="--cor:${esc(c.hex)}"></span>`).join('')}${resto > 0 ? `<span class="bolinhas__mais">+${resto}</span>` : ''}</p>`;
-}
-
-// Cartão de artigo: a fotografia (4:5, cortada pelo ponto de foco), o nome, o preço e, nos que
-// se escolhem por tom de linho, as bolinhas das cores. O cartão inteiro leva ao artigo (a
-// ligação do nome estende-se por cima dele com ::after — nunca display:contents, que tira o foco
-// do teclado).
+// Cartão de artigo: a fotografia (3:4, cortada pelo ponto de foco), o nome e o preço — só isso (16
+// out 2026: as bolinhas dos 14 tons repetiam-se iguais em todos os cartões; os tons escolhem-se na
+// ficha). O cartão inteiro leva ao artigo (a ligação do nome estende-se por cima dele com ::after —
+// nunca display:contents, que tira o foco do teclado).
 export function cartaoProduto(ctx, p, { tamanhos = '(min-width: 1100px) 22vw, (min-width: 700px) 30vw, 46vw', titulo = 'h3' } = {}) {
   const pct = desconto(ctx, p);
   const segunda = p.fotos[1];
   return `<article class="cartao">
   <div class="cartao__foto">${imagem(ctx, p.fotos[0], { tamanhos, classe: 'cartao__img' })}${segunda ? imagem(ctx, segunda, { tamanhos, classe: 'cartao__img cartao__img--outra', alt: '' }) : ''}${pct ? `<span class="selo selo--promocao">−${pct}%</span>` : ''}${p.novidade ? '<span class="selo selo--novidade">Novidade</span>' : ''}</div>
-  ${p.cores ? bolinhasDeCor(ctx) : ''}
   <${titulo} class="cartao__nome"><a class="cartao__ligacao" href="${ctx.url(`/produtos/${p.slug}/`)}">${esc(p.nome)}</a></${titulo}>
   ${preco(ctx, p)}
 </article>`;

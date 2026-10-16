@@ -15,34 +15,53 @@ const paragrafos = (t) => String(t || '').split(/\n{2,}/).map((p) => p.trim()).f
 const prazoCurto = (ctx) => String(ctx.site.entrega.prazo || '').trim().split(/(?<=\.)\s+/)[0];
 
 // ---------------------------------------------------------------- página inicial
+/* A CAPA, como a do ithos: um filme a toda a largura, uma frase e um botão por cima (16 out 2026, a
+   pedido do Renato: «na foto de capa quero um vídeo como no ithos»). O filme é o do
+   scripts/filme.py, em dois cortes (largo e alto), e por baixo dele está o seu primeiro fotograma:
+   é o que se vê antes de ele arrancar, e o que fica para quem pediu menos movimento ou poupa dados
+   (o site.js decide). Com o filme desligado (capa.filme: false), a fotografia da capa.
+   AS PALAVRAS ASSENTAM NUM VÉU BRANCO LISO por cima da capa inteira, com uma opacidade declarada
+   (memória texto-sobre-fotografia-precisa-de-chao): o pior chão possível debaixo de um véu branco é
+   um pixel preto, e mesmo aí a tinta fica a 3,3:1 (texto grande: 3:1). Um véu escuro, como o do
+   ithos, punha os tons pastel do linho cinzentos. */
+const CORTE_ALTO_ATE = '48rem';   // abaixo, o corte alto do filme e a imagem alta; a partir dele, os largos (o CSS usa o mesmo)
+function imagemDaCapa(ctx, f, alt) {
+  const largo = ctx.manifesto.capa[f.largo.imagem];
+  const alto = ctx.manifesto.capa[f.alto.imagem];
+  const srcset = (nome, m, fmt) => m.larguras.map((w) => `${ctx.asset(`img/${nome}-${m.resumo}-${w}.${fmt}`)} ${w}w`).join(', ');
+  const fontes = (nome, m, media) => m.formatos.map((fmt) => `<source${media ? ` media="${media}"` : ''} type="image/${fmt}" srcset="${srcset(nome, m, fmt)}" sizes="100vw">`).join('');
+  const meio = alto.larguras.find((w) => w >= 720) || alto.larguras[alto.larguras.length - 1];
+  return `<picture class="capa__imagem">${fontes(f.largo.imagem, largo, `(min-width: ${CORTE_ALTO_ATE})`)}${fontes(f.alto.imagem, alto, '')}<img src="${ctx.asset(`img/${f.alto.imagem}-${alto.resumo}-${meio}.webp`)}" width="${alto.largura}" height="${alto.altura}" alt="${esc(alt)}" fetchpriority="high" decoding="async"></picture>`;
+}
+
 export function inicio(ctx) {
   const h = ctx.inicio;
-  /* A capa: a fotografia a toda a largura (as velas da capa do Facebook da Mimices), e as palavras
-     num painel liso por cima — nunca soltas sobre a fotografia (memória
-     texto-sobre-fotografia-precisa-de-chao: o contraste mede-se contra o painel). */
+  const f = ctx.ficheiros.filme;
+  const altCapa = ctx.fotos[h.capa.foto]?.alt || '';
+  const fundo = f
+    ? `${imagemDaCapa(ctx, f, 'Velas de batismo com laços de linho em vários tons')}
+  <video class="capa__filme" data-filme-largo="${ctx.asset(f.largo.video)}" data-filme-alto="${ctx.asset(f.alto.video)}" data-filme-a="${CORTE_ALTO_ATE}" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>`
+    : imagem(ctx, h.capa.foto, { tamanhos: '100vw', prioridade: true, classe: 'capa__imagem', alt: altCapa });
   const capa = `<section class="capa" aria-labelledby="capa-titulo">
-  <div class="capa__foto">${imagem(ctx, h.capa.foto, { tamanhos: '100vw', prioridade: true })}</div>
-  <div class="capa__painel">
-    ${h.capa.etiqueta ? `<p class="etiqueta">${esc(h.capa.etiqueta)}</p>` : ''}
+  ${fundo}
+  <div class="capa__veu"></div>
+  <div class="capa__palavras">
     <h1 class="capa__titulo" id="capa-titulo">${esc(h.capa.titulo)}</h1>
-    ${h.capa.texto ? `<p class="capa__texto">${esc(h.capa.texto)}</p>` : ''}
-    ${botaoSeta(ctx.url(h.capa.ligacao || '/loja/'), h.capa.botao, { classe: 'botao botao--cheio' })}
+    <a class="botao botao--cheio capa__botao" href="${ctx.url(h.capa.ligacao || '/loja/')}">${esc(h.capa.botao)}</a>
   </div>
+  ${f ? `<button class="capa__pausa" type="button" aria-pressed="false" data-filme-botao hidden>${icones.pausa}<span class="visualmente-escondido">Parar o filme</span></button>` : ''}
 </section>`;
 
-  /* Uma montra de uma categoria: o título, a frase, os quatro primeiros artigos e o botão para os
-     ver todos (como «Os mais vendidos» do ithos). Sem artigos, não aparece. */
+  /* Uma montra de uma categoria (como «Os mais vendidos» do ithos): o título, os quatro primeiros
+     artigos e o botão para os ver todos. Sem artigos, não aparece. */
   const montra = (s, id, { maximo = 4 } = {}) => {
     const c = categoriaDe(ctx, s.categoria);
     const lista = c ? produtosDe(ctx, c.slug) : [];
     if (!lista.length) return '';
     return `<section class="montra" aria-labelledby="${id}">
-  <header class="montra__topo">
-    <h2 class="titulo-seccao" id="${id}">${esc(s.titulo)}</h2>
-    ${s.texto ? `<p class="montra__texto">${esc(s.texto)}</p>` : ''}
-  </header>
+  <h2 class="titulo-seccao" id="${id}">${esc(s.titulo)}</h2>
   <div class="grelha">${lista.slice(0, maximo).map((p) => cartaoProduto(ctx, p)).join('\n')}</div>
-  <p class="montra__mais">${botaoSeta(ctx.url(`/loja/${c.slug}/`), `${s.botao} (${lista.length})`)}</p>
+  ${lista.length > maximo ? `<p class="montra__mais"><a class="botao botao--contorno" href="${ctx.url(`/loja/${c.slug}/`)}">${esc(s.botao)} (${lista.length})</a></p>` : ''}
 </section>`;
   };
 
@@ -50,51 +69,13 @@ export function inicio(ctx) {
   const apresentacao = `<section class="ola" aria-labelledby="ola-titulo">
   <div class="ola__caixa">
     <div class="ola__texto">
-      <h2 class="titulo-seccao" id="ola-titulo">${esc(a.titulo)}</h2>
+      <h2 class="ola__titulo" id="ola-titulo">${esc(a.titulo)}</h2>
       ${paragrafos(a.texto)}
       ${a.assinatura ? `<p class="ola__assinatura">${esc(a.assinatura)}</p>` : ''}
-      ${botaoSeta(ctx.url('/sobre-nos/'), a.botao)}
     </div>
     <div class="ola__foto">${imagem(ctx, a.foto, { tamanhos: '(min-width: 900px) 44vw, 100vw' })}</div>
   </div>
 </section>`;
-
-  const cores = `<section class="tons" aria-labelledby="tons-titulo">
-  <header class="montra__topo">
-    <h2 class="titulo-seccao" id="tons-titulo">${esc(h.cores.titulo)}</h2>
-    ${h.cores.texto ? `<p class="montra__texto">${esc(h.cores.texto)}</p>` : ''}
-  </header>
-  ${amostras(ctx)}
-  ${sugestoes(ctx)}
-  <p class="montra__mais">${botaoSeta(ctx.url('/tons-de-linho/'), 'Ver os tons em grande')}</p>
-</section>`;
-
-  const sz = h.sazonal;
-  const cSazonal = categoriaDe(ctx, sz.categoria);
-  const nSazonal = cSazonal ? produtosDe(ctx, cSazonal.slug).length : 0;
-  const sazonal = nSazonal && sz.foto ? `<section class="sazonal" aria-labelledby="sazonal-titulo">
-  <div class="sazonal__foto">${imagem(ctx, sz.foto, { tamanhos: '(min-width: 900px) 50vw, 100vw' })}</div>
-  <div class="sazonal__texto">
-    <h2 class="titulo-seccao" id="sazonal-titulo">${esc(sz.titulo)}</h2>
-    ${sz.texto ? `<p>${esc(sz.texto)}</p>` : ''}
-    ${botaoSeta(ctx.url(`/loja/${cSazonal.slug}/`), sz.botao, { classe: 'botao botao--cheio' })}
-  </div>
-</section>` : '';
-
-  const ce = h.comoEncomendar;
-  const comoEncomendar = `<section class="passos" aria-labelledby="passos-titulo">
-  <h2 class="titulo-seccao" id="passos-titulo">${esc(ce.titulo)}</h2>
-  <ol>${ce.passos.map((p) => `<li><h3>${esc(p.titulo)}</h3><p>${esc(p.texto)}</p></li>`).join('')}</ol>
-  <p class="montra__mais">${botaoSeta(ctx.url('/como-encomendar/'), 'Saber mais')}</p>
-</section>`;
-
-  const ig = ctx.site.contactos.instagram;
-  const instagram = ig ? `<section class="instagram" aria-labelledby="instagram-titulo">
-  <span class="instagram__icone" aria-hidden="true">${icones.instagram}</span>
-  <h2 class="instagram__titulo" id="instagram-titulo">${esc(h.instagram.titulo)}</h2>
-  ${h.instagram.texto ? `<p>${esc(h.instagram.texto)}</p>` : ''}
-  <a class="botao botao--contorno" href="https://www.instagram.com/${esc(ig)}/" target="_blank" rel="noopener">${icones.instagram}<span>${esc(h.instagram.botao)}</span><span class="visualmente-escondido"> (abre o Instagram)</span></a>
-</section>` : '';
 
   const org = organizacao(ctx);
   return {
@@ -103,7 +84,7 @@ export function inicio(ctx) {
     descricao: h.seo.descricao,
     classe: 'pagina-inicio',
     jsonld: [org, { '@context': 'https://schema.org', '@type': 'WebSite', '@id': ctx.absoluto('/#site'), name: ctx.site.marca, url: ctx.absoluto('/'), inLanguage: 'pt-PT', publisher: { '@id': ctx.absoluto('/#loja') } }],
-    conteudo: [capa, montra(h.destaque, 'destaque-titulo'), apresentacao, cores, montra(h.lembrancas, 'lembrancas-titulo'), sazonal, comoEncomendar, instagram].filter(Boolean).join('\n\n'),
+    conteudo: [capa, montra(h.destaque, 'destaque-titulo'), apresentacao, montra(h.lembrancas, 'lembrancas-titulo')].filter(Boolean).join('\n\n'),
   };
 }
 
@@ -268,8 +249,8 @@ export function produto(ctx, p) {
   const cores = ctx.site.cores || [];
   const blocoCores = p.cores && cores.length ? `<fieldset class="campo cores" data-cores>
     <legend>Tom de linho <span class="cores__escolhido" data-cor-nome aria-hidden="true"></span></legend>
-    <div class="cores__lista">${cores.map((k) => `<label class="cor"><input type="radio" name="cor" value="${k.numero}" required data-nome="${esc(k.nome)}"><span class="cor__amostra" style="--cor:${esc(k.hex)}" aria-hidden="true">${icones.certo}</span><span class="cor__nome" aria-hidden="true"><b>${k.numero}</b> ${esc(nomeCurtoDaCor(k.nome))}</span><span class="visualmente-escondido">${k.numero} · ${esc(k.nome)}</span></label>`).join('')}</div>
-    <p class="campo__ajuda"><a href="${ctx.url('/tons-de-linho/')}">Ver os tons em grande</a> · As cores no ecrã são aproximadas.</p>
+    <div class="cores__lista">${cores.map((k) => `<label class="cor" title="${k.numero} · ${esc(nomeCurtoDaCor(k.nome))}"><input type="radio" name="cor" value="${k.numero}" required data-nome="${esc(k.nome)}"><span class="cor__amostra" style="--cor:${esc(k.hex)}" aria-hidden="true">${icones.certo}</span><span class="visualmente-escondido">${k.numero} · ${esc(k.nome)}</span></label>`).join('')}</div>
+    <p class="campo__ajuda"><a href="${ctx.url('/tons-de-linho/')}">Ver os 14 tons com o nome</a> · as cores no ecrã são aproximadas.</p>
   </fieldset>` : '';
 
   /* As escolhas (o desenho da caixa, o acrílico…): nenhuma marcada à partida, porque mudam a peça
@@ -286,11 +267,11 @@ export function produto(ctx, p) {
   const blocoPers = campos.length ? `<fieldset class="campo personaliza">
     <legend>Personalização</legend>
     ${campos.map((k) => {
-      if (k.id === 'data') return `<div class="campo"><label for="${idCampo('data')}">${esc(k.rotulo)}</label><input id="${idCampo('data')}" name="data" type="date" required data-sem-passado aria-describedby="${idCampo('data')}-ajuda"><p class="campo__ajuda" id="${idCampo('data')}-ajuda">A data que vai na peça, normalmente a do dia da celebração.</p></div>`;
+      if (k.id === 'data') return `<div class="campo"><label for="${idCampo('data')}">${esc(k.rotulo)}</label><input id="${idCampo('data')}" name="data" type="date" required data-sem-passado></div>`;
       if (k.id === 'frase') return `<div class="campo"><label for="${idCampo('frase')}">${esc(k.rotulo)} <span class="campo__opcional">(opcional)</span></label><textarea id="${idCampo('frase')}" name="frase" rows="2" maxlength="160" spellcheck="true"></textarea></div>`;
-      return `<div class="campo"><label for="${idCampo('nome')}">${esc(k.rotulo)}</label><input id="${idCampo('nome')}" name="nome" type="text" maxlength="40" autocomplete="off" autocapitalize="words" autocorrect="off" spellcheck="false" required aria-describedby="${idCampo('nome')}-ajuda"><p class="campo__ajuda" id="${idCampo('nome')}-ajuda">Como vai ficar escrito, com acentos e maiúsculas. Ex.: Maria Leonor</p></div>`;
+      return `<div class="campo"><label for="${idCampo('nome')}">${esc(k.rotulo)}</label><input id="${idCampo('nome')}" name="nome" type="text" maxlength="40" autocomplete="off" autocapitalize="words" autocorrect="off" spellcheck="false" required aria-describedby="${idCampo('nome')}-ajuda"><p class="campo__ajuda" id="${idCampo('nome')}-ajuda">Como vai ficar escrito na peça.</p></div>`;
     }).join('')}
-    <p class="aviso-pers">${icones.info}<span>Feita com o que escrever aqui: por ser personalizada, não pode ser devolvida por desistência. Se houver algum defeito ou erro nosso, resolvemos.</span></p>
+    <p class="aviso-pers">Peça personalizada: não tem devolução por desistência. Um defeito ou um erro nosso, resolvemos sempre.</p>
   </fieldset>` : '';
 
   const minimo = quantidadeMinimaDe(p);
@@ -322,9 +303,8 @@ export function produto(ctx, p) {
   const prazo = prazoCurto(ctx);
   const confianca = `<ul class="confianca">
     <li>${icones.relogio}<span>${prazo ? esc(prazo) : ctx.marcador('o prazo de produção (ex.: «Cada conjunto fica pronto em 2 a 3 semanas»)')}</span></li>
-    <li>${icones.camiao}<span><strong>Envio por encomenda:</strong> ${portesTexto}. Levantamento grátis na ${esc(ctx.site.local.localidade)}.</span></li>
-    <li>${icones.cartao}<span>Paga depois de confirmarmos a encomenda pelo WhatsApp: MB WAY ou transferência.</span></li>
-    <li>${icones.laco}<span>Feito à mão por nós, peça a peça.</span></li>
+    <li>${icones.camiao}<span>Portes por encomenda: ${portesTexto}. Levantamento grátis na ${esc(ctx.site.local.localidade)}.</span></li>
+    <li>${icones.cartao}<span>Paga depois de confirmarmos pelo WhatsApp: MB WAY ou transferência.</span></li>
   </ul>`;
 
   const e = ctx.site.empresa;
@@ -334,8 +314,7 @@ export function produto(ctx, p) {
   const medidas = p.medidas?.length ? `<table class="medidas"><tbody>${p.medidas.map((l) => `<tr><th scope="row">${esc(l.rotulo)}</th><td>${esc(l.valor)}</td></tr>`).join('')}</tbody></table>` : '';
   const acordeoes = `<div class="acordeoes">
     ${medidas ? `<details><summary>${icones.regua}Medidas</summary><div class="acordeoes__corpo">${medidas}<p class="nota">Medidas aproximadas: cada peça é feita à mão.</p></div></details>` : ''}
-    ${campos.length ? `<details><summary>${icones.gravar}Personalização</summary><div class="acordeoes__corpo"><p>Escrevemos ${campos.map((k) => k.rotulo.toLowerCase()).join(', ').replace(/, ([^,]*)$/, ' e $1')} como os escrever, com os acentos e as maiúsculas. Se tiver uma ideia diferente (outra cor, um desenho, uma frase), diga-nos nas observações do carrinho: combinamos consigo pelo WhatsApp antes de começar.</p><p class="nota">As peças personalizadas são feitas para si: depois de começarmos, não há direito de desistência (DL 24/2014, art. 17.º).</p></div></details>` : ''}
-    <details><summary>${icones.camiao}Envio e entrega</summary><div class="acordeoes__corpo"><p>Os portes são por encomenda, não por peça: ${portesTexto}. O levantamento na ${esc(ctx.site.local.localidade)} não tem custos.</p><p><a href="${ctx.url('/como-encomendar/')}">Como encomendar e prazos</a></p></div></details>
+    <details><summary>${icones.whatsapp}Como encomendar</summary><div class="acordeoes__corpo"><p>Junte as peças ao carrinho e envie-nos a encomenda pelo WhatsApp: confirmamos consigo o total e o prazo, e só depois paga. Uma ideia diferente (outra cor, um desenho, uma frase)? Escreva-a nas observações do carrinho.</p><p><a href="${ctx.url('/como-encomendar/')}">Saber mais</a></p></div></details>
   </div>
   ${eVela(p) ? `<div class="seguranca"><div class="seguranca__topo">${SINAL_PERIGO}<p class="seguranca__titulo">Avisos de segurança</p></div><ul>${AVISOS_VELA.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>` : ''}
   <p class="feito-por">${icones.laco}<span><strong>Feito por:</strong> ${fabricante}</span></p>`;

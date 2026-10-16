@@ -60,6 +60,26 @@ A conversa transcrita, os 2 áudios do Renato (transcritos), as 40 fotografias e
   erradas (pesquisa de UX). Os preços com acréscimo dizem «Desde».
 - **Opiniões no site:** ficam para depois (a Pokóto tem o sistema; trazê-lo com o painel).
 
+## 3-A. Refeito a 16 out 2026 (pedido do Renato)
+
+«Não adorei o site, consegues refazer e melhorar, usar umas cores melhores e na foto de capa quero
+um Video como no ITHos, Cria tu o Vídeo. E quero poucas seções no site como no Ithos, às vezes
+simples é mais!»
+
+- **Cores:** fundo branco (o creme confundia-se com as fotografias de linho), tinta quase preta,
+  rosa-terracota da marca (#97564F) nos botões, preços e ligações, linho claro (#F7F3EE) nas
+  secções suaves e o rosa do logótipo (#F7EAE6) no rodapé. Contrastes no cabeçalho do site.css.
+- **A capa é um filme** (`scripts/filme.py`): seis fotografias da Susana com um movimento lento de
+  câmara, dissolvidas umas nas outras, em ciclo, num corte largo (1600×900, 3 MB) e num alto
+  (720×1080, 1,9 MB). Os vídeos dela não serviam: tremem (medido) e têm 480 px. Por cima, um véu
+  branco a 48 % e só o título e o botão (o véu escuro do ithos punha os tons pastel cinzentos).
+- **Página inicial:** só a capa, «Conjuntos de batismo», o «Olá» da Susana e as lembranças. Saíram
+  os tons de linho (ficam na ficha e na página própria), o Natal (fica no menu), os passos de «Como
+  encomendar» (página própria) e o bloco do Instagram (está no rodapé).
+- **Cartões** sem as bolinhas dos tons (eram iguais em todos). **Ficha:** as amostras só com a cor
+  (o nome aparece ao escolher), ajudas mais curtas, sem a caixa de fundo nem o acordeão da
+  personalização.
+
 ## 4. Perguntas para a Susana (o que trava o site no domínio)
 
 1. **Preços** de cada artigo (e dos acréscimos, se houver: caixa com tampa de vidro, desenhos). Para as
@@ -81,7 +101,9 @@ A conversa transcrita, os 2 áudios do Renato (transcritos), as 40 fotografias e
 
 ## 5. O que falta fazer
 
-- [ ] Publicar a pré-visualização (GitHub Pages) e mostrar à Susana.
+- [x] Publicar a pré-visualização (GitHub Pages).
+- [x] Refazer o desenho (16 out): cores, filme na capa, menos secções.
+- [ ] Mostrar à Susana (o Renato decide quando).
 - [ ] **Painel (backoffice)** `mimices-painel`, a partir do `pokoto-painel`, com os campos novos
       (tons de linho, escolhas, personalização por campos, quantidade mínima, portes da loja,
       composição).

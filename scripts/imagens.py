@@ -5,6 +5,8 @@ Lê:
   media/fotos/*.jpg        as fotografias (cada uma tem de estar em content/fotos.json, com o
                            texto alternativo e o ponto de foco)
   media/video/*.jpg        a imagem de capa de cada vídeo
+  media/capa/*.jpg         as imagens paradas do filme da capa (o primeiro fotograma de cada corte,
+                           feitas pelo scripts/filme.py)
   media/marca/logo.png     o logótipo, com transparência (o do Facebook da Mimices, com o branco tirado)
   content/produtos/*.json  para saber a primeira fotografia de cada artigo (o cartão de partilha)
 
@@ -27,6 +29,7 @@ from PIL import Image, ImageOps, features
 RAIZ = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 FOTOS = os.path.join(RAIZ, 'media', 'fotos')
 VIDEO = os.path.join(RAIZ, 'media', 'video')
+CAPA = os.path.join(RAIZ, 'media', 'capa')
 MARCA = os.path.join(RAIZ, 'media', 'marca')
 INDICE = os.path.join(RAIZ, 'content', 'fotos.json')
 PRODUTOS = os.path.join(RAIZ, 'content', 'produtos')
@@ -36,7 +39,7 @@ LARGURAS = [360, 540, 720, 960, 1280, 1600]
 QUALIDADE_AVIF = 55
 QUALIDADE_WEBP = 80
 PARTILHA = (1200, 630)
-CREME = (251, 247, 242)          # --marfim: o fundo do site
+CREME = (247, 243, 238)          # --linho: o fundo claro das secções do site (o #F7F3EE)
 FORMATOS = ('avif', 'webp') if features.check('avif') else ('webp',)
 VERSAO = f'v1-{LARGURAS}-{QUALIDADE_AVIF}-{QUALIDADE_WEBP}-{PARTILHA}'
 
@@ -216,7 +219,7 @@ def principal():
         print('fotografias conferidas:', len(json.load(open(INDICE, encoding='utf-8'))))
         return
     os.makedirs(CACHE, exist_ok=True)
-    manifesto = {'fotos': {}, 'posters': {}, 'partilha': {}, 'logo': None}
+    manifesto = {'fotos': {}, 'posters': {}, 'capa': {}, 'partilha': {}, 'logo': None}
     origens = {}
     for f in sorted(os.listdir(FOTOS)):
         nome, ext = os.path.splitext(f)
@@ -228,6 +231,10 @@ def principal():
     for f in sorted(glob.glob(os.path.join(VIDEO, '*.jpg'))):
         nome = 'video-' + os.path.splitext(os.path.basename(f))[0]
         manifesto['posters'][nome] = versoes(nome, f)
+    # as imagens paradas do filme da capa: «capa-filme-largo» e «capa-filme-alto»
+    for f in sorted(glob.glob(os.path.join(CAPA, '*.jpg'))):
+        nome = 'capa-' + os.path.splitext(os.path.basename(f))[0]
+        manifesto['capa'][nome] = versoes(nome, f)
     # cartões de partilha: um por artigo (a primeira fotografia dele)
     for f in sorted(glob.glob(os.path.join(PRODUTOS, '*.json'))):
         slug = os.path.splitext(os.path.basename(f))[0]
@@ -241,7 +248,7 @@ def principal():
         manifesto['partilha']['_site'] = cartao_logotipo(logo)
     # tira da cache o que já não é de nenhuma versão actual (fotografias trocadas ou apagadas)
     vivos = set()
-    for grupo in ('fotos', 'posters'):
+    for grupo in ('fotos', 'posters', 'capa'):
         for nome, d in manifesto[grupo].items():
             for w in d['larguras']:
                 for fmt in d['formatos']:
@@ -260,7 +267,7 @@ def principal():
     with open(os.path.join(CACHE, 'manifesto.json'), 'w', encoding='utf-8') as f:
         json.dump(manifesto, f, ensure_ascii=False, indent=1)
     print(f'imagens: {len(manifesto["fotos"])} fotografias, {len(manifesto["posters"])} capas de vídeo, '
-          f'{len(manifesto["partilha"])} cartões de partilha')
+          f'{len(manifesto["capa"])} imagens do filme da capa, {len(manifesto["partilha"])} cartões de partilha')
 
 
 if __name__ == '__main__':

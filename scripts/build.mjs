@@ -149,10 +149,30 @@ for (const f of fs.readdirSync(path.join(RAIZ, 'media/video')).filter((x) => x.e
   copiar(path.join(RAIZ, 'media/video', f), path.join(SAIDA, 'assets', ficheirosVideo[nome]));
 }
 
+// O FILME DA CAPA (media/capa/, feito pelo scripts/filme.py): os dois cortes, com o resumo no
+// nome, e as imagens paradas (o primeiro fotograma de cada um) já passaram pelo imagens.py. Com o
+// filme ligado na página inicial e um dos ficheiros em falta, a publicação pára: a capa ficava sem
+// nada por baixo das palavras.
+let filme = null;
+if (inicio.capa?.filme === true) {
+  const cortes = { largo: 'filme-largo', alto: 'filme-alto' };
+  const faltam = Object.values(cortes).flatMap((n) => [
+    ...(existe(`media/capa/${n}.mp4`) ? [] : [`media/capa/${n}.mp4`]),
+    ...(manifesto.capa?.[`capa-${n}`] ? [] : [`media/capa/${n}.jpg`]),
+  ]);
+  if (faltam.length) parar('A publicação parou: falta o filme da capa.', faltam.map((f) => `Página inicial › A capa: falta ${f} (scripts/filme.py)`), { tecnico: true });
+  filme = {};
+  for (const [corte, n] of Object.entries(cortes)) {
+    const buf = fs.readFileSync(path.join(RAIZ, `media/capa/${n}.mp4`));
+    filme[corte] = { video: `video/${n}-${resumo(buf)}.mp4`, imagem: `capa-${n}` };
+    copiar(path.join(RAIZ, `media/capa/${n}.mp4`), path.join(SAIDA, 'assets', filme[corte].video));
+  }
+}
+
 // CSS e JS: um ficheiro cada, com o resumo no nome
 const css = fs.readFileSync(path.join(RAIZ, 'src/estilos/site.css'));
 const js = Buffer.from(['site.js', 'carrinho.js'].map((f) => `// ${f}\n${fs.readFileSync(path.join(RAIZ, 'src/scripts', f), 'utf8')}`).join('\n'));
-const ficheiros = { css: `site-${resumo(css)}.css`, js: `site-${resumo(js)}.js`, videos: ficheirosVideo };
+const ficheiros = { css: `site-${resumo(css)}.css`, js: `site-${resumo(js)}.js`, videos: ficheirosVideo, filme };
 fs.writeFileSync(path.join(SAIDA, 'assets', ficheiros.css), css);
 fs.writeFileSync(path.join(SAIDA, 'assets', ficheiros.js), js);
 
@@ -299,7 +319,7 @@ try {
   const data = (ficheirosFonte) => execFileSync('git', ['log', '-1', '--format=%cs', '--', ...ficheirosFonte], { cwd: RAIZ, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
   for (const s of indexaveis) {
     let fontes = ['content/site.json'];
-    if (s.caminho === '/') fontes = ['content/inicio.json', 'content/produtos'];
+    if (s.caminho === '/') fontes = ['content/inicio.json', 'content/produtos', 'media/capa'];
     else if (s.caminho.startsWith('/produtos/')) fontes = [`content/produtos/${s.caminho.split('/')[2]}.json`];
     else if (s.caminho.startsWith('/loja/')) fontes = ['content/produtos', 'content/categorias.json'];
     else if (s.caminho === '/tons-de-linho/') fontes = ['content/site.json'];
