@@ -29,7 +29,7 @@ As conversas e os dados de uma encomenda guardam-se enquanto forem precisos para
 ## Com quem partilhamos
 
 - **WhatsApp (Meta Platforms Ireland Ltd.)**, por onde seguem as encomendas e as conversas. O WhatsApp tem a sua própria política de privacidade.
-- **Transportadoras**, quando há envio: o nome, a morada e o contacto necessários para a entrega.
+- **A transportadora (CTT Expresso)**, quando há envio: o nome, a morada e o contacto necessários para a entrega.
 - **Contabilista e Autoridade Tributária**, para a faturação.
 - **Alojamento do site**: as páginas são servidas pela Cloudflare, Inc., que trata os endereços IP de quem as visita para as entregar e por razões de segurança.
 

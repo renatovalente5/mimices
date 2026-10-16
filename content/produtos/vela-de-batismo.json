@@ -6,18 +6,49 @@
     "capa-velas-de-batismo",
     "vela-toalha-beatriz-rosa"
   ],
-  "resumo": "Vela de batismo com o nome, laço de linho e corda, no tom que escolher.",
-  "descricao": "A vela que se acende no batismo, com o nome escrito ao alto, o laço de linho e a corda a envolver.\n\nEscolha o tom do linho entre os catorze que temos.",
-  "preco": null,
+  "resumo": "Vela de batismo com o nome gravado e laço em 100 % linho, no tom que escolher.",
+  "descricao": "A vela que se acende no batismo, com o nome gravado e o laço de linho.\n\nEscolha o tom do linho entre os catorze que temos, e se a quer com flores secas ou com corda.",
+  "preco": 23,
   "precoAnterior": null,
   "promocaoAte": "",
   "inclui": [
-    "Vela com o nome",
-    "Laço de linho e corda"
+    "Vela com o nome gravado",
+    "Laço em 100 % linho"
   ],
   "medidas": [],
   "cores": true,
-  "opcoes": [],
+  "opcoes": [
+    {
+      "nome": "Flores secas na vela",
+      "valores": [
+        {
+          "nome": "Sem flores",
+          "suplemento": 0
+        },
+        {
+          "nome": "Com flores secas",
+          "suplemento": 1.5
+        }
+      ]
+    },
+    {
+      "nome": "Corda na vela",
+      "valores": [
+        {
+          "nome": "Sem corda",
+          "suplemento": 0
+        },
+        {
+          "nome": "14 voltas",
+          "suplemento": 1.5
+        },
+        {
+          "nome": "Até meio da vela",
+          "suplemento": 3
+        }
+      ]
+    }
+  ],
   "personalizacao": {
     "nome": true,
     "data": true,

@@ -12,7 +12,7 @@
     "horario": ""
   },
   "local": {
-    "localidade": "Quinta do Conde",
+    "localidade": "Azeitão",
     "distrito": "Setúbal"
   },
   "empresa": {
@@ -135,19 +135,19 @@
     "zonas": [
       {
         "id": "levantamento",
-        "nome": "Levantamento na Quinta do Conde",
+        "nome": "Levantamento em Azeitão",
         "curto": "Levantamento (grátis)",
         "morada": false
       },
       {
         "id": "continente",
-        "nome": "Envio para Portugal Continental",
+        "nome": "Envio por CTT Expresso para Portugal Continental",
         "curto": "Portugal Continental",
         "morada": true
       },
       {
         "id": "ilhas",
-        "nome": "Envio para a Madeira e os Açores",
+        "nome": "Envio por CTT Expresso para a Madeira e os Açores",
         "curto": "Madeira e Açores",
         "morada": true
       }
@@ -159,6 +159,6 @@
     },
     "prazo": "",
     "pagamento": "O pagamento é feito por MB WAY ou por transferência bancária. Quando confirmarmos a encomenda pelo WhatsApp, enviamos-lhe os dados para o pagamento.",
-    "levantamento": "Na Quinta do Conde, sem custos. Combinamos o dia e a hora pelo WhatsApp."
+    "levantamento": "Em Azeitão, sem custos. Combinamos o dia e a hora pelo WhatsApp."
   }
 }

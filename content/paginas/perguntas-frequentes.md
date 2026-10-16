@@ -19,7 +19,7 @@ Exatamente como quer que fique na peça, com os acentos e as maiúsculas: escrev
 
 ## Posso levantar a encomenda?
 
-Pode, na {{localidade}}, sem custos. Combinamos o dia e a hora pelo WhatsApp.
+Pode, em {{localidade}}, sem custos. Combinamos o dia e a hora pelo WhatsApp.
 
 ## Quanto custam os portes?
 

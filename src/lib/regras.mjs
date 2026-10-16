@@ -119,7 +119,7 @@ export const LIMITES = Object.freeze({ preco: [0.01, 100000], suplemento: [0, 10
 export const TAMANHOS = Object.freeze({
   nome: 120, nomeCurto: 40, resumo: 300, descricao: 6000, composicao: 300,
   inclui: 12, incluiTexto: 120, medidaRotulo: 40, medidaValor: 60, medidas: 12,
-  opcoes: 3, valores: 16, opcaoNome: 40, valorNome: 60, rotulo: 40,
+  opcoes: 4, valores: 16, opcaoNome: 40, valorNome: 60, rotulo: 40,
   fotos: 16, nomeFoto: 120, alt: 300,
   marca: 60, descricaoSite: 300, assinatura: 100, fundadores: 80, email: 160, telefone: 20, rede: 60, horario: 120,
   empresaNome: 160, empresaTipo: 80, nif: 20, morada: 160, codigoPostal: 12, localidade: 60, concelho: 60, iva: 200,

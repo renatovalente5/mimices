@@ -19,18 +19,18 @@
   "cores": false,
   "opcoes": [
     {
-      "nome": "Desenho da caixa",
+      "nome": "Caixa de madeira",
       "valores": [
         {
-          "nome": "Sol e lua",
+          "nome": "Tampa de encaixe, madeira natural",
           "suplemento": 0
         },
         {
-          "nome": "Ramos",
+          "nome": "Tampa de encaixe, madeira branca",
           "suplemento": 0
         },
         {
-          "nome": "Simples",
+          "nome": "Com fecho ou tampa de vidro",
           "suplemento": 0
         }
       ]

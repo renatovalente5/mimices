@@ -131,7 +131,7 @@ export function custoChamada(n) {
   return 'Chamada para a rede nacional';
 }
 
-// A morada da sede por extenso: «Rua …, n.º …, 2975-000 Quinta do Conde, Sesimbra»
+// A morada da sede por extenso: «Rua …, n.º …, 2925-000 Azeitão, Setúbal»
 export function moradaCompleta(e) {
   return [e.morada, [e.codigoPostal, e.localidade].filter(Boolean).join(' '), e.concelho].filter(Boolean).join(', ');
 }

@@ -303,7 +303,7 @@ export function produto(ctx, p) {
   const prazo = prazoCurto(ctx);
   const confianca = `<ul class="confianca">
     <li>${icones.relogio}<span>${prazo ? esc(prazo) : ctx.marcador('o prazo de produção (ex.: «Cada conjunto fica pronto em 2 a 3 semanas»)')}</span></li>
-    <li>${icones.camiao}<span>Portes por encomenda: ${portesTexto}. Levantamento grátis na ${esc(ctx.site.local.localidade)}.</span></li>
+    <li>${icones.camiao}<span>Envio por CTT Expresso, com portes por encomenda: ${portesTexto}. Levantamento grátis em ${esc(ctx.site.local.localidade)}.</span></li>
     <li>${icones.cartao}<span>Paga depois de confirmarmos pelo WhatsApp: MB WAY ou transferência.</span></li>
   </ul>`;
 

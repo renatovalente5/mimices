@@ -221,14 +221,14 @@ ficheiros.catalogo = `catalogo-${resumo(catalogoBuf)}.json`;
 fs.writeFileSync(path.join(SAIDA, 'assets', ficheiros.catalogo), catalogoBuf);
 
 // ---------------------------------------------------------------- marcadores das páginas de texto
-/* Os portes da loja (por encomenda, não por peça), como frase: «Portugal Continental: 5 €;
-   Madeira e Açores: 9 €. O levantamento na Quinta do Conde não tem custos.» */
+/* Os portes da loja (por encomenda, não por peça), como frase: «Enviamos por CTT Expresso. Portugal
+   Continental: 5 €; Madeira e Açores: 9 €. O levantamento em Azeitão não tem custos.» */
 function textoPortes() {
   const p = site.entrega.portes || {};
   const zonas = site.entrega.zonas.filter((z) => z.morada);
   const partes = zonas.map((z) => `${esc(z.curto)}: ${Number.isFinite(p[z.id]) ? euros(p[z.id]) : ctx.marcador(`os portes para ${z.curto}`)}`);
   const gratis = Number.isFinite(p.gratisAPartirDe) ? ` Portes grátis no continente a partir de ${euros(p.gratisAPartirDe)} em peças.` : '';
-  return `${partes.join('; ')}.${gratis} O levantamento na ${esc(site.local.localidade)} não tem custos.`;
+  return `Enviamos por CTT Expresso. ${partes.join('; ')}.${gratis} O levantamento em ${esc(site.local.localidade)} não tem custos.`;
 }
 
 function identificacao() {

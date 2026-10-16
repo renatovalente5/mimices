@@ -99,6 +99,32 @@ simples é mais!»
    Natal fica visível?). E a **touca de batismo**, o **livro de honra** e os **convites**: vendem-se?
 10. **Email do backoffice** (o mimices1720@gmail.com?) e quem entra.
 
+## 4-A. O que a Susana respondeu (WhatsApp, 16 out 2026, 14:40–14:49) — já no site
+
+- **Domínio:** «Posso comprar o domínio mimices.pt?» — «Sim sim» (10:49). Compra-o o Renato.
+- **Tipo de loja:** perguntou o que é melhor (pagamento no site ou WhatsApp); o Renato explicou o
+  preço (e-commerce: 100 €/ano + 200 € no 1.º ano, e taxas) e ficaram de falar depois das 15h. O
+  site continua no modelo A (WhatsApp) até decidirem.
+- **Conjuntos:** 64 € a base (toalha em algodão com linho ou 100 % linho, bordada na cor pretendida;
+  vela com o nome gravado e laço em 100 % linho; concha natural com laço em 100 % linho), e os
+  extras: caixa de madeira de tampa de encaixe, natural ou branca, 18 €, ou com fecho ou tampa de
+  vidro, 20 €; toalha 100 % linho + 3 €; flores secas na vela e na concha + 1,50 €; corda na vela
+  + 1,50 € (14 voltas) ou + 3 € (até meio da vela). No site: «Conjunto de Batismo» desde 64 € e
+  «Conjunto de Batismo com Caixa» desde 82 €, com os extras como escolhas (o «Conjunto Tomás» dela,
+  86,50 €, e o «Conjunto Daniel», 67 €, saem certos no carrinho — provado).
+- **Vela:** desde 23 € (com as flores e a corda como escolhas, os mesmos acréscimos do conjunto:
+  CONFIRMAR com ela). **A vela e concha «Eva»: eliminar** (descontinuada) — saiu, com as duas
+  fotografias.
+- **Lembranças:** 1,90 € cada; o íman ursinho e a de gesso perfumado 2,10 €.
+- **Natal:** 4 velas (Advento) 17,80 €; vela do Advento (25 dias) 17,40 €; vela da professora
+  4,80 €; enfeite em linho alentejano bordado 7,40 € (o artigo passou a chamar-se assim, só com a
+  fotografia do bastidor de linho); postal com gesso 3,50 €; decoração «Família» 3,50 €.
+- **Entrega:** CTT Expresso, ou levantamento grátis em **Azeitão** (o site dizia Quinta do Conde).
+- **Ainda por saber:** o preço da toalha sozinha, da caixa sozinha e do convite; quanto custam os
+  portes do CTT Expresso; o prazo; as percentagens da toalha de algodão com linho (a lei pede-as,
+  ex.: «55 % linho, 45 % algodão»); se há mínimo de unidades nas lembranças; se o porta-chaves, a
+  velinha e a oração do Anjo da Guarda são mesmo 1,90 €; os dados legais e o IVA.
+
 ## 5. O que falta fazer
 
 - [x] Publicar a pré-visualização (GitHub Pages).

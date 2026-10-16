@@ -12,19 +12,63 @@
     "conjunto-isabel-rosa"
   ],
   "resumo": "Vela de batismo, toalha bordada e concha, com o nome e a data, nos laços de linho do tom que escolher.",
-  "descricao": "As três peças da cerimónia, a condizer: a vela com o nome, o laço de linho e a corda, a toalha bordada com o nome e a data, e a concha com o mesmo laço.\n\nEscolha o tom do linho: o bordado da toalha acompanha-o.",
-  "preco": null,
+  "descricao": "As três peças da cerimónia, a condizer: a vela com o nome gravado, a toalha bordada com o nome e a data, e a concha, com laços em 100 % linho.\n\nEscolha o tom do linho (o bordado da toalha acompanha-o) e os extras: a toalha em 100 % linho, as flores secas e a corda na vela.",
+  "preco": 64,
   "precoAnterior": null,
   "promocaoAte": "",
   "inclui": [
-    "Vela de batismo com o nome, laço de linho e corda",
-    "Toalha bordada com o nome e a data",
-    "Concha natural com laço de linho"
+    "Toalha bordada com o nome e a data, na cor de linha que escolher",
+    "Vela com o nome gravado e laço em 100 % linho",
+    "Concha natural com laço em 100 % linho"
   ],
   "medidas": [],
-  "composicao": "",
+  "composicao": "Toalha em algodão com linho, ou em 100 % linho (à escolha); laços em 100 % linho.",
   "cores": true,
-  "opcoes": [],
+  "opcoes": [
+    {
+      "nome": "Toalha",
+      "valores": [
+        {
+          "nome": "Algodão com linho",
+          "suplemento": 0
+        },
+        {
+          "nome": "100 % linho",
+          "suplemento": 3
+        }
+      ]
+    },
+    {
+      "nome": "Flores secas na vela e na concha",
+      "valores": [
+        {
+          "nome": "Sem flores",
+          "suplemento": 0
+        },
+        {
+          "nome": "Com flores secas",
+          "suplemento": 1.5
+        }
+      ]
+    },
+    {
+      "nome": "Corda na vela",
+      "valores": [
+        {
+          "nome": "Sem corda",
+          "suplemento": 0
+        },
+        {
+          "nome": "14 voltas",
+          "suplemento": 1.5
+        },
+        {
+          "nome": "Até meio da vela",
+          "suplemento": 3
+        }
+      ]
+    }
+  ],
   "personalizacao": {
     "nome": true,
     "data": true,

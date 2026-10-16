@@ -11,35 +11,78 @@
     "conjunto-caixa-maria-eduarda-rosa",
     "caixa-salvador-sol-e-lua"
   ],
-  "resumo": "Caixa de madeira com o nome e a data, vela de batismo, toalha bordada e concha, nos laços de linho do tom que escolher.",
-  "descricao": "O conjunto completo para o dia do batismo, e uma caixa para guardar tudo depois.\n\nA caixa de madeira tem um lugar para cada peça. Pensamos cada conjunto consigo: o tom do linho, o desenho da caixa e os pormenores.",
-  "preco": null,
+  "resumo": "Vela de batismo, toalha bordada e concha, com o nome e a data, e uma caixa de madeira para guardar tudo.",
+  "descricao": "O conjunto completo para o dia do batismo, e uma caixa de madeira para guardar tudo depois.\n\nPensamos cada conjunto consigo: o tom do linho, o desenho da caixa e os pormenores.",
+  "preco": 82,
   "precoAnterior": null,
   "promocaoAte": "",
   "inclui": [
     "Caixa de madeira com o nome e a data na tampa",
-    "Vela de batismo com o nome, laço de linho e corda",
-    "Toalha bordada com o nome e a data",
-    "Concha natural com laço de linho"
+    "Toalha bordada com o nome e a data, na cor de linha que escolher",
+    "Vela com o nome gravado e laço em 100 % linho",
+    "Concha natural com laço em 100 % linho"
   ],
   "medidas": [],
-  "composicao": "",
+  "composicao": "Toalha em algodão com linho, ou em 100 % linho (à escolha); laços em 100 % linho.",
   "cores": true,
   "opcoes": [
     {
-      "nome": "Desenho da caixa",
+      "nome": "Caixa de madeira",
       "valores": [
         {
-          "nome": "Sol e lua",
+          "nome": "Tampa de encaixe, madeira natural",
           "suplemento": 0
         },
         {
-          "nome": "Ramos",
+          "nome": "Tampa de encaixe, madeira branca",
           "suplemento": 0
         },
         {
-          "nome": "Simples",
+          "nome": "Com fecho ou tampa de vidro",
+          "suplemento": 2
+        }
+      ]
+    },
+    {
+      "nome": "Toalha",
+      "valores": [
+        {
+          "nome": "Algodão com linho",
           "suplemento": 0
+        },
+        {
+          "nome": "100 % linho",
+          "suplemento": 3
+        }
+      ]
+    },
+    {
+      "nome": "Flores secas na vela e na concha",
+      "valores": [
+        {
+          "nome": "Sem flores",
+          "suplemento": 0
+        },
+        {
+          "nome": "Com flores secas",
+          "suplemento": 1.5
+        }
+      ]
+    },
+    {
+      "nome": "Corda na vela",
+      "valores": [
+        {
+          "nome": "Sem corda",
+          "suplemento": 0
+        },
+        {
+          "nome": "14 voltas",
+          "suplemento": 1.5
+        },
+        {
+          "nome": "Até meio da vela",
+          "suplemento": 3
         }
       ]
     }
