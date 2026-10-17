@@ -59,7 +59,7 @@ export function inicio(ctx) {
     const lista = c ? produtosDe(ctx, c.slug) : [];
     if (!lista.length) return '';
     return `<section class="montra" aria-labelledby="${id}">
-  <h2 class="titulo-seccao na-mancha" id="${id}">${esc(s.titulo)}</h2>
+  <h2 class="titulo-seccao" id="${id}"><span class="na-mancha">${esc(s.titulo)}</span></h2>
   <div class="grelha">${lista.slice(0, maximo).map((p) => cartaoProduto(ctx, p)).join('\n')}</div>
   ${lista.length > maximo ? `<p class="montra__mais"><a class="botao botao--contorno" href="${ctx.url(`/loja/${c.slug}/`)}">${esc(s.botao)} (${lista.length})</a></p>` : ''}
 </section>`;
@@ -69,7 +69,7 @@ export function inicio(ctx) {
   const apresentacao = `<section class="ola" aria-labelledby="ola-titulo">
   <div class="ola__caixa">
     <div class="ola__texto">
-      <h2 class="ola__titulo na-mancha" id="ola-titulo">${esc(a.titulo)}</h2>
+      <h2 class="ola__titulo" id="ola-titulo"><span class="na-mancha">${esc(a.titulo)}</span></h2>
       ${paragrafos(a.texto)}
       ${a.assinatura ? `<p class="ola__assinatura">${esc(a.assinatura)}</p>` : ''}
     </div>
@@ -327,7 +327,7 @@ export function produto(ctx, p) {
     </div>
   </div>
   <section class="relacionados" aria-labelledby="rel-titulo">
-    <h2 id="rel-titulo" class="titulo-seccao">Também lhe pode interessar</h2>
+    <h2 id="rel-titulo" class="titulo-seccao"><span class="na-mancha">Também lhe pode interessar</span></h2>
     <div class="grelha">${relacionados.map((x) => cartaoProduto(ctx, x)).join('\n')}</div>
   </section>
 </div>`;
@@ -376,7 +376,7 @@ export function produto(ctx, p) {
 export function carrinho(ctx) {
   const zonas = ctx.site.entrega.zonas;
   const conteudo = `<div class="contentor carrinho-pagina">
-  <h1 class="titulo-pagina na-mancha">O seu carrinho</h1>
+  <h1 class="titulo-pagina"><span class="na-mancha">O seu carrinho</span></h1>
   <div class="carrinho-pagina__grelha" data-carrinho-pagina>
     <section class="carrinho-pagina__artigos" aria-labelledby="artigos-titulo">
       <h2 id="artigos-titulo" class="visualmente-escondido">Artigos</h2>

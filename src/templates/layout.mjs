@@ -198,7 +198,7 @@ ${!ctx.producao ? '<meta name="robots" content="noindex, nofollow">\n' : indexar
 <link rel="icon" type="image/png" sizes="32x32" href="${ctx.asset(`img/${l.icones[32]}`)}">
 <link rel="icon" type="image/png" sizes="48x48" href="${ctx.asset(`img/${l.icones[48]}`)}">
 <link rel="apple-touch-icon" href="${ctx.asset(`img/${l.icones.apple}`)}">
-<link rel="preload" href="${ctx.asset('fontes/montserrat-latin.woff2')}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="${ctx.asset('fontes/quicksand-latin.woff2')}" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="${ctx.asset('fontes/cormorant-latin.woff2')}" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${ctx.asset(ctx.ficheiros.css)}">
 ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j).replace(/</g, '\\u003c')}</script>`).join('\n')}

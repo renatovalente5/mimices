@@ -80,7 +80,7 @@ export function botaoSeta(href, texto, { classe = 'botao botao--contorno', exter
 export function cabecaDePagina(ctx, { migalhas = '', titulo, sub = '', data = '', extra = '' }) {
   return `<header class="cabeca">
   ${migalhas}
-  <h1 class="titulo-pagina na-mancha">${esc(titulo)}</h1>
+  <h1 class="titulo-pagina"><span class="na-mancha">${esc(titulo)}</span></h1>
   ${sub ? `<p class="cabeca__sub">${esc(sub)}</p>` : ''}
   ${data ? `<p class="cabeca__data">${esc(data)}</p>` : ''}
   ${extra}
