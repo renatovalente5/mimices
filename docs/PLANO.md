@@ -79,6 +79,9 @@ simples é mais!»
 - **Cartões** sem as bolinhas dos tons (eram iguais em todos). **Ficha:** as amostras só com a cor
   (o nome aparece ao escolher), ajudas mais curtas, sem a caixa de fundo nem o acordeão da
   personalização.
+- **17 out 2026 (Renato):** o nome do tom numa dica própria, que aparece logo ao passar o rato (o
+  «title» do browser levava cerca de 1 s); e **sem os avisos de segurança das velas**, a pedido
+  dele. O RGSP (art. 19.º, al. d)) pede-os na oferta à distância: o bloco está no commit 396e7e9.
 
 ## 4. Perguntas para a Susana (o que trava o site no domínio)
 

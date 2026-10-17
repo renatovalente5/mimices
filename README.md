@@ -86,7 +86,9 @@ Além do nome, das fotografias, dos textos e do preço (com promoção):
 - Sem preço, um artigo aparece na pré-visualização com «Preço por confirmar» e fica escondido em
   produção. O mesmo para a composição de uma toalha.
 - Sem alegações ambientais genéricas nem certificações que não temos (Diretiva (UE) 2024/825).
-- As velas mostram os avisos de segurança (EN 15494) e todas as fichas dizem quem fabrica, com a
-  morada e o email (Regulamento (UE) 2023/988, art. 19.º).
+- Todas as fichas dizem quem fabrica, com a morada e o email (Regulamento (UE) 2023/988,
+  art. 19.º). Os avisos de segurança das velas (EN 15494) saíram das fichas a 17 out 2026, a
+  pedido do Renato; o mesmo artigo (al. d)) pede-os na oferta à distância, e o bloco está no
+  commit 396e7e9 se voltarem.
 - Toda a ligação interna, imagem e cartão de partilha tem de existir; nenhuma página sai com
   `undefined`, `NaN` ou `{{`.

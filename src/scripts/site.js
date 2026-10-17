@@ -199,7 +199,9 @@
 
   // ---------------------------------------------------------------- o tom de linho escolhido
   // O nome do tom aparece ao lado de «Tom de linho» quando se escolhe uma amostra (as amostras são
-  // só cor e número: o nome lê-se aqui, e o leitor de ecrã ouve-o na própria amostra).
+  // só cor: o nome lê-se aqui, numa dica ao passar o rato, e o leitor de ecrã ouve-o na própria
+  // amostra). A dica fecha-se com Esc sem mexer no rato nem no foco (WCAG 1.4.13) e volta na
+  // amostra seguinte.
   $$('[data-cores]').forEach((f) => {
     const nome = $('[data-cor-nome]', f);
     const mostrar = () => {
@@ -208,6 +210,13 @@
     };
     f.addEventListener('change', mostrar);
     mostrar();
+    let sobre = null;
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') f.classList.add('cores--sem-dica'); });
+    f.addEventListener('pointerover', (e) => {
+      const c = e.target.closest('.cor');
+      if (c !== sobre) { sobre = c; f.classList.remove('cores--sem-dica'); }
+    });
+    f.addEventListener('focusin', () => f.classList.remove('cores--sem-dica'));
   });
 
   // ---------------------------------------------------------------- datas sem dias passados

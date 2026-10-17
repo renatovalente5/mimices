@@ -356,9 +356,9 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
 .personaliza { gap: 16px; }
 .personaliza > legend { margin-bottom: 14px; }
 
-/* as amostras do tom de linho: só a cor (o nome aparece na legenda ao escolher, e o leitor de ecrã
-   ouve-o na própria amostra); a escolhida tem um anel escuro e um visto (não depende só da cor:
-   WCAG 1.4.1) */
+/* as amostras do tom de linho: só a cor (o nome aparece numa dica ao passar o rato, na legenda ao
+   escolher, e o leitor de ecrã ouve-o na própria amostra); a escolhida tem um anel escuro e um visto
+   (não depende só da cor: WCAG 1.4.1) */
 .cores__escolhido { font-weight: 400; color: var(--tinta-2); }
 /* Os 14 tons em duas filas de 7, até aos 320 px: as amostras encolhem (até ~34 px) e os espaços
    também (7 × 40 + 6 × 12 = 352 px fixos fugiam para o lado a menos de 384 px). */
@@ -371,6 +371,16 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
 .cor input:checked + .cor__amostra { outline-color: var(--tinta); }
 .cor input:checked + .cor__amostra .icone { opacity: 1; }
 .cor input:focus-visible + .cor__amostra { outline: 2px dashed var(--acento); }
+/* A dica com o número e o nome, por cima da amostra. Não é o «title» do browser, que leva cerca de
+   1 s a aparecer e não se acelera (o Renato, 17 out 2026: «demora muito tempo»): esta aparece logo,
+   com o rato ou com o foco do teclado. Nas pontas de cada fila encosta-se à amostra para dentro:
+   mesmo escondida, uma dica a sair à direita alargava a página no telemóvel. Fecha-se com Esc
+   (WCAG 1.4.13; site.js). */
+.cor__dica { position: absolute; bottom: calc(100% + 9px); left: 50%; translate: -50% 0; z-index: 3; padding: 5px 10px; border-radius: 7px; background: var(--tinta); color: var(--branco); font-size: .8125rem; font-weight: 500; line-height: 1.25; white-space: nowrap; pointer-events: none; opacity: 0; visibility: hidden; transition: opacity .1s, visibility 0s .1s; }
+.cor:nth-child(7n + 1) .cor__dica { left: 0; translate: none; }
+.cor:nth-child(7n) .cor__dica { left: auto; right: 0; translate: none; }
+@media (hover: hover) { .cores:not(.cores--sem-dica) .cor:hover .cor__dica { opacity: 1; visibility: visible; transition: opacity .1s; } }
+.cores:not(.cores--sem-dica) .cor input:focus-visible ~ .cor__dica { opacity: 1; visibility: visible; transition: opacity .1s; }
 
 /* as escolhas (desenho da caixa, acrílico…): pílulas */
 .escolha__lista { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -392,11 +402,6 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
 .campo > .comprar__erro { margin-top: 4px; font-size: .9375rem; }
 .aviso-pers { margin: 2px 0 0; font-size: .8125rem; color: var(--tinta-2); }
 .composicao { margin: 10px 0 0; font-size: .875rem; color: var(--tinta-2); }
-.seguranca { margin: 22px 0 0; font-size: .8125rem; color: var(--tinta-2); }
-.seguranca__topo { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
-.seguranca__topo .sinal-perigo { width: 30px; height: 26px; }
-.seguranca__titulo { margin: 0; font-weight: 600; color: var(--tinta); }
-.seguranca ul { margin: 0; padding-left: 1.2em; display: grid; gap: 2px; }
 .feito-por { display: flex; gap: .6em; align-items: flex-start; margin: 16px 0 0; font-size: .8125rem; color: var(--tinta-2); }
 .feito-por .icone { color: var(--tinta-2); width: 1.2em; height: 1.2em; }
 

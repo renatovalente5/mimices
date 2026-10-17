@@ -200,20 +200,10 @@ export function video(ctx, nome) {
 }
 
 // ---------------------------------------------------------------- ficha de artigo
-/* A segurança das velas (as velas de batismo, as velinhas, as do Advento): os avisos da norma das
-   velas (EN 15494) que a lei geral da segurança dos produtos pede junto do artigo vendido à
-   distância (Regulamento (UE) 2023/988, art. 19.º). */
-const AVISOS_VELA = [
-  'Nunca deixe uma vela acesa sem vigilância.',
-  'Mantenha afastada de objetos que possam incendiar-se.',
-  'Mantenha fora do alcance de crianças e animais.',
-  'Use um castiçal resistente ao calor.',
-  'Retire o laço, a corda e as flores antes de acender: são decoração.',
-];
-/* O sinal geral de perigo (ISO 7010 W001), que a norma das velas pede junto dos avisos. */
-const SINAL_PERIGO = '<svg class="sinal-perigo" viewBox="0 0 48 42" width="40" height="35" role="img" aria-label="Sinal de perigo"><path d="M24 2 46 40H2Z" fill="#F9C80E" stroke="#1A1A1A" stroke-width="3" stroke-linejoin="round"/><path d="M24 14v13" stroke="#1A1A1A" stroke-width="4.5" stroke-linecap="round"/><circle cx="24" cy="33.5" r="2.6" fill="#1A1A1A"/></svg>';
+/* Sem os avisos de segurança das velas (EN 15494): o Renato pediu para os tirar a 17 out 2026. O
+   Regulamento (UE) 2023/988, art. 19.º, al. d), pede-os na oferta à distância; o bloco que os
+   mostrava está no commit 396e7e9, se voltarem. */
 const nomeCurtoDaCor = (n) => String(n).split(' / ')[0].replace(/\s*\(.*\)$/, '');
-const eVela = (p) => /\bvel(a|as|inha|inhas)\b/i.test(`${p.nome} ${p.resumo}`);
 
 export function produto(ctx, p) {
   const c = categoriaDe(ctx, p.categoria);
@@ -252,7 +242,7 @@ export function produto(ctx, p) {
   const cores = ctx.site.cores || [];
   const blocoCores = p.cores && cores.length ? `<fieldset class="campo cores" data-cores>
     <legend>Tom de linho <span class="cores__escolhido" data-cor-nome aria-hidden="true"></span></legend>
-    <div class="cores__lista">${cores.map((k) => `<label class="cor" title="${k.numero} · ${esc(nomeCurtoDaCor(k.nome))}"><input type="radio" name="cor" value="${k.numero}" required data-nome="${esc(k.nome)}"><span class="cor__amostra" style="--cor:${esc(k.hex)}" aria-hidden="true">${icones.certo}</span><span class="visualmente-escondido">${k.numero} · ${esc(k.nome)}</span></label>`).join('')}</div>
+    <div class="cores__lista">${cores.map((k) => `<label class="cor"><input type="radio" name="cor" value="${k.numero}" required data-nome="${esc(k.nome)}"><span class="cor__amostra" style="--cor:${esc(k.hex)}" aria-hidden="true">${icones.certo}</span><span class="cor__dica" aria-hidden="true">${k.numero} · ${esc(nomeCurtoDaCor(k.nome))}</span><span class="visualmente-escondido">${k.numero} · ${esc(k.nome)}</span></label>`).join('')}</div>
     <p class="campo__ajuda"><a href="${ctx.url('/tons-de-linho/')}">Ver os 14 tons com o nome</a> · as cores no ecrã são aproximadas.</p>
   </fieldset>` : '';
 
@@ -319,7 +309,6 @@ export function produto(ctx, p) {
     ${medidas ? `<details><summary>${icones.regua}Medidas</summary><div class="acordeoes__corpo">${medidas}<p class="nota">Medidas aproximadas: cada peça é feita à mão.</p></div></details>` : ''}
     <details><summary>${icones.whatsapp}Como encomendar</summary><div class="acordeoes__corpo"><p>Junte as peças ao carrinho e envie-nos a encomenda pelo WhatsApp: confirmamos consigo o total e o prazo, e só depois paga. Uma ideia diferente (outra cor, um desenho, uma frase)? Escreva-a nas observações do carrinho.</p><p><a href="${ctx.url('/como-encomendar/')}">Saber mais</a></p></div></details>
   </div>
-  ${eVela(p) ? `<div class="seguranca"><div class="seguranca__topo">${SINAL_PERIGO}<p class="seguranca__titulo">Avisos de segurança</p></div><ul>${AVISOS_VELA.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>` : ''}
   <p class="feito-por">${icones.laco}<span><strong>Feito por:</strong> ${fabricante}</span></p>`;
 
   const relacionados = ctx.produtos.filter((x) => x.slug !== p.slug)
