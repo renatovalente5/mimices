@@ -94,6 +94,15 @@ simples é mais!»
   grande… gostei mais do outro. Deste gosto das ondinhas e dos traços»), e ficou o de colunas com a
   orla recortada e o pesponto. O WhatsApp passou a ir só como ligação, sem o número; o telefone
   leva «(Chamada para a rede móvel nacional)» entre parênteses e mais pequeno, em todo o site.
+- **As páginas, na mesma linguagem** («melhora também as páginas do site, pensa bem como o fazer»):
+  a cabeça de cada página ao centro, com o título numa mancha rosa, um subtítulo curto (`subtitulo:`
+  no Markdown) ou a data nas legais, e o laço entre pespontos. «Como encomendar» (`modelo: passos`):
+  os passos ligados por um pesponto, cada número numa mancha de um tom de linho, e o resto em
+  cartões. «Perguntas frequentes» (`modelo: perguntas`): abrem e fecham. Contactos com o WhatsApp à
+  cabeça. Os tons de linho em manchas (três por fila no telemóvel). O carrinho vazio e a página que
+  não existe mostram as categorias. As páginas que não são legais acabam num convite (WhatsApp e loja).
+- **A barra de cima, como a do ithos:** no topo sem chão (na inicial sobre o filme), ao descer vidro
+  fosco, uma sombra e mais baixa. O botão de parar o filme saiu da vista (fica para o teclado).
 
 ## 4. Perguntas para a Susana (o que trava o site no domínio)
 

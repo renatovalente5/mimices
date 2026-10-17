@@ -1,5 +1,7 @@
 titulo: Perguntas frequentes
 descricao: Tons de linho, personalização, prazos, portes, levantamento e pagamento: as respostas às perguntas que mais nos fazem.
+subtitulo: O que mais nos perguntam.
+modelo: perguntas
 ---
 ## Que tons de linho posso escolher?
 

@@ -293,7 +293,7 @@ function paginaMarkdown(ficheiro) {
   if (meta.foto && !fotoExiste(meta.foto)) erros.push(`Páginas › ${ficheiro}: a fotografia «${meta.foto}» não existe`);
   // «indexar: não» no cabeçalho tira a página do Google (noindex e fora do sitemap); continua no site
   const indexar = !/^(n[ãa]o|false)$/i.test(meta.indexar || '');
-  return { caminho: `/${slug}/`, titulo: meta.titulo, tituloSeo: meta.tituloSeo, descricao: meta.descricao, atualizado: meta.atualizado, foto: meta.foto, indexar, html };
+  return { caminho: `/${slug}/`, titulo: meta.titulo, tituloSeo: meta.tituloSeo, subtitulo: meta.subtitulo, modelo: meta.modelo, descricao: meta.descricao, atualizado: meta.atualizado, foto: meta.foto, indexar, html };
 }
 
 // ---------------------------------------------------------------- páginas

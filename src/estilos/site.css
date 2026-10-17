@@ -107,6 +107,7 @@ mark.por-confirmar { background: #FFF1B8; color: #5C4A00; padding: 0 .25em; bord
   --mancha-2: 44% 56% 41% 59% / 58% 47% 53% 42%;
   --mancha-3: 53% 47% 63% 37% / 42% 60% 40% 58%;
   --rosa-mancha: #F4E1DC;
+  --pesponto-v: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='2' height='12'%3E%3Cpath d='M1 1v6' stroke='%2397564F' stroke-opacity='.5' stroke-width='1.4' stroke-linecap='round'/%3E%3C/svg%3E");
   --pesponto: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='2'%3E%3Cpath d='M1 1h6' stroke='%2397564F' stroke-opacity='.5' stroke-width='1.4' stroke-linecap='round'/%3E%3C/svg%3E");
 }
 .pesponto { display: block; height: 2px; background: var(--pesponto) left center / 12px 2px repeat-x; }
@@ -130,6 +131,10 @@ mark.por-confirmar { background: #FFF1B8; color: #5C4A00; padding: 0 .25em; bord
 @media (hover: hover) { .botao--whatsapp:hover { background: var(--verde-escuro); color: var(--branco); } }
 .botao--texto { background: none; border: 0; padding: .4em .2em; min-height: 44px; color: var(--acento); text-decoration: underline; text-underline-offset: .2em; }
 .botao--largo { width: 100%; }
+/* o WhatsApp suave (o Renato: «está muito forte»), no menu e no convite: o verde fica só no ícone */
+.botao--whatsapp-suave { background: var(--linho); color: var(--tinta); border-color: var(--linha-forte); }
+.botao--whatsapp-suave .icone { color: var(--verde); }
+@media (hover: hover) { .botao--whatsapp-suave:hover { background: #EFE7DE; color: var(--tinta); border-color: var(--tinta-2); } }
 
 /* --- aviso do topo -------------------------------------------------------------- */
 .aviso { background: var(--acento); color: var(--branco); text-align: center; font-size: .875rem; padding: .55em var(--margem); }
@@ -137,10 +142,32 @@ mark.por-confirmar { background: #FFF1B8; color: #5C4A00; padding: 0 .25em; bord
 .aviso a { color: inherit; }
 
 /* --- cabeçalho (o do ithos: Menu · logótipo · carrinho) ---------------------------- */
-.topo { position: sticky; top: 0; z-index: 30; background: rgba(255, 255, 255, .97); border-bottom: 1px solid transparent; transition: border-color .2s, box-shadow .2s; }
-@supports (backdrop-filter: blur(8px)) { .topo { background: rgba(255, 255, 255, .9); backdrop-filter: blur(8px); } }
-.topo[data-rolado="true"] { border-bottom-color: var(--linha); box-shadow: 0 6px 18px rgba(46, 42, 40, .05); }
-.topo__barra { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: var(--topo); width: min(100% - 2 * var(--margem), var(--largura)); margin-inline: auto; }
+/* AO DESCER (17 out 2026, o Renato: «um efeito melhor ao descer a página… como está feito no ithos»).
+   No topo a barra não tem chão: são os controlos de pé sobre a página (na inicial, sobre o filme). Ao
+   descer ganha um chão de vidro fosco (branco a 92 % e desfocado), uma sombra baixa e encolhe, a
+   altura e o logótipo no mesmo relógio (memória cabecalho-pegajoso-que-encolhe). Como no ithos:
+   · o estado vive na raiz (html[data-rolado]), escrito por uma linha no <head> antes da primeira
+     pintura e depois pelo site.js; a regra exige data-rolado='nao' PRESENTE, por isso sem script a
+     barra fica sólida, e um script que falhe nunca deixa a barra sem chão sobre o texto;
+   · a caixa da barra nunca muda de altura (o chão e a fila mudam por dentro dela): encolher não mexe
+     no documento, e não há o baloiçar das páginas curtas nem o salto do «saltar para o conteúdo»;
+   · o chão a aparecer é estado e acontece sempre; o movimento (a transição e o encolher) só para
+     quem não pediu menos movimento, e só depois da primeira decisão ter pintado (data-anim). */
+.topo { position: sticky; top: 0; z-index: 30; height: var(--topo); pointer-events: none; --topo-barra: var(--topo); }
+.topo::before { content: ''; position: absolute; inset: 0 0 auto; height: var(--topo-barra); background: rgba(255, 255, 255, .92); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); box-shadow: 0 2px 20px rgba(46, 42, 40, .07); border-bottom: 1px solid var(--linha); }
+html[data-rolado="nao"] .topo::before { background-color: rgba(255, 255, 255, 0); -webkit-backdrop-filter: blur(0px); backdrop-filter: blur(0px); box-shadow: 0 0 0 rgba(46, 42, 40, 0); border-bottom-color: transparent; }
+.topo__barra { position: relative; pointer-events: auto; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: var(--topo-barra); width: min(100% - 2 * var(--margem), var(--largura)); margin-inline: auto; }
+@media (prefers-reduced-motion: no-preference) {
+  .topo[data-anim="sim"] { --mexer: 350ms cubic-bezier(.4, 0, .2, 1); }
+  .topo[data-anim="sim"]::before { transition: height var(--mexer), background-color var(--mexer), box-shadow var(--mexer), border-color var(--mexer), backdrop-filter var(--mexer), -webkit-backdrop-filter var(--mexer); }
+  .topo[data-anim="sim"] .topo__barra, .topo[data-anim="sim"] .topo__marca .logo { transition: height var(--mexer); }
+  html[data-rolado="sim"] .topo { --topo-barra: 60px; }
+  html[data-rolado="sim"] .topo__marca .logo { height: 46px; }
+}
+@media (prefers-reduced-motion: no-preference) and (min-width: 900px) {
+  html[data-rolado="sim"] .topo { --topo-barra: 72px; }
+  html[data-rolado="sim"] .topo__marca .logo { height: 58px; }
+}
 .topo__menu { justify-self: start; display: inline-flex; align-items: center; gap: .6em; min-height: 44px; padding: 0 .4em 0 0; background: none; border: 0; cursor: pointer; color: var(--tinta); font: 500 .75rem/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; }
 .topo__menu .icone { width: 26px; height: 26px; }
 .topo__menu-texto { display: none; }
@@ -181,23 +208,24 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
 .menu__fechar, .gaveta__fechar { display: inline-grid; place-items: center; width: 44px; height: 44px; background: none; border: 0; cursor: pointer; color: var(--tinta); }
 .menu__fechar .icone, .gaveta__fechar .icone { width: 26px; height: 26px; }
 .menu__nav { flex: 1; }
-/* a montra das categorias: três fotografias recortadas em mancha, cada uma com uma mancha de cor por
-   trás, deslocada (como a do logótipo); os tons são os de linho: rosa antigo, verde água e azul bebé */
-.menu__nav { text-align: center; }
-.menu__cats { list-style: none; margin: 6px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
-.menu__cat { display: grid; justify-items: center; color: var(--tinta); text-decoration: none; }
-.menu__mancha { position: relative; display: block; width: 100%; max-width: 128px; margin-bottom: 12px; }
-.menu__mancha::before { content: ''; position: absolute; inset: 7% -6% -7% 6%; background: #D9C6BD; border-radius: var(--mancha-2); opacity: .55; }
-.menu__cats li:nth-child(2) .menu__mancha::before { background: #A9C1BC; border-radius: var(--mancha-3); }
-.menu__cats li:nth-child(3) .menu__mancha::before { background: #ADC8E1; border-radius: var(--mancha-1); }
-.menu__foto { position: relative; display: block; aspect-ratio: 1; overflow: hidden; border-radius: var(--mancha-1); background: var(--linho); }
-.menu__cats li:nth-child(2) .menu__foto { border-radius: var(--mancha-2); }
-.menu__cats li:nth-child(3) .menu__foto { border-radius: var(--mancha-3); }
-.menu__foto img { width: 100%; height: 100%; object-fit: cover; transition: scale .5s ease; }
-@media (hover: hover) { .menu__cat:hover .menu__foto img { scale: 1.05; } .menu__cat:hover .menu__cat-nome { color: var(--acento); } }
-.menu__cat-nome { font: 500 1.3125rem/1.15 var(--serifa); }
-.menu__cat[aria-current="page"] .menu__cat-nome { color: var(--acento); }
-.menu__conta { font-size: .75rem; color: var(--tinta-2); }
+/* as categorias em mancha (componentes.categoriasEmMancha: no menu, na página que não existe e no
+   carrinho vazio): três fotografias recortadas em mancha, cada uma com uma mancha de cor por trás,
+   deslocada (como a do logótipo); os tons são os de linho: rosa antigo, verde água e azul bebé */
+.menu__nav { text-align: center; padding-top: clamp(10px, 4vh, 40px); }
+.categorias-mancha { list-style: none; margin: 6px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; text-align: center; }
+.categoria-mancha { display: grid; justify-items: center; color: var(--tinta); text-decoration: none; }
+.categoria-mancha__fundo { position: relative; display: block; width: 100%; max-width: 128px; margin-bottom: 12px; }
+.categoria-mancha__fundo::before { content: ''; position: absolute; inset: 7% -6% -7% 6%; background: #D9C6BD; border-radius: var(--mancha-2); opacity: .55; }
+.categorias-mancha li:nth-child(2) .categoria-mancha__fundo::before { background: #A9C1BC; border-radius: var(--mancha-3); }
+.categorias-mancha li:nth-child(3) .categoria-mancha__fundo::before { background: #ADC8E1; border-radius: var(--mancha-1); }
+.categoria-mancha__foto { position: relative; display: block; aspect-ratio: 1; overflow: hidden; border-radius: var(--mancha-1); background: var(--linho); }
+.categorias-mancha li:nth-child(2) .categoria-mancha__foto { border-radius: var(--mancha-2); }
+.categorias-mancha li:nth-child(3) .categoria-mancha__foto { border-radius: var(--mancha-3); }
+.categoria-mancha__foto img { width: 100%; height: 100%; object-fit: cover; transition: scale .5s ease; }
+@media (hover: hover) { .categoria-mancha:hover .categoria-mancha__foto img { scale: 1.05; } .categoria-mancha:hover .categoria-mancha__nome { color: var(--acento); } }
+.categoria-mancha__nome { font: 500 1.3125rem/1.15 var(--serifa); }
+.categoria-mancha[aria-current="page"] .categoria-mancha__nome { color: var(--acento); }
+.categoria-mancha__conta { font-size: .75rem; color: var(--tinta-2); }
 .menu__tudo { display: inline-flex; align-items: center; gap: .5em; min-height: 44px; margin: 14px 0 4px; padding: 0 20px; border: 1px solid var(--linha-forte); border-radius: 999px; color: var(--tinta); font-weight: 500; font-size: .875rem; text-decoration: none; }
 @media (hover: hover) { .menu__tudo:hover { border-color: var(--tinta); color: var(--tinta); } }
 .menu__tudo .icone { width: 1.1em; height: 1.1em; color: var(--acento); }
@@ -267,10 +295,18 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
 /* O véu: branco liso a 48 %. Debaixo dele, o pior pixel possível (o preto) fica a 3,3:1 com a
    tinta, e o título é texto grande (3:1). Nada de texto pequeno em cima do filme. */
 .capa__veu { background: rgba(255, 255, 255, .48); }
+/* na inicial a capa sobe para debaixo da barra (que no topo não tem chão) e enche o ecrã; o cimo do
+   véu é mais branco, para o «Menu», o WhatsApp e o carrinho se lerem por cima do filme */
+.pagina-inicio .capa { margin-top: calc(-1 * var(--topo)); max-height: 100svh; }
+.pagina-inicio .capa__palavras { padding-top: calc(var(--topo) + 24px); }
+.pagina-inicio .capa__veu { background: linear-gradient(rgba(255, 255, 255, .55), rgba(255, 255, 255, 0) calc(var(--topo) + 90px)), rgba(255, 255, 255, .48); }
 .capa__palavras { position: relative; z-index: 1; display: grid; justify-items: center; gap: 26px; padding: 40px var(--margem); text-align: center; }
 .capa__titulo { font: 500 clamp(2.5rem, 5.6vw, 4.6rem)/1.02 var(--serifa); letter-spacing: -.012em; margin: 0; max-width: 9.5em; color: var(--tinta); text-wrap: pretty; }
 .capa__botao { min-height: 52px; padding-inline: 2em; }
 .capa__pausa { position: absolute; z-index: 2; right: max(16px, calc((100% - var(--largura)) / 2)); bottom: 18px; display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; border: 0; background: rgba(255, 255, 255, .88); color: var(--tinta); cursor: pointer; box-shadow: 0 1px 4px rgba(46, 42, 40, .12); }
+/* o botão de parar o filme saiu da vista a pedido do Renato (17 out 2026); continua lá para quem usa o
+   teclado, que o vê quando lá chega (WCAG 2.2.2) */
+.capa__pausa:not(:focus-visible) { width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); }
 .capa__pausa .icone { width: 22px; height: 22px; }
 @media (hover: hover) { .capa__pausa:hover { background: var(--branco); } }
 
@@ -319,8 +355,9 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
 .ola__titulo { font: 500 clamp(1.9rem, 3.4vw, 2.6rem)/1.1 var(--serifa); margin: 0 0 .6em; }
 .ola__texto p { color: var(--tinta-2); }
 .ola__assinatura { font: italic 300 2.4rem/1 var(--serifa); color: var(--tinta) !important; margin: .3em 0 0; }
-.ola__foto { overflow: hidden; border-radius: 2px; }
-.ola__foto img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.ola__foto { position: relative; isolation: isolate; }
+.ola__foto::before { content: ''; position: absolute; z-index: -1; inset: 5% -4% -4% 6%; background: var(--rosa-mancha); border-radius: var(--mancha-2); }
+.ola__foto img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 22px; }
 @media (min-width: 900px) { .ola__foto img { aspect-ratio: 5 / 6; } }
 
 /* --- tons de linho (a página) ----------------------------------------------------------------- */
@@ -333,19 +370,26 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
 .amostra__numero { font: 600 .75rem/1 var(--sans); color: var(--tinta); margin-top: 4px; }
 .amostra__nome { font-size: .75rem; line-height: 1.3; color: var(--tinta-2); }
 .amostras--grandes .amostra__nome { font-size: .875rem; }
+/* na página dos tons as amostras são manchas (cada uma um pouco diferente, como o linho tingido), e no
+   telemóvel ficam três por fila: com cinco, os nomes compridos («Taupe / bege acinzentado») pisavam-se */
+.amostras--grandes .amostra:nth-child(3n+1) .amostra__cor, .sugestao__cores li:nth-child(1) .amostra__cor { border-radius: var(--mancha-1); }
+.amostras--grandes .amostra:nth-child(3n+2) .amostra__cor, .sugestao__cores li:nth-child(2) .amostra__cor { border-radius: var(--mancha-2); }
+.amostras--grandes .amostra:nth-child(3n) .amostra__cor, .sugestao__cores li:nth-child(3) .amostra__cor { border-radius: var(--mancha-3); }
+@media (max-width: 559.98px) { .amostras--grandes { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px 12px; } .amostras--grandes .amostra__cor { width: 72px; height: 72px; } }
 .sugestoes { margin: clamp(32px, 5vw, 56px) auto 0; max-width: 64rem; text-align: center; }
 .sugestoes__titulo { font: 500 1.6rem/1.2 var(--serifa); margin-bottom: 18px; }
 .sugestoes > ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
 @media (min-width: 760px) { .sugestoes > ul { grid-template-columns: repeat(3, 1fr); } }
-.sugestao { background: var(--linho); border-radius: var(--raio); padding: 20px; }
+.sugestao { background: var(--linho); border-radius: 20px; padding: 22px 20px; }
 .sugestao__titulo { font: 500 1.5rem/1 var(--serifa); margin-bottom: 12px; }
 .sugestao__cores { list-style: none; margin: 0 0 10px; padding: 0; display: flex; justify-content: center; gap: 14px; }
 .sugestao__cores li { display: grid; justify-items: center; gap: 6px; font-size: .75rem; color: var(--tinta-2); max-width: 5.5rem; }
 .sugestao__cores .amostra__cor { width: 40px; height: 40px; }
 .sugestao__texto { font-size: .875rem; color: var(--tinta-2); margin: 0; }
 .tons-pagina { margin-bottom: clamp(56px, 8vw, 96px); }
+.tons-pagina__intro { max-width: 34rem; margin: 0 auto; text-align: center; color: var(--tinta-2); font-size: .9375rem; text-wrap: pretty; }
 .tons-pagina__quadro { max-width: 640px; margin: 48px auto; }
-.tons-pagina__quadro img { border-radius: var(--raio-pequeno); }
+.tons-pagina__quadro img { border-radius: 18px; }
 .tons-pagina__quadro figcaption { font-size: .875rem; color: var(--tinta-2); text-align: center; margin-top: 10px; }
 
 /* --- migalhas, loja, chips -------------------------------------------------------------------- */
@@ -353,9 +397,7 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
 .migalhas li + li::before { content: '/'; margin-right: .4em; color: var(--linha-forte); }
 .migalhas a { color: var(--tinta-2); text-decoration: none; }
 @media (hover: hover) { .migalhas a:hover { color: var(--acento); text-decoration: underline; } }
-.loja__topo { max-width: 48rem; margin-bottom: 18px; }
-.loja__texto { color: var(--tinta-2); }
-.chips ul { list-style: none; margin: 0 0 28px; padding: 0 0 4px; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+.chips ul { list-style: none; width: fit-content; max-width: 100%; margin: 0 auto 28px; padding: 0 0 4px; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
 .chips ul::-webkit-scrollbar { display: none; }
 .chip { display: inline-flex; align-items: center; gap: .55em; min-height: 42px; padding: 0 1em; border: 1px solid var(--linha-forte); border-radius: 999px; color: var(--tinta); text-decoration: none; font-size: .875rem; font-weight: 500; white-space: nowrap; background: var(--branco); }
 @media (hover: hover) { .chip:hover { border-color: var(--tinta); color: var(--tinta); } }
@@ -478,6 +520,13 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
 .carrinho-pagina__grelha { display: grid; gap: 32px; }
 @media (min-width: 1000px) { .carrinho-pagina__grelha { grid-template-columns: minmax(0, 1fr) 26rem; gap: 56px; align-items: start; } }
 .carrinho-vazio { color: var(--tinta-2); }
+.carrinho-pagina__vazio { display: none; }
+.carrinho-pagina:has(.carrinho-vazio) > .titulo-pagina { width: fit-content; margin-inline: auto; }
+.carrinho-pagina:has(.carrinho-vazio) .carrinho-pagina__grelha { display: block; }
+.carrinho-pagina:has(.carrinho-vazio) .carrinho-pagina__resumo { display: none; }
+.carrinho-pagina:has(.carrinho-vazio) .carrinho-pagina__vazio { display: block; max-width: 30rem; margin: 8px auto 0; }
+.carrinho-pagina .carrinho-vazio { margin: 4px 0 28px; text-align: center; }
+.carrinho-pagina .carrinho-vazio::before { content: ''; display: block; width: 92px; height: 84px; margin: 0 auto 14px; border-radius: var(--mancha-1); background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2397564F' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5.5 8h13l-1.1 11.2a1 1 0 0 1-1 .8H7.6a1 1 0 0 1-1-.8L5.5 8Z'/%3E%3Cpath d='M9 8V6.5a3 3 0 0 1 6 0V8'/%3E%3C/svg%3E") center / 34px no-repeat, var(--rosa-mancha); }
 .encomenda { display: grid; gap: 20px; padding: 24px; background: var(--branco); border: 1px solid var(--linha); border-radius: var(--raio); }
 @media (min-width: 1000px) { .encomenda { position: sticky; top: calc(var(--topo) + 20px); } }
 .encomenda__titulo { font: 500 1.75rem/1.1 var(--serifa); margin: 0; }
@@ -500,34 +549,99 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
 .encomenda__instagram { display: flex; gap: .6em; font-size: .9rem; }
 .encomenda__enviada-mais { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; margin: 0; }
 
-/* --- páginas de texto -------------------------------------------------------------------------------- */
+/* --- a cabeça das páginas (componentes.cabecaDePagina) ---------------------------------------------- */
+.cabeca { text-align: center; padding: 4px 0 clamp(26px, 4vw, 40px); }
+.cabeca .migalhas ol { justify-content: center; }
+.cabeca .titulo-pagina { width: fit-content; max-width: 100%; margin: .55em auto .22em; text-wrap: balance; }
+.cabeca__sub { max-width: 30rem; margin: 0 auto; font: italic 300 clamp(1.3rem, 2.4vw, 1.6rem)/1.3 var(--serifa); color: var(--tinta-2); text-wrap: balance; }
+.cabeca__data { margin: 0; font-size: .875rem; color: var(--tinta-2); }
+.cabeca__texto { max-width: 38rem; margin: 0 auto; color: var(--tinta-2); text-wrap: pretty; }
+.cabeca__texto p { margin: 0; }
+.cabeca .ornamento { margin-top: 22px; }
+/* os títulos centrados das montras assentam na mancha pelas primeiras letras */
+.montra > .titulo-seccao, .relacionados > .titulo-seccao { width: fit-content; max-width: 100%; margin-inline: auto; }
+
+/* --- páginas de texto ----------------------------------------------------------------------------- */
 .texto-pagina { max-width: 46rem; margin-bottom: clamp(56px, 8vw, 96px); }
-.texto-pagina--largo { max-width: var(--largura); }
-.texto__data { color: var(--tinta-2); font-size: .875rem; }
-.texto__foto { margin: 0 0 28px; border-radius: 2px; overflow: hidden; }
+.texto-pagina--passos { max-width: 62rem; }
+.texto__intro { max-width: 40rem; margin: 0 auto 8px; color: var(--tinta-2); text-align: center; }
+.texto__intro p { margin: 0; }
 .texto h2 { font: 500 1.75rem/1.2 var(--serifa); margin: 1.6em 0 .5em; }
 .texto h3 { font: 600 1.0625rem/1.3 var(--sans); margin: 1.4em 0 .4em; }
 .texto li { margin-bottom: .35em; }
-.quadro { overflow-x: auto; margin: 0 0 1.2em; }
-.quadro table { border-collapse: collapse; width: 100%; font-size: .9375rem; }
-.quadro th, .quadro td { text-align: left; padding: 10px 12px 10px 0; border-bottom: 1px solid var(--linha); vertical-align: top; }
-.quadro th { font-weight: 600; }
-.botoes { display: flex; flex-wrap: wrap; gap: 10px; margin: 1em 0; }
-.aviso-garantia { margin: 1.5em 0; }
-.aviso-garantia img { border: 1px solid var(--linha); border-radius: var(--raio-pequeno); }
-.aviso-garantia figcaption { font-size: .875rem; color: var(--tinta-2); margin-top: 8px; }
-.contactos { list-style: none; margin: 28px 0 0; padding: 0; display: grid; gap: 14px; }
-@media (min-width: 760px) { .contactos { grid-template-columns: repeat(3, 1fr); } }
-.contactos li { background: var(--linho); border-radius: var(--raio); padding: 22px; }
-.contactos li > .icone { color: var(--tinta); width: 28px; height: 28px; margin-bottom: 10px; }
-.contactos h2 { font: 500 1.5rem/1.1 var(--serifa); margin-bottom: .3em; }
-.contactos p { margin: 0 0 .3em; }
-.erro { text-align: center; padding-top: 48px; margin-inline: auto; }
+.texto > h2:first-child, .foto-mancha + h2 { margin-top: .4em; }
+/* uma fotografia com a mancha de cor por trás, deslocada (como o nome do logótipo na mancha rosa) */
+.foto-mancha { position: relative; isolation: isolate; margin: 0 0 36px; }
+.foto-mancha::before { content: ''; position: absolute; z-index: -1; inset: 6% -3% -4% 5%; background: var(--rosa-mancha); border-radius: var(--mancha-2); }
+.foto-mancha img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 22px; }
+
+/* «Como encomendar»: os passos ligados por um pesponto (a linha de costura), cada número numa mancha
+   com um tom de linho; o resto em cartões */
+.passos { list-style: none; max-width: 40rem; margin: 24px auto 0; padding: 0; }
+.passo { position: relative; display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 0 20px; padding-bottom: 26px; margin: 0; }
+.passo:not(:last-child)::before { content: ''; position: absolute; left: 27px; top: 64px; bottom: 6px; width: 2px; background: var(--pesponto-v) center top / 2px 12px repeat-y; }
+.passo__numero { display: grid; place-items: center; width: 56px; height: 56px; font: 500 1.7rem/1 var(--serifa); color: var(--tinta); background: var(--rosa-mancha); border-radius: var(--mancha-1); }
+.passo:nth-child(2) .passo__numero { background: #E1ECE9; border-radius: var(--mancha-2); }
+.passo:nth-child(3) .passo__numero { background: #E2EBF5; border-radius: var(--mancha-3); }
+.passo:nth-child(4) .passo__numero { background: #EEE7DE; border-radius: var(--mancha-2); }
+.texto .passo__texto h2 { margin: 12px 0 6px; font-size: 1.6rem; }
+.passo__texto p { margin: 0 0 .6em; color: var(--tinta-2); }
+.notas { display: grid; gap: 14px; margin-top: clamp(24px, 4vw, 40px); }
+@media (min-width: 760px) { .notas { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.nota-cartao { padding: 22px; border-radius: 20px; background: var(--linho); }
+.nota-cartao__icone { display: inline-grid; place-items: center; width: 46px; height: 46px; background: var(--branco); color: var(--acento); border-radius: var(--mancha-2); }
+.nota-cartao__icone .icone { width: 22px; height: 22px; }
+.texto .nota-cartao h2 { margin: 10px 0 6px; font-size: 1.45rem; }
+.nota-cartao p { margin: 0 0 .5em; font-size: .9375rem; color: var(--tinta-2); }
+
+/* «Perguntas frequentes»: abrem e fecham; o sinal numa mancha, o pesponto entre elas */
+.perguntas { margin-top: 8px; }
+.pergunta { background: var(--pesponto) left bottom / 12px 2px repeat-x; }
+.pergunta summary { display: flex; align-items: center; gap: 16px; min-height: 64px; padding: 14px 0; cursor: pointer; list-style: none; }
+.pergunta summary::-webkit-details-marker { display: none; }
+.texto .pergunta__titulo { flex: 1; margin: 0; font: 500 1.375rem/1.25 var(--serifa); }
+@media (hover: hover) { .pergunta summary:hover .pergunta__titulo { color: var(--acento); } }
+.pergunta__sinal { position: relative; flex: none; width: 34px; height: 34px; background: var(--rosa-mancha); border-radius: var(--mancha-1); }
+.pergunta__sinal::before, .pergunta__sinal::after { content: ''; position: absolute; left: 50%; top: 50%; width: 12px; height: 1.6px; border-radius: 1px; background: var(--acento); translate: -50% -50%; transition: rotate .2s ease; }
+.pergunta__sinal::after { rotate: 90deg; }
+.pergunta[open] .pergunta__sinal::after { rotate: 0deg; }
+.pergunta__resposta { padding: 0 50px 20px 0; color: var(--tinta-2); }
+.pergunta__resposta p { margin: 0 0 .6em; }
+
+/* o convite no fim das páginas: num cartão de linho com um pesponto por dentro, como uma etiqueta cosida */
+.convite { position: relative; max-width: 42rem; margin: clamp(40px, 6vw, 64px) auto 0; padding: clamp(26px, 4vw, 38px) 22px; text-align: center; background: var(--linho); border-radius: 24px; }
+.convite::before, .contacto-principal::before { content: ''; position: absolute; inset: 8px; border: 1.5px dashed rgba(151, 86, 79, .35); border-radius: 18px; pointer-events: none; }
+.convite__titulo { margin: 0 0 16px; font: italic 300 clamp(1.45rem, 2.6vw, 1.8rem)/1.25 var(--serifa); color: var(--tinta); text-wrap: balance; }
+.convite__botoes { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+
+/* «Contactos»: o WhatsApp à cabeça, os outros numa lista com os ícones em manchas */
+.contactos-pagina { margin-bottom: clamp(56px, 8vw, 96px); }
+.contactos-grelha { display: grid; gap: 22px; max-width: 60rem; margin-inline: auto; }
+@media (min-width: 860px) { .contactos-grelha { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 40px; align-items: center; } }
+.contacto-principal { position: relative; padding: clamp(28px, 4vw, 44px) 24px; border-radius: 24px; background: var(--linho); text-align: center; }
+.contacto-principal__icone { display: inline-grid; place-items: center; width: 76px; height: 76px; color: var(--verde); background: var(--branco); border-radius: var(--mancha-1); }
+.contacto-principal__icone .icone { width: 36px; height: 36px; }
+.contacto-principal h2 { margin: 14px 0 6px; font: 500 2rem/1.1 var(--serifa); }
+.contacto-principal p { max-width: 22rem; margin: 0 auto 20px; color: var(--tinta-2); }
+.contactos-lista { list-style: none; margin: 0; padding: 0; }
+.contacto { display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 16px; align-items: center; padding: 14px 0; background: var(--pesponto) left bottom / 12px 2px repeat-x; }
+.contacto:last-child { background: none; }
+.contacto__icone { display: grid; place-items: center; width: 48px; height: 48px; color: var(--acento-escuro); background: var(--rosa-mancha); border-radius: var(--mancha-2); }
+.contacto:nth-child(2n) .contacto__icone { border-radius: var(--mancha-3); }
+.contacto__icone .icone { width: 22px; height: 22px; }
+.contacto__nome { margin: 0; font: 500 1.3rem/1.2 var(--serifa); }
+.contacto p { margin: 0; }
+.contacto .nota { margin-top: 2px; }
+
+/* a página que não existe: a cabeça, as categorias em mancha e a loja */
+.erro { margin-bottom: clamp(56px, 8vw, 96px); text-align: center; }
+.erro .categorias-mancha { max-width: 30rem; margin: 0 auto; }
+.erro__loja { margin: 30px 0 0; }
 
 /* --- rodapé (17 out 2026; o porquê está no rodape() de layout.mjs) ------------------------------- */
-/* A orla: meias-luas de linho a sair do rodapé para a página branca, como a renda das toalhas, e o
-   pesponto logo abaixo dela; o mesmo pesponto separa a linha legal. */
-.rodape { position: relative; margin-top: 12px; background: var(--pesponto) 0 16px / 12px 2px repeat-x, var(--linho); color: var(--tinta); }
+/* A orla: meias-luas de linho a sair do rodapé para a página branca, como a renda das toalhas (o
+   pesponto que havia logo abaixo saiu a pedido do Renato); o pesponto separa a linha legal. */
+.rodape { position: relative; margin-top: 12px; background: var(--linho); color: var(--tinta); }
 .rodape::before { content: ''; position: absolute; left: 0; right: 0; bottom: 100%; height: 12px; background: radial-gradient(circle at 50% 100%, var(--linho) 11.5px, transparent 12px) 0 0 / 24px 12px repeat-x; }
 .rodape__corpo { width: min(100% - 2 * var(--margem), var(--largura)); margin-inline: auto; padding: clamp(48px, 6vw, 64px) 0 clamp(28px, 4vw, 40px); display: grid; gap: 36px 32px; }
 @media (min-width: 640px) { .rodape__corpo { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); } .rodape__marca { grid-column: 1 / -1; } }

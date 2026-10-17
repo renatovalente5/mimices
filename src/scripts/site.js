@@ -17,16 +17,37 @@
   addEventListener('pointerdown', () => { raiz.dataset.entrada = 'ponteiro'; }, { capture: true, passive: true });
   addEventListener('keydown', (e) => { if (!e.metaKey && !e.ctrlKey) delete raiz.dataset.entrada; }, { capture: true });
 
-  // ---------------------------------------------------------------- o cabeçalho ao descer
-  // Fica preso ao topo; ao descer ganha uma linha por baixo (a página por baixo deixa de ser a
-  // capa). Um sentinela no topo da página diz quando se saiu dele.
+  // ---------------------------------------------------------------- a barra ao descer
+  // No topo a barra não tem chão; ao descer ganha o vidro fosco e encolhe (site.css). O estado vive
+  // na raiz (html[data-rolado]), onde a linha do <head> já o escreveu antes da primeira pintura.
+  // Dois limiares (40 a descer, 8 a subir) só contra a tremura de uma página parada na linha: a
+  // caixa da barra não muda de altura, por isso encolher não mexe no documento. Uma leitura e no
+  // máximo uma escrita por quadro. A animação só se arma depois de a primeira decisão ter pintado
+  // (um recarregar a meio da página não desliza sozinho), e desarma-se enquanto se arrasta a janela.
   const topo = $('[data-topo]');
-  if (topo && 'IntersectionObserver' in window) {
-    const sentinela = document.createElement('div');
-    sentinela.setAttribute('aria-hidden', 'true');
-    sentinela.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:8px;pointer-events:none';
-    document.body.prepend(sentinela);
-    new IntersectionObserver((es) => { topo.dataset.rolado = String(!es[0].isIntersecting); }).observe(sentinela);
+  if (topo) {
+    let pedido = false;
+    const decidir = () => {
+      pedido = false;
+      const y = scrollY;
+      const agora = raiz.dataset.rolado === 'sim';
+      const seguinte = y >= 40 ? true : y <= 8 ? false : agora;
+      raiz.dataset.rolado = seguinte ? 'sim' : 'nao';
+    };
+    addEventListener('scroll', () => { if (!pedido) { pedido = true; requestAnimationFrame(decidir); } }, { passive: true });
+    let armar;
+    const armarDepois = () => {
+      topo.dataset.anim = 'nao';
+      clearTimeout(armar);
+      requestAnimationFrame(() => requestAnimationFrame(() => { topo.dataset.anim = 'sim'; }));
+      armar = setTimeout(() => { topo.dataset.anim = 'sim'; }, 300); // sem quadros num separador escondido
+    };
+    decidir();
+    armarDepois();
+    addEventListener('pageshow', () => { decidir(); armarDepois(); });
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) decidir(); });
+    let redimensionar;
+    addEventListener('resize', () => { topo.dataset.anim = 'nao'; clearTimeout(redimensionar); redimensionar = setTimeout(() => { topo.dataset.anim = 'sim'; }, 250); });
   }
 
   // ---------------------------------------------------------------- aviso do topo com data

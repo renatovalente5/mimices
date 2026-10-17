@@ -1,5 +1,7 @@
 titulo: Como encomendar
 descricao: Escolha as peças, o tom de linho e escreva o nome e a data; no fim, envie a encomenda pelo WhatsApp. Pagamento por MB WAY ou transferência.
+subtitulo: Do carrinho ao WhatsApp, em quatro passos.
+modelo: passos
 ---
 Não há pagamentos no site: a encomenda segue para nós pelo WhatsApp e combinamos o resto consigo.
 

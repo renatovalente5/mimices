@@ -1,6 +1,7 @@
 titulo: Sobre a Mimices
 descricao: A Mimices é a Susana: conjuntos de batismo e lembranças personalizadas, feitos à mão, peça a peça, com o nome, a data e os tons de linho de cada família.
 foto: caixas-de-batismo-tampas
+subtitulo: Feito à mão, peça a peça, em Azeitão.
 ---
 ## Olá, eu sou a Susana
 

@@ -3,7 +3,7 @@
 // logótipo ao centro, o carrinho à direita, e um menu que abre de lado.
 import { esc, numeroWhatsApp } from './util.mjs';
 import { icones } from './icones.mjs';
-import { imagem } from './componentes.mjs';
+import { categoriasEmMancha } from './componentes.mjs';
 
 const LIVRO = 'https://www.livroreclamacoes.pt/inicio';
 
@@ -63,11 +63,6 @@ function redes(ctx, classe = 'redes', { whatsapp = true } = {}) {
 function menu(ctx, atual) {
   const c = ctx.site.contactos;
   const marca = (caminho) => (caminho === atual ? ' aria-current="page"' : '');
-  const cats = categoriasComArtigos(ctx).map((k) => {
-    const caminho = `/loja/${k.slug}/`;
-    const n = ctx.produtos.filter((p) => p.categoria === k.slug).length;
-    return `<li><a class="menu__cat" href="${ctx.url(caminho)}"${marca(caminho)}><span class="menu__mancha"><span class="menu__foto">${imagem(ctx, k.foto, { tamanhos: '(min-width: 48rem) 128px, 30vw', alt: '' })}</span></span><span class="menu__cat-nome">${esc(k.nome)}</span><span class="menu__conta">${quantosArtigos(n)}</span></a></li>`;
-  }).join('');
   const ligacao = (caminho, texto) => `<li><a class="menu__pagina" href="${ctx.url(caminho)}"${marca(caminho)}>${esc(texto)}</a></li>`;
   return `<dialog class="menu" id="menu" aria-label="Menu">
   <div class="menu__corpo" tabindex="-1">
@@ -77,7 +72,7 @@ function menu(ctx, atual) {
     </div>
     <nav class="menu__nav" aria-label="Menu">
       <h2 class="visualmente-escondido" id="menu-loja">Loja</h2>
-      <ul class="menu__cats" aria-labelledby="menu-loja">${cats}</ul>
+      ${categoriasEmMancha(ctx, { atual }).replace('<ul class="categorias-mancha">', '<ul class="categorias-mancha" aria-labelledby="menu-loja">')}
       <a class="menu__tudo" href="${ctx.url('/loja/')}"${marca('/loja/')}>Ver toda a loja · ${quantosArtigos(ctx.produtos.length)} ${icones.seta}</a>
       <div class="ornamento ornamento--curto" aria-hidden="true">${icones.laco}</div>
       <ul class="menu__paginas">
@@ -89,7 +84,7 @@ function menu(ctx, atual) {
       </ul>
     </nav>
     <div class="menu__pe">
-      ${c.whatsapp ? `<a class="botao botao--whatsapp botao--largo" href="https://wa.me/${numeroWhatsApp(c.whatsapp)}" target="_blank" rel="noopener">${icones.whatsapp}<span>Falar connosco no WhatsApp</span></a>` : ''}
+      ${c.whatsapp ? `<a class="botao botao--whatsapp-suave botao--largo" href="https://wa.me/${numeroWhatsApp(c.whatsapp)}" target="_blank" rel="noopener">${icones.whatsapp}<span>Falar connosco no WhatsApp</span></a>` : ''}
       ${redes(ctx, 'redes redes--menu', { whatsapp: false })}
     </div>
   </div>
@@ -182,6 +177,7 @@ export function pagina(ctx, { titulo, descricao, caminho, conteudo, partilha, ti
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>document.documentElement.dataset.rolado=scrollY>40?'sim':'nao'</script>
 <title>${esc(tituloCompleto)}</title>
 <meta name="description" content="${esc(descricao)}">
 <meta name="google-site-verification" content="v8PPLKIhMn_2B8I_KIt1AeTOFtCoW2oASKByuSwryBs">

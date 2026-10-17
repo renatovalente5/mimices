@@ -1,9 +1,9 @@
 // As páginas do site. Cada função devolve { caminho, titulo, descricao, conteudo, ... } e o
 // build.mjs veste-a com a moldura (layout.mjs).
-import { esc, euros, precoDe, markdown, inline, textoSimples, numeroWhatsApp, moradaCompleta } from './util.mjs';
+import { esc, euros, precoDe, markdown, inline, textoSimples, numeroWhatsApp, numeroLegivel, notaChamada, moradaCompleta } from './util.mjs';
 import { icones } from './icones.mjs';
 import { numeroPortugues, opcoesDe, personalizacaoDe, quantidadeMinimaDe, temSuplementos } from '../lib/regras.mjs';
-import { imagem, preco, cartaoProduto, migalhas, botaoSeta, desconto, promocaoAte } from './componentes.mjs';
+import { imagem, preco, cartaoProduto, migalhas, botaoSeta, desconto, promocaoAte, cabecaDePagina, categoriasEmMancha, convite } from './componentes.mjs';
 import { categoriasComArtigos } from './layout.mjs';
 
 const produtosDe = (ctx, cat) => ctx.produtos.filter((p) => p.categoria === cat);
@@ -59,7 +59,7 @@ export function inicio(ctx) {
     const lista = c ? produtosDe(ctx, c.slug) : [];
     if (!lista.length) return '';
     return `<section class="montra" aria-labelledby="${id}">
-  <h2 class="titulo-seccao" id="${id}">${esc(s.titulo)}</h2>
+  <h2 class="titulo-seccao na-mancha" id="${id}">${esc(s.titulo)}</h2>
   <div class="grelha">${lista.slice(0, maximo).map((p) => cartaoProduto(ctx, p)).join('\n')}</div>
   ${lista.length > maximo ? `<p class="montra__mais"><a class="botao botao--contorno" href="${ctx.url(`/loja/${c.slug}/`)}">${esc(s.botao)} (${lista.length})</a></p>` : ''}
 </section>`;
@@ -69,7 +69,7 @@ export function inicio(ctx) {
   const apresentacao = `<section class="ola" aria-labelledby="ola-titulo">
   <div class="ola__caixa">
     <div class="ola__texto">
-      <h2 class="ola__titulo" id="ola-titulo">${esc(a.titulo)}</h2>
+      <h2 class="ola__titulo na-mancha" id="ola-titulo">${esc(a.titulo)}</h2>
       ${paragrafos(a.texto)}
       ${a.assinatura ? `<p class="ola__assinatura">${esc(a.assinatura)}</p>` : ''}
     </div>
@@ -110,12 +110,12 @@ function sugestoes(ctx) {
 export function tonsDeLinho(ctx) {
   const m = migalhas(ctx, [{ nome: 'Início', caminho: '/' }, { nome: 'Tons de linho', caminho: '/tons-de-linho/' }]);
   const conteudo = `<div class="contentor tons-pagina">
-  ${m.html}
-  <h1 class="titulo-pagina">Tons de linho</h1>
-  <p class="texto__intro">Os laços das velas e das conchas, e o bordado das toalhas, fazem-se nos tons de linho que escolher. Escolha pelo número, ao encomendar. As cores no ecrã são aproximadas: se tiver dúvidas, pergunte-nos pelo WhatsApp e mostramos o linho.</p>
+  ${cabecaDePagina(ctx, { migalhas: m.html, titulo: 'Tons de linho', sub: `${(ctx.site.cores || []).length === 14 ? 'Catorze' : (ctx.site.cores || []).length} tons para os laços e os bordados.` })}
+  <p class="tons-pagina__intro">Escolha pelo número, ao encomendar. As cores no ecrã são aproximadas: se tiver dúvidas, pergunte-nos pelo WhatsApp e mostramos o linho.</p>
   ${amostras(ctx, { grandes: true })}
   ${sugestoes(ctx)}
   ${ctx.fotos['tons-de-linho'] ? `<figure class="tons-pagina__quadro">${imagem(ctx, 'tons-de-linho', { tamanhos: '(min-width: 900px) 640px, 100vw' })}<figcaption>O quadro dos tons, como o publicámos no Instagram.</figcaption></figure>` : ''}
+  ${convite(ctx)}
 </div>`;
   return { caminho: '/tons-de-linho/', titulo: 'Tons de linho para o batismo', descricao: `Os ${(ctx.site.cores || []).length} tons de linho da ${ctx.site.marca} para os laços das velas, das conchas e o bordado das toalhas de batismo, com sugestões para menino, menina e neutro.`, jsonld: [m.ld], conteudo };
 }
@@ -159,11 +159,7 @@ export function loja(ctx, cat = null) {
       return `<li><a class="chip" href="${href}"${atual ? ' aria-current="page"' : ''}><span>${esc(k.nome)}</span><span class="chip__n">${k.n}</span></a></li>`;
     }).join('');
   const conteudo = `<div class="contentor loja">
-  ${m.html}
-  <header class="loja__topo">
-    <h1 class="titulo-pagina">${esc(c ? c.titulo : 'Loja')}</h1>
-    ${c ? `<div class="loja__texto">${markdown(c.resumo, ctx.url)}</div>` : `<p class="loja__texto">${esc(TEXTO_LOJA)}</p>`}
-  </header>
+  ${cabecaDePagina(ctx, { migalhas: m.html, titulo: c ? c.titulo : 'Loja', extra: c ? `<div class="cabeca__texto">${markdown(c.resumo, ctx.url)}</div>` : `<p class="cabeca__texto">${esc(TEXTO_LOJA)}</p>` })}
   <nav class="chips" aria-label="Categorias"><ul>${chips}</ul></nav>
   <div class="grelha">
     ${lista.map((p) => cartaoProduto(ctx, p, { titulo: 'h2' })).join('\n')}
@@ -380,7 +376,7 @@ export function produto(ctx, p) {
 export function carrinho(ctx) {
   const zonas = ctx.site.entrega.zonas;
   const conteudo = `<div class="contentor carrinho-pagina">
-  <h1 class="titulo-pagina">O seu carrinho</h1>
+  <h1 class="titulo-pagina na-mancha">O seu carrinho</h1>
   <div class="carrinho-pagina__grelha" data-carrinho-pagina>
     <section class="carrinho-pagina__artigos" aria-labelledby="artigos-titulo">
       <h2 id="artigos-titulo" class="visualmente-escondido">Artigos</h2>
@@ -429,53 +425,97 @@ export function carrinho(ctx) {
       </form>
     </aside>
   </div>
+  <div class="carrinho-pagina__vazio" aria-label="Sugestões">${categoriasEmMancha(ctx)}</div>
   <noscript><p class="nota">O carrinho precisa de JavaScript. Pode sempre encomendar diretamente pelo <a href="${ctx.whatsapp('Olá! Gostava de fazer uma encomenda.')}">WhatsApp</a>.</p></noscript>
 </div>`;
   return { caminho: '/carrinho/', titulo: 'O seu carrinho', descricao: 'Reveja as peças, escolha a entrega e envie-nos a encomenda pelo WhatsApp.', conteudo, classe: 'pagina-carrinho' };
 }
 
 // ---------------------------------------------------------------- páginas de texto
+/* As páginas de texto (17 out 2026, na linguagem da marca): a cabeça ao centro (ver componentes) e o
+   texto numa coluna de leitura. Duas têm um modelo próprio, escolhido no cabeçalho do Markdown
+   («modelo:»): «passos» (Como encomendar: os passos numerados ligados por um pesponto, como uma
+   linha de costura, e o resto em cartões) e «perguntas» (as perguntas abrem e fecham). As que não
+   são legais acabam com o convite (WhatsApp e loja). */
+const ICONE_DA_NOTA = { pagamento: 'cartao', prazos: 'relogio', prazo: 'relogio', levantamento: 'local', entrega: 'camiao' };
+const chaveDe = (t) => textoSimples(t).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').trim();
+// O HTML do Markdown partido pelos <h2>: o que vem antes e cada secção (id, título, corpo).
+function seccoes(html) {
+  const partes = html.split(/(?=<h2[ >])/);
+  const intro = partes.length && !partes[0].startsWith('<h2') ? partes.shift().trim() : '';
+  return { intro, lista: partes.map((x) => {
+    const m = /^<h2(?: id="([^"]*)")?>([\s\S]*?)<\/h2>([\s\S]*)$/.exec(x.trim());
+    return m ? { id: m[1] || '', titulo: m[2], corpo: m[3].trim() } : { id: '', titulo: '', corpo: x };
+  }) };
+}
+function comoPassos(html) {
+  const { intro, lista } = seccoes(html);
+  const numerado = (x) => /^\d+\.\s/.test(textoSimples(x.titulo));
+  const passos = lista.filter(numerado);
+  const notas = lista.filter((x) => !numerado(x));
+  return `${intro ? `<div class="texto__intro">${intro}</div>` : ''}
+    <ol class="passos">${passos.map((x, i) => `<li class="passo"><span class="passo__numero" aria-hidden="true">${i + 1}</span><div class="passo__texto"><h2 id="${x.id}">${x.titulo.replace(/^\d+\.\s*/, '')}</h2>${x.corpo}</div></li>`).join('')}</ol>
+    ${notas.length ? `<div class="notas">${notas.map((x) => { const ic = icones[ICONE_DA_NOTA[chaveDe(x.titulo)]]; return `<section class="nota-cartao">${ic ? `<span class="nota-cartao__icone">${ic}</span>` : ''}<h2 id="${x.id}">${x.titulo}</h2>${x.corpo}</section>`; }).join('')}</div>` : ''}`;
+}
+function comoPerguntas(html) {
+  const { intro, lista } = seccoes(html);
+  return `${intro ? `<div class="texto__intro">${intro}</div>` : ''}
+    <div class="perguntas">${lista.map((x) => `<details class="pergunta"><summary><h2 class="pergunta__titulo" id="${x.id}">${x.titulo}</h2><span class="pergunta__sinal" aria-hidden="true"></span></summary><div class="pergunta__resposta">${x.corpo}</div></details>`).join('')}</div>`;
+}
+
 export function texto(ctx, pag) {
   const m = migalhas(ctx, [{ nome: 'Início', caminho: '/' }, { nome: pag.titulo, caminho: pag.caminho }]);
-  const conteudo = `<div class="contentor texto-pagina">
-  ${m.html}
+  const legal = Boolean(pag.atualizado);
+  const data = legal ? `Atualizado a ${new Date(`${pag.atualizado}T12:00:00Z`).toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Lisbon' })}` : '';
+  const corpo = pag.modelo === 'passos' ? comoPassos(pag.html) : pag.modelo === 'perguntas' ? comoPerguntas(pag.html) : pag.html;
+  const conteudo = `<div class="contentor texto-pagina${pag.modelo ? ` texto-pagina--${esc(pag.modelo)}` : ''}${legal ? ' texto-pagina--legal' : ''}">
+  ${cabecaDePagina(ctx, { migalhas: m.html, titulo: pag.titulo, sub: pag.subtitulo, data })}
   <article class="texto">
-    <h1 class="titulo-pagina">${esc(pag.titulo)}</h1>
-    ${pag.atualizado ? `<p class="texto__data">Atualizado a ${new Date(`${pag.atualizado}T12:00:00Z`).toLocaleDateString('pt-PT', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Lisbon' })}</p>` : ''}
-    ${pag.foto ? `<div class="texto__foto">${imagem(ctx, pag.foto, { tamanhos: '(min-width: 900px) 760px, 100vw' })}</div>` : ''}
-    ${pag.html}
+    ${pag.foto ? `<figure class="foto-mancha">${imagem(ctx, pag.foto, { tamanhos: '(min-width: 900px) 720px, 100vw' })}</figure>` : ''}
+    ${corpo}
   </article>
+  ${legal ? '' : convite(ctx)}
 </div>`;
   return { caminho: pag.caminho, titulo: pag.tituloSeo || pag.titulo, descricao: pag.descricao, indexar: pag.indexar, jsonld: [m.ld], conteudo };
 }
 
+/* Os contactos (17 out 2026): o WhatsApp à cabeça, num cartão com o botão (é por lá que se combinam as
+   encomendas; só a ligação, sem o número, a pedido do Renato), e os outros caminhos numa lista, cada
+   um com o ícone numa mancha. O telefone leva a nota da chamada entre parênteses (DL 59/2021). */
 export function contactos(ctx) {
   const c = ctx.site.contactos;
   const m = migalhas(ctx, [{ nome: 'Início', caminho: '/' }, { nome: 'Contactos', caminho: '/contactos/' }]);
-  const cartoes = [];
-  if (c.whatsapp) cartoes.push(`<li>${icones.whatsapp}<h2>WhatsApp</h2><p><a href="${ctx.whatsapp('Olá!')}">Enviar uma mensagem</a></p></li>`);
-  else cartoes.push(`<li>${icones.whatsapp}<h2>WhatsApp</h2><p>${ctx.marcador('o número de WhatsApp das encomendas')}</p></li>`);
-  /* O telefone, para ligar, com a nota que a lei pede junto de um número (DL 59/2021). */
   const tel = numeroPortugues(c.telefone);
-  if (tel) cartoes.push(`<li>${icones.telefone}<h2>Telefone</h2><p><a href="tel:+351${tel}">${esc(ctx.numeroLegivel(tel))}</a> ${ctx.notaChamada(tel)}</p></li>`);
-  if (c.email) cartoes.push(`<li>${icones.email}<h2>Email</h2><p><a href="mailto:${esc(c.email)}">${esc(c.email)}</a></p></li>`);
-  if (c.instagram) cartoes.push(`<li>${icones.instagram}<h2>Instagram</h2><p><a href="https://www.instagram.com/${esc(c.instagram)}/" target="_blank" rel="noopener">@${esc(c.instagram)}</a></p></li>`);
-  if (c.facebook) cartoes.push(`<li>${icones.facebook}<h2>Facebook</h2><p><a href="https://www.facebook.com/${esc(c.facebook)}" target="_blank" rel="noopener">${esc(ctx.site.marca)}</a></p></li>`);
-  cartoes.push(`<li>${icones.local}<h2>Onde estamos</h2><p>${esc(ctx.site.local.localidade)}, distrito de ${esc(ctx.site.local.distrito)}</p><p class="nota">Levantamentos com marcação, pelo WhatsApp.</p></li>`);
-  const conteudo = `<div class="contentor texto-pagina texto-pagina--largo">
-  ${m.html}
-  <h1 class="titulo-pagina">Contactos</h1>
-  <p class="texto__intro">Encomendas, dúvidas sobre os tons de linho ou uma ideia para um conjunto: fale connosco. Respondemos pelo WhatsApp, por email ou pelas redes sociais.</p>
-  <ul class="contactos">${cartoes.join('')}</ul>
+  const linha = (icone, nome, corpo) => `<li class="contacto"><span class="contacto__icone">${icone}</span><div><h2 class="contacto__nome">${nome}</h2>${corpo}</div></li>`;
+  const outros = [];
+  if (tel) outros.push(linha(icones.telefone, 'Telefone', `<p><a href="tel:+351${tel}">${esc(numeroLegivel(tel))}</a> ${notaChamada(tel)}</p>`));
+  if (c.email) outros.push(linha(icones.email, 'Email', `<p><a href="mailto:${esc(c.email)}">${esc(c.email)}</a></p>`));
+  if (c.instagram) outros.push(linha(icones.instagram, 'Instagram', `<p><a href="https://www.instagram.com/${esc(c.instagram)}/" target="_blank" rel="noopener">@${esc(c.instagram)}</a></p>`));
+  if (c.facebook) outros.push(linha(icones.facebook, 'Facebook', `<p><a href="https://www.facebook.com/${esc(c.facebook)}" target="_blank" rel="noopener">${esc(ctx.site.marca)}</a></p>`));
+  outros.push(linha(icones.local, 'Onde estamos', `<p>${esc(ctx.site.local.localidade)}, distrito de ${esc(ctx.site.local.distrito)}</p><p class="nota">Levantamentos com marcação, pelo WhatsApp.</p>`));
+  const principal = c.whatsapp
+    ? `<section class="contacto-principal" aria-labelledby="contacto-whatsapp">
+      <span class="contacto-principal__icone">${icones.whatsapp}</span>
+      <h2 id="contacto-whatsapp">WhatsApp</h2>
+      <p>É por aqui que combinamos as encomendas, as cores e os nomes.</p>
+      <a class="botao botao--whatsapp" href="${ctx.whatsapp('Olá!')}" target="_blank" rel="noopener">${icones.whatsapp}<span>Enviar uma mensagem</span></a>
+    </section>`
+    : `<section class="contacto-principal"><h2>WhatsApp</h2><p>${ctx.marcador('o número de WhatsApp das encomendas')}</p></section>`;
+  const conteudo = `<div class="contentor contactos-pagina">
+  ${cabecaDePagina(ctx, { migalhas: m.html, titulo: 'Contactos', sub: 'Fale connosco como preferir.' })}
+  <div class="contactos-grelha">
+    ${principal}
+    <ul class="contactos-lista">${outros.join('')}</ul>
+  </div>
 </div>`;
   return { caminho: '/contactos/', titulo: 'Contactos', descricao: `Fale com a ${ctx.site.marca}: WhatsApp, ${tel ? 'telefone, ' : ''}email, Instagram e Facebook. ${ctx.site.local.localidade}, ${ctx.site.local.distrito}.`, jsonld: [m.ld, organizacao(ctx)], conteudo };
 }
 
 export function erro404(ctx) {
-  const conteudo = `<div class="contentor texto-pagina erro">
-  <h1 class="titulo-pagina">Esta página não existe</h1>
-  <p>Pode ter mudado de sítio, ou o endereço tem um erro. Experimente a loja:</p>
-  ${botaoSeta(ctx.url('/loja/'), 'Ver a loja', { classe: 'botao botao--cheio' })}
+  const conteudo = `<div class="contentor erro">
+  ${cabecaDePagina(ctx, { titulo: 'Esta página não existe', sub: 'Pode ter mudado de sítio, ou o endereço tem um erro.' })}
+  ${categoriasEmMancha(ctx)}
+  <p class="erro__loja">${botaoSeta(ctx.url('/loja/'), 'Ver toda a loja', { classe: 'botao botao--cheio' })}</p>
 </div>`;
   return { caminho: '/404.html', titulo: 'Página não encontrada', descricao: 'Esta página não existe.', conteudo };
 }

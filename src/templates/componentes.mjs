@@ -73,3 +73,41 @@ export function migalhas(ctx, itens) {
 export function botaoSeta(href, texto, { classe = 'botao botao--contorno', externo = false } = {}) {
   return `<a class="${classe}" href="${esc(href)}"${externo ? ' target="_blank" rel="noopener"' : ''}><span>${esc(texto)}</span>${icones.seta}</a>`;
 }
+
+/* A CABEÇA DAS PÁGINAS (17 out 2026, na linguagem da marca): as migalhas, o título numa mancha rosa
+   (como o nome no logótipo), um subtítulo curto — ou, nas páginas legais, a data — e o laço entre
+   pespontos. Ao centro. */
+export function cabecaDePagina(ctx, { migalhas = '', titulo, sub = '', data = '', extra = '' }) {
+  return `<header class="cabeca">
+  ${migalhas}
+  <h1 class="titulo-pagina na-mancha">${esc(titulo)}</h1>
+  ${sub ? `<p class="cabeca__sub">${esc(sub)}</p>` : ''}
+  ${data ? `<p class="cabeca__data">${esc(data)}</p>` : ''}
+  ${extra}
+  <div class="ornamento ornamento--curto" aria-hidden="true">${icones.laco}</div>
+</header>`;
+}
+
+/* As categorias em três fotografias recortadas em mancha, cada uma com uma mancha de cor por trás
+   (no menu, na página que não existe e no carrinho vazio). As fotografias vão sem texto
+   alternativo: o nome está por baixo. */
+export function categoriasEmMancha(ctx, { atual = '', tamanhos = '(min-width: 48rem) 128px, 30vw' } = {}) {
+  const cats = ctx.categorias.filter((c) => ctx.produtos.some((p) => p.categoria === c.slug));
+  return `<ul class="categorias-mancha">${cats.map((k) => {
+    const caminho = `/loja/${k.slug}/`;
+    const n = ctx.produtos.filter((p) => p.categoria === k.slug).length;
+    return `<li><a class="categoria-mancha" href="${ctx.url(caminho)}"${caminho === atual ? ' aria-current="page"' : ''}><span class="categoria-mancha__fundo"><span class="categoria-mancha__foto">${imagem(ctx, k.foto, { tamanhos, alt: '' })}</span></span><span class="categoria-mancha__nome">${esc(k.nome)}</span><span class="categoria-mancha__conta">${n === 1 ? '1 artigo' : `${n} artigos`}</span></a></li>`;
+  }).join('')}</ul>`;
+}
+
+/* O convite no fim das páginas que não são legais: uma linha e dois botões. */
+export function convite(ctx) {
+  const c = ctx.site.contactos;
+  return `<aside class="convite" aria-label="Fale connosco">
+  <p class="convite__titulo">Uma dúvida, ou uma ideia para o batizado?</p>
+  <div class="convite__botoes">
+    ${c.whatsapp ? `<a class="botao botao--whatsapp-suave" href="${ctx.whatsapp('Olá!')}" target="_blank" rel="noopener">${icones.whatsapp}<span>Falar no WhatsApp</span></a>` : ''}
+    <a class="botao botao--contorno" href="${ctx.url('/loja/')}">Ver a loja</a>
+  </div>
+</aside>`;
+}
