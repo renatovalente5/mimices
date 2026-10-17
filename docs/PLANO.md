@@ -68,7 +68,7 @@ simples é mais!»
 
 - **Cores:** fundo branco (o creme confundia-se com as fotografias de linho), tinta quase preta,
   rosa-terracota da marca (#97564F) nos botões, preços e ligações, linho claro (#F7F3EE) nas
-  secções suaves e o rosa do logótipo (#F7EAE6) no rodapé. Contrastes no cabeçalho do site.css.
+  secções suaves e no rodapé. Contrastes no cabeçalho do site.css.
 - **A capa é um filme** (`scripts/filme.py`): seis fotografias da Susana com um movimento lento de
   câmara, dissolvidas umas nas outras, em ciclo, num corte largo (1600×900, 3 MB) e num alto
   (720×1080, 1,9 MB). Os vídeos dela não serviam: tremem (medido) e têm 480 px. Por cima, um véu
@@ -82,6 +82,11 @@ simples é mais!»
 - **17 out 2026 (Renato):** o nome do tom numa dica própria, que aparece logo ao passar o rato (o
   «title» do browser levava cerca de 1 s); e **sem os avisos de segurança das velas**, a pedido
   dele. O RGSP (art. 19.º, al. d)) pede-os na oferta à distância: o bloco está no commit 396e7e9.
+- **Rodapé refeito (17 out 2026, Renato: «Não gosto nada do rodapé… E falta o Logo»; «Podes ver os
+  rodapés de outras aplicações minhas»):** na arrumação dos rodapés da Pokóto, da Pau Ferro e da AMMA.
+  À esquerda o logótipo, a assinatura e as redes; ao lado «Loja», «A Mimices» e «Contactos»; as
+  páginas legais numa linha, com o Livro de Reclamações num botão. Fundo de linho: no rosa claro a
+  mancha do logótipo some, e num fundo escuro o «M» e o «s», que saem da mancha, deixam de se ler.
 
 ## 4. Perguntas para a Susana (o que trava o site no domínio)
 

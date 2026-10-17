@@ -88,52 +88,61 @@ function menu(ctx) {
 </dialog>`;
 }
 
-/* O RODAPÉ, em quatro colunas como o do ithos: apoio ao cliente, a loja, as condições (as
-   páginas legais) e os contactos. */
+/* O RODAPÉ (refeito a 17 out 2026: o Renato «não gosto nada do rodapé… E falta o Logo»), na
+   arrumação dos outros sites dele (Pokóto, Pau Ferro, AMMA): à esquerda a marca — o logótipo, a
+   assinatura e as redes —, ao lado a loja, a Mimices e os contactos, e as páginas legais numa linha
+   só, em baixo, com o Livro de Reclamações destacado num botão (DL 156/2005, art. 5.º-B, n.º 2). O
+   fundo é o linho: no rosa claro a mancha do logótipo desaparecia, e num fundo escuro o «M» e o «s»,
+   que saem da mancha, deixavam de se ler. */
 function rodape(ctx) {
   const c = ctx.site.contactos;
+  const e = ctx.site.empresa || {};
   const contactos = [];
-  if (c.whatsapp) contactos.push(`<li><a href="https://wa.me/${numeroWhatsApp(c.whatsapp)}" target="_blank" rel="noopener">${icones.whatsapp}<span>WhatsApp ${esc(ctx.numeroLegivel(c.whatsapp))}</span></a><span class="rodape__nota">${esc(ctx.custoChamada(c.whatsapp))}</span></li>`);
+  if (c.whatsapp) contactos.push(`<li><a href="https://wa.me/${numeroWhatsApp(c.whatsapp)}" target="_blank" rel="noopener">${icones.whatsapp}<span><span class="visualmente-escondido">WhatsApp </span>${esc(ctx.numeroLegivel(c.whatsapp))}</span></a><span class="rodape__nota">${esc(ctx.custoChamada(c.whatsapp))}</span></li>`);
   if (c.email) contactos.push(`<li><a href="mailto:${esc(c.email)}">${icones.email}<span>${esc(c.email)}</span></a></li>`);
   contactos.push(`<li><span class="rodape__local">${icones.local}<span>${esc(ctx.site.local.localidade)}, ${esc(ctx.site.local.distrito)}</span></span></li>`);
+  const ligacao = (caminho, texto) => `<li><a href="${ctx.url(caminho)}">${esc(texto)}</a></li>`;
   return `<footer class="rodape">
-  <div class="rodape__grelha">
-    <div class="rodape__coluna">
-      <h2>Apoio ao cliente</h2>
-      <ul>
-        <li><a href="${ctx.url('/como-encomendar/')}">Como encomendar</a></li>
-        <li><a href="${ctx.url('/perguntas-frequentes/')}">Perguntas frequentes</a></li>
-        <li><a href="${ctx.url('/tons-de-linho/')}">Tons de linho</a></li>
-        <li><a href="${ctx.url('/desistir/')}">Desistir de uma compra</a></li>
-        <li><a href="${LIVRO}" target="_blank" rel="noopener">Livro de Reclamações</a></li>
-      </ul>
-    </div>
-    <div class="rodape__coluna">
-      <h2>A loja</h2>
-      <ul>
-        ${categoriasComArtigos(ctx).map((k) => `<li><a href="${ctx.url(`/loja/${k.slug}/`)}">${esc(k.titulo)}</a></li>`).join('')}
-        <li><a href="${ctx.url('/loja/')}">Toda a loja</a></li>
-        <li><a href="${ctx.url('/sobre-nos/')}">Sobre a Mimices</a></li>
-      </ul>
-    </div>
-    <div class="rodape__coluna">
-      <h2>Condições</h2>
-      <ul>
-        <li><a href="${ctx.url('/termos-e-condicoes/')}">Termos e condições</a></li>
-        <li><a href="${ctx.url('/politica-de-privacidade/')}">Política de privacidade</a></li>
-        <li><a href="${ctx.url('/politica-de-cookies/')}">Política de cookies</a></li>
-        <li><a href="${ctx.url('/garantia/')}">Garantia legal</a></li>
-        <li><a href="${ctx.url('/resolucao-de-litigios/')}">Resolução de litígios</a></li>
-      </ul>
-    </div>
-    <div class="rodape__coluna rodape__coluna--contactos">
-      <h2>Fale connosco</h2>
-      <ul class="rodape__contactos">${contactos.join('')}</ul>
+  <div class="rodape__corpo">
+    <div class="rodape__marca">
+      <a class="rodape__logo" href="${ctx.url('/')}">${logotipo(ctx, { alto: 104, classe: 'rodape__logo-img' })}<span class="visualmente-escondido"> — página inicial</span></a>
+      <p class="rodape__frase">${esc(ctx.site.assinatura)}</p>
       ${redes(ctx, 'redes redes--rodape', { whatsapp: false })}
+    </div>
+    <nav class="rodape__nav" aria-label="Rodapé">
+      <div class="rodape__coluna">
+        <h2>Loja</h2>
+        <ul>
+          ${categoriasComArtigos(ctx).map((k) => ligacao(`/loja/${k.slug}/`, k.nome)).join('')}
+          ${ligacao('/loja/', 'Toda a loja')}
+        </ul>
+      </div>
+      <div class="rodape__coluna">
+        <h2>A Mimices</h2>
+        <ul>
+          ${ligacao('/sobre-nos/', 'Sobre nós')}
+          ${ligacao('/como-encomendar/', 'Como encomendar')}
+          ${ligacao('/tons-de-linho/', 'Tons de linho')}
+          ${ligacao('/perguntas-frequentes/', 'Perguntas frequentes')}
+        </ul>
+      </div>
+    </nav>
+    <div class="rodape__coluna rodape__coluna--contactos">
+      <h2>Contactos</h2>
+      <ul class="rodape__contactos">${contactos.join('')}</ul>
     </div>
   </div>
   <div class="rodape__fim">
-    <p>© ${ctx.hoje.slice(0, 4)} ${esc(ctx.site.marca)} · ${esc(ctx.site.assinatura)}</p>
+    <p class="rodape__direitos">© ${ctx.hoje.slice(0, 4)} ${esc(ctx.site.marca)}${e.nif ? ` · NIF ${esc(e.nif)}` : ''}</p>
+    <ul class="rodape__legal">
+      ${ligacao('/termos-e-condicoes/', 'Termos e condições')}
+      ${ligacao('/politica-de-privacidade/', 'Privacidade')}
+      ${ligacao('/politica-de-cookies/', 'Cookies')}
+      ${ligacao('/garantia/', 'Garantia legal')}
+      ${ligacao('/resolucao-de-litigios/', 'Resolução de litígios')}
+      ${ligacao('/desistir/', 'Desistir de uma compra')}
+    </ul>
+    <a class="rodape__livro" href="${LIVRO}" target="_blank" rel="noopener">Livro de Reclamações</a>
   </div>
 </footer>`;
 }

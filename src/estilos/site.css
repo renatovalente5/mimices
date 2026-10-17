@@ -1,11 +1,12 @@
 /* Mimices — o estilo do site.
    A arrumação é a do ithos (ithos-cathelier.pt), de que a Susana gostou: o cabeçalho com «Menu»
    à esquerda e o logótipo ao centro, a capa a toda a largura (com um filme, desde 16 out 2026),
-   as grelhas de quatro, a secção «Olá», o rodapé em quatro colunas — e poucas secções.
+   as grelhas de quatro, a secção «Olá» — e poucas secções. O rodapé (refeito a 17 out 2026) segue
+   os outros sites do Renato: a marca com o logótipo, três colunas e as páginas legais numa linha.
    AS CORES (refeitas a 16 out 2026, a pedido do Renato: «usar umas cores melhores»): o fundo
    BRANCO (as fotografias de linho claro ficavam a perder-se num creme parecido com elas), a tinta
    quase preta, o rosa-terracota da marca nos botões, nos preços e nas ligações, o linho claro nas
-   secções suaves e o rosa do logótipo no rodapé. Letras: Cormorant Garamond nos títulos e
+   secções suaves e no rodapé. Letras: Cormorant Garamond nos títulos e
    Montserrat no texto (as do ithos, servidas daqui, sem Google Fonts).
    Contrastes medidos (WCAG): tinta 14,2:1 no branco, 12,9:1 no linho, 12,1:1 no rosa claro;
    tinta-2 6,3 / 5,7 / 5,4:1; o acento 5,6:1 no branco, 5,1:1 no linho e 4,75:1 no rosa claro, e
@@ -478,24 +479,53 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
 .contactos p { margin: 0 0 .3em; }
 .erro { text-align: center; padding-top: 48px; margin-inline: auto; }
 
-/* --- rodapé (quatro colunas, como o do ithos), no rosa do logótipo ------------------------------------ */
-.rodape { background: var(--rosa-claro); color: var(--tinta); }
-.rodape__grelha { width: min(100% - 2 * var(--margem), var(--largura)); margin-inline: auto; padding: clamp(44px, 7vw, 72px) 0 32px; display: grid; gap: 32px; }
-@media (min-width: 640px) { .rodape__grelha { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1000px) { .rodape__grelha { grid-template-columns: repeat(4, 1fr); } }
-.rodape h2 { font: 600 .75rem/1.2 var(--sans); letter-spacing: .16em; text-transform: uppercase; margin: 0 0 16px; }
-.rodape ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
-.rodape__coluna a { display: inline-flex; align-items: center; gap: .55em; min-height: 36px; color: var(--tinta); text-decoration: none; font-size: .9rem; }
-@media (hover: hover) { .rodape__coluna a:hover { color: var(--tinta); text-decoration: underline; } }
-.rodape__contactos .icone { width: 1.1em; height: 1.1em; color: var(--tinta); }
-.rodape__nota { display: block; font-size: .75rem; color: var(--tinta-2); margin: -6px 0 6px 1.65em; }
-.rodape__local { display: inline-flex; align-items: center; gap: .55em; min-height: 36px; font-size: .9rem; }
-.rodape__fim { border-top: 1px solid rgba(46, 42, 40, .12); width: min(100% - 2 * var(--margem), var(--largura)); margin-inline: auto; padding: 18px 0 calc(22px + env(safe-area-inset-bottom)); font-size: .8125rem; color: var(--tinta-2); }
-.rodape__fim p { margin: 0; }
+/* --- rodapé (refeito a 17 out 2026; o porquê está no rodape() de layout.mjs) ------------------- */
+.rodape { background: var(--linho); color: var(--tinta); }
+.rodape__corpo { width: min(100% - 2 * var(--margem), var(--largura)); margin-inline: auto; padding: clamp(48px, 7vw, 80px) 0 clamp(36px, 5vw, 56px); display: grid; gap: 40px 32px; }
+@media (min-width: 640px) { .rodape__corpo { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); } .rodape__marca { grid-column: 1 / -1; } }
+@media (min-width: 1200px) { .rodape__corpo { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.35fr) minmax(0, 1fr); } .rodape__marca { grid-column: auto; } }
+.rodape__marca { display: grid; justify-items: start; align-content: start; gap: 18px; }
+/* no tablet a marca ocupa a largura toda: o logótipo ao lado da assinatura e das redes, e não por cima */
+@media (min-width: 640px) and (max-width: 1199.98px) {
+  .rodape__marca { grid-template-columns: auto minmax(0, 1fr); column-gap: clamp(24px, 5vw, 48px); row-gap: 14px; }
+  .rodape__logo { grid-row: span 2; align-self: center; }
+  .rodape__frase { align-self: end; }
+  .rodape__marca .redes { align-self: start; }
+}
+.rodape__logo { display: block; }
+.rodape__logo-img { display: block; width: auto; height: clamp(84px, 9vw, 104px); }
+.rodape__frase { margin: 0; max-width: 16em; font: italic 300 clamp(1.375rem, 2.2vw, 1.625rem)/1.25 var(--serifa); color: var(--acento); }
+.rodape__nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
+.rodape h2 { margin: 0 0 10px; font: 500 1.3125rem/1.2 var(--serifa); color: var(--acento); }
+.rodape ul { list-style: none; margin: 0; padding: 0; }
+.rodape__coluna li a { display: inline-flex; align-items: center; gap: .6em; min-height: 40px; color: var(--tinta); text-decoration: none; font-size: .9375rem; }
+@media (hover: hover) { .rodape__coluna li a:hover { color: var(--acento); } }
+.rodape__contactos .icone { flex: none; width: 1.1em; height: 1.1em; color: var(--acento); }
+.rodape__nota { display: block; margin: -8px 0 6px 1.7em; font-size: .75rem; color: var(--tinta-2); }
+.rodape__local { display: inline-flex; align-items: center; gap: .6em; min-height: 40px; font-size: .9375rem; }
+/* a linha legal: no telemóvel as ligações em duas colunas, o botão do livro e os direitos por baixo; do
+   tablet para cima o botão à direita; a partir de 1200 px tudo numa linha */
+.rodape__fim { width: min(100% - 2 * var(--margem), var(--largura)); margin-inline: auto; padding: 20px 0 calc(28px + env(safe-area-inset-bottom)); border-top: 1px solid var(--linha-forte); display: grid; grid-template-areas: "legal" "livro" "direitos"; justify-items: start; gap: 16px; font-size: .8125rem; color: var(--tinta-2); }
+.rodape__legal { grid-area: legal; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 16px; width: 100%; }
+.rodape__livro { grid-area: livro; }
+.rodape__direitos { grid-area: direitos; margin: 0; }
+@media (min-width: 700px) {
+  .rodape__fim { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "legal livro" "direitos livro"; align-items: center; gap: 2px 32px; }
+  .rodape__legal { display: flex; flex-wrap: wrap; gap: 0 22px; }
+}
+@media (min-width: 1200px) {
+  .rodape__fim { grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "direitos legal livro"; gap: 12px 32px; }
+}
+.rodape__legal a { display: inline-flex; align-items: center; min-height: 36px; color: var(--tinta-2); text-decoration: none; }
+@media (hover: hover) { .rodape__legal a:hover { color: var(--tinta); text-decoration: underline; } }
+.rodape__livro { display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border: 1px solid var(--tinta); border-radius: 999px; color: var(--tinta); font-weight: 500; text-decoration: none; }
+@media (hover: hover) { .rodape__livro:hover { background: var(--tinta); color: var(--branco); } }
 .redes { list-style: none; margin: 14px 0 0; padding: 0; display: flex; gap: 8px; }
 .redes a { display: inline-grid; place-items: center; width: 44px; height: 44px; border: 1px solid rgba(46, 42, 40, .25); border-radius: 50%; color: var(--tinta); }
 @media (hover: hover) { .redes a:hover { border-color: var(--tinta); color: var(--tinta); } }
-.rodape .redes { display: flex; gap: 10px; }
+.redes--rodape { margin: 2px 0 0; gap: 10px; }
+.redes--rodape a { border: 0; background: var(--rosa); color: var(--acento-escuro); transition: background-color .2s, color .2s; }
+@media (hover: hover) { .redes--rodape a:hover { background: var(--acento); color: var(--branco); } }
 .redes--menu { justify-content: center; }
 
 @media (prefers-reduced-motion: reduce) {
