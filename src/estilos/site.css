@@ -205,7 +205,11 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
    proporção, crescia a linha). Quem dá a forma é a própria capa: 2:3 no telemóvel e 16:9 a partir
    de 48rem (a largura em que o filme troca de corte: a mesma no paginas.mjs), nunca mais alta do
    que o ecrã por baixo do cabeçalho. */
-.capa { position: relative; display: grid; place-items: center; overflow: hidden; background: var(--linho); aspect-ratio: 2 / 3; max-height: calc(100svh - var(--topo)); min-height: 420px; }
+/* width: 100% É PRECISO: com a largura automática, o max-height passa para a largura através da forma
+   (max-width = altura máxima × 16/9), e num ecrã largo e baixo a capa encolhia e deixava uma faixa
+   branca à direita (o Renato viu-a num ecrã de 2000 px, 17 out 2026). Com a largura fixada, o
+   limite só corta a altura, e o filme (cover) enche a capa toda. */
+.capa { position: relative; display: grid; place-items: center; overflow: hidden; background: var(--linho); width: 100%; aspect-ratio: 2 / 3; max-height: calc(100svh - var(--topo)); min-height: 420px; }
 @media (min-width: 48rem) { .capa { aspect-ratio: 16 / 9; } }
 .capa__imagem, .capa__filme, .capa__veu { position: absolute; inset: 0; width: 100%; height: 100%; }
 .capa__imagem img, .capa__filme { width: 100%; height: 100%; object-fit: cover; }
