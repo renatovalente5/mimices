@@ -53,16 +53,22 @@ function redes(ctx, classe = 'redes', { whatsapp = true } = {}) {
   return `<ul class="${classe}">${r.map((x) => `<li>${x}</li>`).join('')}</ul>`;
 }
 
-/* O MENU (a gaveta da esquerda, em todas as larguras, como o do ithos): as categorias com a
-   miniatura e quantos artigos têm, «Ver toda a loja», as páginas de informação e, em baixo, o
-   WhatsApp, por onde chegam as encomendas. No telemóvel ocupa o ecrã; a partir de 48rem é um
-   painel de lado, que nunca passa de metade do ecrã. As miniaturas vão sem texto alternativo:
-   o nome da categoria está ao lado. */
-function menu(ctx) {
-  const linha = (href, conteudo) => `<li><a class="menu__linha" href="${href}">${conteudo}${icones.direita}</a></li>`;
-  const cats = categoriasComArtigos(ctx).map((c) => linha(ctx.url(`/loja/${c.slug}/`),
-    `<span class="menu__mini">${imagem(ctx, c.foto, { tamanhos: '64px', alt: '' })}</span><span class="menu__texto"><span class="menu__nome">${esc(c.nomeMenu || c.nome)}</span><span class="menu__conta">${quantosArtigos(ctx.produtos.filter((p) => p.categoria === c.slug).length)}</span></span>`)).join('');
+/* O MENU (a gaveta da esquerda; no telemóvel ocupa o ecrã, a partir de 48rem é um painel de lado).
+   Refeito a 17 out 2026 («melhora também o menu… improvisa»), na linguagem da marca (ver site.css): ao
+   centro, como um cartão; as categorias em três fotografias recortadas em mancha, cada uma com a sua
+   mancha de cor por trás (como o nome do logótipo assenta na mancha rosa), «Ver toda a loja», o laço
+   entre pespontos, as páginas na letra dos títulos e, em baixo, o WhatsApp, por onde chegam as
+   encomendas. As fotografias vão sem texto alternativo: o nome está por baixo. A página em que se está
+   fica marcada (aria-current). */
+function menu(ctx, atual) {
   const c = ctx.site.contactos;
+  const marca = (caminho) => (caminho === atual ? ' aria-current="page"' : '');
+  const cats = categoriasComArtigos(ctx).map((k) => {
+    const caminho = `/loja/${k.slug}/`;
+    const n = ctx.produtos.filter((p) => p.categoria === k.slug).length;
+    return `<li><a class="menu__cat" href="${ctx.url(caminho)}"${marca(caminho)}><span class="menu__mancha"><span class="menu__foto">${imagem(ctx, k.foto, { tamanhos: '(min-width: 48rem) 128px, 30vw', alt: '' })}</span></span><span class="menu__cat-nome">${esc(k.nome)}</span><span class="menu__conta">${quantosArtigos(n)}</span></a></li>`;
+  }).join('');
+  const ligacao = (caminho, texto) => `<li><a class="menu__pagina" href="${ctx.url(caminho)}"${marca(caminho)}>${esc(texto)}</a></li>`;
   return `<dialog class="menu" id="menu" aria-label="Menu">
   <div class="menu__corpo" tabindex="-1">
     <div class="menu__topo">
@@ -70,14 +76,16 @@ function menu(ctx) {
       <button class="menu__fechar" type="button" data-fechar>${icones.fechar}<span class="visualmente-escondido">Fechar o menu</span></button>
     </div>
     <nav class="menu__nav" aria-label="Menu">
-      <h2 class="menu__titulo" id="menu-loja">Loja</h2>
-      <ul class="menu__lista" aria-labelledby="menu-loja">${cats}</ul>
-      <a class="menu__tudo" href="${ctx.url('/loja/')}">Ver toda a loja · ${quantosArtigos(ctx.produtos.length)} ${icones.seta}</a>
-      <ul class="menu__lista menu__lista--info">
-        ${linha(ctx.url('/tons-de-linho/'), `<span class="menu__icone">${icones.paleta}</span><span class="menu__nome">Tons de linho</span>`)}
-        ${linha(ctx.url('/como-encomendar/'), `<span class="menu__icone">${icones.whatsapp}</span><span class="menu__nome">Como encomendar</span>`)}
-        ${linha(ctx.url('/sobre-nos/'), `<span class="menu__icone">${icones.laco}</span><span class="menu__nome">Sobre a Mimices</span>`)}
-        ${linha(ctx.url('/contactos/'), `<span class="menu__icone">${icones.email}</span><span class="menu__nome">Contactos</span>`)}
+      <h2 class="visualmente-escondido" id="menu-loja">Loja</h2>
+      <ul class="menu__cats" aria-labelledby="menu-loja">${cats}</ul>
+      <a class="menu__tudo" href="${ctx.url('/loja/')}"${marca('/loja/')}>Ver toda a loja · ${quantosArtigos(ctx.produtos.length)} ${icones.seta}</a>
+      <div class="ornamento ornamento--curto" aria-hidden="true">${icones.laco}</div>
+      <ul class="menu__paginas">
+        ${ligacao('/como-encomendar/', 'Como encomendar')}
+        ${ligacao('/tons-de-linho/', 'Tons de linho')}
+        ${ligacao('/perguntas-frequentes/', 'Perguntas frequentes')}
+        ${ligacao('/sobre-nos/', 'Sobre a Mimices')}
+        ${ligacao('/contactos/', 'Contactos')}
       </ul>
     </nav>
     <div class="menu__pe">
@@ -88,24 +96,27 @@ function menu(ctx) {
 </dialog>`;
 }
 
-/* O RODAPÉ (refeito a 17 out 2026: o Renato «não gosto nada do rodapé… E falta o Logo»), na
-   arrumação dos outros sites dele (Pokóto, Pau Ferro, AMMA): à esquerda a marca — o logótipo, a
-   assinatura e as redes —, ao lado a loja, a Mimices e os contactos, e as páginas legais numa linha
-   só, em baixo, com o Livro de Reclamações destacado num botão (DL 156/2005, art. 5.º-B, n.º 2). O
-   fundo é o linho: no rosa claro a mancha do logótipo desaparecia, e num fundo escuro o «M» e o «s»,
-   que saem da mancha, deixavam de se ler. */
+/* O RODAPÉ (17 out 2026). O Renato viu três: o primeiro, em colunas; um centrado, como um cartão de
+   batizado («Está muito grande… gostei mais do outro… Deste gosto das ondinhas e dos traços»). Ficou o
+   de colunas, compacto, com a orla recortada (as ondinhas, como a renda das toalhas bordadas) e o
+   pesponto (os traços). À esquerda o logótipo, a assinatura e as redes; ao lado a loja, a Mimices e os
+   contactos — o WhatsApp só como ligação, sem o número, e o telefone com a nota entre parênteses, em
+   letra mais pequena (pedidos dele) —; em baixo as páginas legais numa linha, com o Livro de
+   Reclamações destacado num botão (DL 156/2005, art. 5.º-B, n.º 2). O fundo é o linho: no rosa claro a
+   mancha do logótipo some, e num fundo escuro o «M» e o «s», que saem da mancha, deixam de se ler. */
 function rodape(ctx) {
   const c = ctx.site.contactos;
   const e = ctx.site.empresa || {};
   const contactos = [];
-  if (c.whatsapp) contactos.push(`<li><a href="https://wa.me/${numeroWhatsApp(c.whatsapp)}" target="_blank" rel="noopener">${icones.whatsapp}<span><span class="visualmente-escondido">WhatsApp </span>${esc(ctx.numeroLegivel(c.whatsapp))}</span></a><span class="rodape__nota">${esc(ctx.custoChamada(c.whatsapp))}</span></li>`);
+  if (c.whatsapp) contactos.push(`<li><a href="https://wa.me/${numeroWhatsApp(c.whatsapp)}" target="_blank" rel="noopener">${icones.whatsapp}<span>WhatsApp</span></a></li>`);
+  if (c.telefone) contactos.push(`<li><a href="tel:+${numeroWhatsApp(c.telefone)}">${icones.telefone}<span>${esc(ctx.numeroLegivel(c.telefone))}</span></a> ${ctx.notaChamada(c.telefone)}</li>`);
   if (c.email) contactos.push(`<li><a href="mailto:${esc(c.email)}">${icones.email}<span>${esc(c.email)}</span></a></li>`);
   contactos.push(`<li><span class="rodape__local">${icones.local}<span>${esc(ctx.site.local.localidade)}, ${esc(ctx.site.local.distrito)}</span></span></li>`);
   const ligacao = (caminho, texto) => `<li><a href="${ctx.url(caminho)}">${esc(texto)}</a></li>`;
   return `<footer class="rodape">
   <div class="rodape__corpo">
     <div class="rodape__marca">
-      <a class="rodape__logo" href="${ctx.url('/')}">${logotipo(ctx, { alto: 104, classe: 'rodape__logo-img' })}<span class="visualmente-escondido"> — página inicial</span></a>
+      <a class="rodape__logo" href="${ctx.url('/')}">${logotipo(ctx, { alto: 96, classe: 'rodape__logo-img' })}<span class="visualmente-escondido"> — página inicial</span></a>
       <p class="rodape__frase">${esc(ctx.site.assinatura)}</p>
       ${redes(ctx, 'redes redes--rodape', { whatsapp: false })}
     </div>
@@ -206,7 +217,7 @@ ${conteudo}
 </main>
 ${rodape(ctx)}
 ${gavetaCarrinho()}
-${menu(ctx)}
+${menu(ctx, caminho)}
 </body>
 </html>
 `;

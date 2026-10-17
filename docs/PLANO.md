@@ -87,6 +87,13 @@ simples é mais!»
   À esquerda o logótipo, a assinatura e as redes; ao lado «Loja», «A Mimices» e «Contactos»; as
   páginas legais numa linha, com o Livro de Reclamações num botão. Fundo de linho: no rosa claro a
   mancha do logótipo some, e num fundo escuro o «M» e o «s», que saem da mancha, deixam de se ler.
+- **Mais tarde no mesmo dia** («Não gosto de como está a ficar, improvisa… sem ser baseado nos meus
+  outros projetos»): uma linguagem da própria marca — a MANCHA do logótipo, o PESPONTO das toalhas
+  e o LAÇO (cabeçalho de site.css). O menu ficou com as categorias em fotografias recortadas em
+  mancha e as páginas ao centro, na letra dos títulos. O rodapé: um centrado foi rejeitado («muito
+  grande… gostei mais do outro. Deste gosto das ondinhas e dos traços»), e ficou o de colunas com a
+  orla recortada e o pesponto. O WhatsApp passou a ir só como ligação, sem o número; o telefone
+  leva «(Chamada para a rede móvel nacional)» entre parênteses e mais pequeno, em todo o site.
 
 ## 4. Perguntas para a Susana (o que trava o site no domínio)
 

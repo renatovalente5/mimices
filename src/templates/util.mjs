@@ -131,6 +131,12 @@ export function custoChamada(n) {
   return 'Chamada para a rede nacional';
 }
 
+// A nota junto de um número, como o Renato a quer em todo o site (17 out 2026): entre parênteses e em
+// letra mais pequena. O WhatsApp vai só como ligação, sem o número, e por isso sem nota.
+export function notaChamada(n) {
+  return `<span class="chamada">(${esc(custoChamada(n))})</span>`;
+}
+
 // A morada da sede por extenso: «Rua …, n.º …, 2925-000 Azeitão, Setúbal»
 export function moradaCompleta(e) {
   return [e.morada, [e.codigoPostal, e.localidade].filter(Boolean).join(' '), e.concelho].filter(Boolean).join(', ');

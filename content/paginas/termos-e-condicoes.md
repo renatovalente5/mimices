@@ -6,7 +6,7 @@ atualizado: 2026-10-16
 
 {{empresa.identificacao}}
 
-Contactos: {{email}} · {{whatsapp}}.
+Contactos: {{email}} · {{whatsapp}} · telefone {{telefone}}.
 
 Estas condições aplicam-se às encomendas feitas a partir deste site. Nada nelas afasta os direitos que a lei reconhece ao consumidor.
 

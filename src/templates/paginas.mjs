@@ -453,11 +453,11 @@ export function contactos(ctx) {
   const c = ctx.site.contactos;
   const m = migalhas(ctx, [{ nome: 'Início', caminho: '/' }, { nome: 'Contactos', caminho: '/contactos/' }]);
   const cartoes = [];
-  if (c.whatsapp) cartoes.push(`<li>${icones.whatsapp}<h2>WhatsApp</h2><p><a href="${ctx.whatsapp('Olá!')}">${esc(ctx.numeroLegivel(c.whatsapp))}</a></p><p class="nota">${esc(ctx.custoChamada(c.whatsapp))}</p></li>`);
+  if (c.whatsapp) cartoes.push(`<li>${icones.whatsapp}<h2>WhatsApp</h2><p><a href="${ctx.whatsapp('Olá!')}">Enviar uma mensagem</a></p></li>`);
   else cartoes.push(`<li>${icones.whatsapp}<h2>WhatsApp</h2><p>${ctx.marcador('o número de WhatsApp das encomendas')}</p></li>`);
   /* O telefone, para ligar, com a nota que a lei pede junto de um número (DL 59/2021). */
   const tel = numeroPortugues(c.telefone);
-  if (tel) cartoes.push(`<li>${icones.telefone}<h2>Telefone</h2><p><a href="tel:+351${tel}">${esc(ctx.numeroLegivel(tel))}</a></p><p class="nota">${esc(ctx.custoChamada(tel))}</p></li>`);
+  if (tel) cartoes.push(`<li>${icones.telefone}<h2>Telefone</h2><p><a href="tel:+351${tel}">${esc(ctx.numeroLegivel(tel))}</a> ${ctx.notaChamada(tel)}</p></li>`);
   if (c.email) cartoes.push(`<li>${icones.email}<h2>Email</h2><p><a href="mailto:${esc(c.email)}">${esc(c.email)}</a></p></li>`);
   if (c.instagram) cartoes.push(`<li>${icones.instagram}<h2>Instagram</h2><p><a href="https://www.instagram.com/${esc(c.instagram)}/" target="_blank" rel="noopener">@${esc(c.instagram)}</a></p></li>`);
   if (c.facebook) cartoes.push(`<li>${icones.facebook}<h2>Facebook</h2><p><a href="https://www.facebook.com/${esc(c.facebook)}" target="_blank" rel="noopener">${esc(ctx.site.marca)}</a></p></li>`);

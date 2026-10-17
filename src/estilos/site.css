@@ -95,6 +95,30 @@ mark.por-confirmar { background: #FFF1B8; color: #5C4A00; padding: 0 .25em; bord
 .titulo-seccao { font: 500 clamp(1.9rem, 3.4vw, 2.6rem)/1.1 var(--serifa); letter-spacing: -.005em; margin: 0 0 .35em; }
 .texto__intro { font-size: 1.0625rem; color: var(--tinta-2); max-width: 46rem; }
 
+/* --- a linguagem da marca (17 out 2026, o Renato: «improvisa», com ideias que não sejam as dos outros
+   sites dele). Três sinais tirados da própria Mimices, e não de um modelo:
+   · A MANCHA: a forma de seixo do logótipo (o nome escrito por cima de uma mancha rosa). Os títulos das
+     páginas assentam numa mancha pequena, e as fotografias do menu são manchas;
+   · O PESPONTO: a linha de costura tracejada das toalhas, no lugar das linhas direitas;
+   · O LAÇO: o dos laços de linho, como ornamento entre o pesponto.
+   E a renda: o rodapé acaba numa orla recortada, como a renda das toalhas bordadas. */
+:root {
+  --mancha-1: 62% 38% 54% 46% / 55% 44% 56% 45%;
+  --mancha-2: 44% 56% 41% 59% / 58% 47% 53% 42%;
+  --mancha-3: 53% 47% 63% 37% / 42% 60% 40% 58%;
+  --rosa-mancha: #F4E1DC;
+  --pesponto: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='2'%3E%3Cpath d='M1 1h6' stroke='%2397564F' stroke-opacity='.5' stroke-width='1.4' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+.pesponto { display: block; height: 2px; background: var(--pesponto) left center / 12px 2px repeat-x; }
+.ornamento { display: flex; align-items: center; gap: 12px; color: var(--acento); }
+.ornamento::before, .ornamento::after { content: ''; flex: 1; height: 2px; background: var(--pesponto) center / 12px 2px repeat-x; }
+.ornamento .icone { flex: none; width: 24px; height: 24px; }
+.ornamento--curto { width: min(220px, 64%); margin-inline: auto; }
+/* o título numa mancha: uma mancha rosa por trás das primeiras letras, como no logótipo */
+.na-mancha { position: relative; isolation: isolate; }
+.na-mancha::before { content: ''; position: absolute; z-index: -1; left: -.3em; top: -.1em; width: 1.55em; height: 1.4em; background: var(--rosa-mancha); border-radius: var(--mancha-1); }
+.chamada { font-size: .8em; color: var(--tinta-2); }
+
 /* --- botões ------------------------------------------------------------------- */
 .botao { display: inline-flex; align-items: center; justify-content: center; gap: .6em; min-height: 48px; padding: .75em 1.6em; border-radius: 999px; border: 1px solid transparent; font: 500 .9375rem/1.2 var(--sans); letter-spacing: .02em; text-decoration: none; cursor: pointer; transition: background-color .2s, color .2s, border-color .2s; }
 .botao .icone { width: 1.15em; height: 1.15em; }
@@ -138,7 +162,18 @@ mark.por-confirmar { background: #FFF1B8; color: #5C4A00; padding: 0 .25em; bord
 dialog { padding: 0; border: 0; color: var(--tinta); background: var(--papel); max-width: none; max-height: none; }
 dialog::backdrop { background: rgba(46, 42, 40, .45); }
 .menu { width: 100%; height: 100dvh; margin: 0; }
-@media (min-width: 48rem) { .menu { width: min(26rem, 48vw); box-shadow: var(--sombra); } }
+@media (min-width: 48rem) { .menu { width: min(28rem, 48vw); box-shadow: var(--sombra); } }
+/* a chegada: o menu entra pela esquerda e o carrinho pela direita, com o fundo a escurecer. Keyframes
+   no [open] e não um repouso fora do ecrã (memória dialog-como-painel-lateral); sem animação para
+   quem pede menos movimento. */
+@media (prefers-reduced-motion: no-preference) {
+  .menu[open] { animation: menu-entra .34s cubic-bezier(.22, 1, .36, 1); }
+  .gaveta[open] { animation: gaveta-entra .34s cubic-bezier(.22, 1, .36, 1); }
+  dialog[open]::backdrop { animation: fundo-entra .34s ease; }
+}
+@keyframes menu-entra { from { translate: -100% 0; } }
+@keyframes gaveta-entra { from { translate: 100% 0; } }
+@keyframes fundo-entra { from { opacity: 0; } }
 .menu__corpo:focus, .gaveta__corpo:focus, dialog:focus { outline: none; }
 .menu__corpo { display: flex; flex-direction: column; min-height: 100%; padding: 0 var(--margem) calc(24px + env(safe-area-inset-bottom)); }
 .menu__topo { display: flex; align-items: center; justify-content: space-between; height: var(--topo); }
@@ -146,22 +181,32 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
 .menu__fechar, .gaveta__fechar { display: inline-grid; place-items: center; width: 44px; height: 44px; background: none; border: 0; cursor: pointer; color: var(--tinta); }
 .menu__fechar .icone, .gaveta__fechar .icone { width: 26px; height: 26px; }
 .menu__nav { flex: 1; }
-.menu__titulo { font: 500 .75rem/1 var(--sans); letter-spacing: .18em; text-transform: uppercase; color: var(--tinta-2); margin: 12px 0 8px; }
-.menu__lista { list-style: none; margin: 0; padding: 0; }
-.menu__lista li + li { border-top: 1px solid var(--linha); }
-.menu__linha { display: flex; align-items: center; gap: 14px; min-height: 64px; padding: 8px 0; color: var(--tinta); text-decoration: none; }
-@media (hover: hover) { .menu__linha:hover { color: var(--acento); } }
-.menu__linha > .icone { margin-left: auto; color: var(--tinta-2); width: 20px; height: 20px; }
-.menu__mini { width: 52px; height: 52px; border-radius: var(--raio-pequeno); overflow: hidden; flex: none; background: var(--linho); }
-.menu__mini img { width: 100%; height: 100%; object-fit: cover; }
-.menu__texto { display: flex; flex-direction: column; }
-.menu__nome { font: 500 1.375rem/1.15 var(--serifa); }
-.menu__conta { font-size: .8125rem; color: var(--tinta-2); }
-.menu__tudo { display: flex; align-items: center; gap: .5em; margin: 14px 0 22px; font-weight: 500; font-size: .9375rem; text-decoration: none; }
-.menu__lista--info .menu__linha { min-height: 54px; }
-.menu__lista--info .menu__nome { font: 500 1rem/1.3 var(--sans); }
-.menu__icone { display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--rosa-claro); color: var(--tinta); }
-.menu__icone .icone { width: 20px; height: 20px; }
+/* a montra das categorias: três fotografias recortadas em mancha, cada uma com uma mancha de cor por
+   trás, deslocada (como a do logótipo); os tons são os de linho: rosa antigo, verde água e azul bebé */
+.menu__nav { text-align: center; }
+.menu__cats { list-style: none; margin: 6px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.menu__cat { display: grid; justify-items: center; color: var(--tinta); text-decoration: none; }
+.menu__mancha { position: relative; display: block; width: 100%; max-width: 128px; margin-bottom: 12px; }
+.menu__mancha::before { content: ''; position: absolute; inset: 7% -6% -7% 6%; background: #D9C6BD; border-radius: var(--mancha-2); opacity: .55; }
+.menu__cats li:nth-child(2) .menu__mancha::before { background: #A9C1BC; border-radius: var(--mancha-3); }
+.menu__cats li:nth-child(3) .menu__mancha::before { background: #ADC8E1; border-radius: var(--mancha-1); }
+.menu__foto { position: relative; display: block; aspect-ratio: 1; overflow: hidden; border-radius: var(--mancha-1); background: var(--linho); }
+.menu__cats li:nth-child(2) .menu__foto { border-radius: var(--mancha-2); }
+.menu__cats li:nth-child(3) .menu__foto { border-radius: var(--mancha-3); }
+.menu__foto img { width: 100%; height: 100%; object-fit: cover; transition: scale .5s ease; }
+@media (hover: hover) { .menu__cat:hover .menu__foto img { scale: 1.05; } .menu__cat:hover .menu__cat-nome { color: var(--acento); } }
+.menu__cat-nome { font: 500 1.3125rem/1.15 var(--serifa); }
+.menu__cat[aria-current="page"] .menu__cat-nome { color: var(--acento); }
+.menu__conta { font-size: .75rem; color: var(--tinta-2); }
+.menu__tudo { display: inline-flex; align-items: center; gap: .5em; min-height: 44px; margin: 14px 0 4px; padding: 0 20px; border: 1px solid var(--linha-forte); border-radius: 999px; color: var(--tinta); font-weight: 500; font-size: .875rem; text-decoration: none; }
+@media (hover: hover) { .menu__tudo:hover { border-color: var(--tinta); color: var(--tinta); } }
+.menu__tudo .icone { width: 1.1em; height: 1.1em; color: var(--acento); }
+.menu .ornamento { margin: 18px auto 6px; }
+/* as páginas: ao centro, na letra dos títulos, sem ícones nem setas (a linha inteira é a ligação) */
+.menu__paginas { list-style: none; margin: 0; padding: 0; display: grid; justify-items: center; }
+.menu__pagina { display: inline-flex; align-items: center; min-height: 48px; padding: 0 12px; font: 500 1.5rem/1.2 var(--serifa); color: var(--tinta); text-decoration: none; }
+@media (hover: hover) { .menu__pagina:hover { color: var(--acento); } }
+.menu__pagina[aria-current="page"] { color: var(--acento); }
 .menu__pe { display: grid; gap: 16px; padding-top: 22px; }
 
 .gaveta { width: 100%; height: 100dvh; margin: 0 0 0 auto; }
@@ -479,12 +524,15 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
 .contactos p { margin: 0 0 .3em; }
 .erro { text-align: center; padding-top: 48px; margin-inline: auto; }
 
-/* --- rodapé (refeito a 17 out 2026; o porquê está no rodape() de layout.mjs) ------------------- */
-.rodape { background: var(--linho); color: var(--tinta); }
-.rodape__corpo { width: min(100% - 2 * var(--margem), var(--largura)); margin-inline: auto; padding: clamp(48px, 7vw, 80px) 0 clamp(36px, 5vw, 56px); display: grid; gap: 40px 32px; }
+/* --- rodapé (17 out 2026; o porquê está no rodape() de layout.mjs) ------------------------------- */
+/* A orla: meias-luas de linho a sair do rodapé para a página branca, como a renda das toalhas, e o
+   pesponto logo abaixo dela; o mesmo pesponto separa a linha legal. */
+.rodape { position: relative; margin-top: 12px; background: var(--pesponto) 0 16px / 12px 2px repeat-x, var(--linho); color: var(--tinta); }
+.rodape::before { content: ''; position: absolute; left: 0; right: 0; bottom: 100%; height: 12px; background: radial-gradient(circle at 50% 100%, var(--linho) 11.5px, transparent 12px) 0 0 / 24px 12px repeat-x; }
+.rodape__corpo { width: min(100% - 2 * var(--margem), var(--largura)); margin-inline: auto; padding: clamp(48px, 6vw, 64px) 0 clamp(28px, 4vw, 40px); display: grid; gap: 36px 32px; }
 @media (min-width: 640px) { .rodape__corpo { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); } .rodape__marca { grid-column: 1 / -1; } }
 @media (min-width: 1200px) { .rodape__corpo { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.35fr) minmax(0, 1fr); } .rodape__marca { grid-column: auto; } }
-.rodape__marca { display: grid; justify-items: start; align-content: start; gap: 18px; }
+.rodape__marca { display: grid; justify-items: start; align-content: start; gap: 14px; }
 /* no tablet a marca ocupa a largura toda: o logótipo ao lado da assinatura e das redes, e não por cima */
 @media (min-width: 640px) and (max-width: 1199.98px) {
   .rodape__marca { grid-template-columns: auto minmax(0, 1fr); column-gap: clamp(24px, 5vw, 48px); row-gap: 14px; }
@@ -493,7 +541,7 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
   .rodape__marca .redes { align-self: start; }
 }
 .rodape__logo { display: block; }
-.rodape__logo-img { display: block; width: auto; height: clamp(84px, 9vw, 104px); }
+.rodape__logo-img { display: block; width: auto; height: clamp(80px, 8vw, 96px); }
 .rodape__frase { margin: 0; max-width: 16em; font: italic 300 clamp(1.375rem, 2.2vw, 1.625rem)/1.25 var(--serifa); color: var(--acento); }
 .rodape__nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
 .rodape h2 { margin: 0 0 10px; font: 500 1.3125rem/1.2 var(--serifa); color: var(--acento); }
@@ -501,11 +549,12 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
 .rodape__coluna li a { display: inline-flex; align-items: center; gap: .6em; min-height: 40px; color: var(--tinta); text-decoration: none; font-size: .9375rem; }
 @media (hover: hover) { .rodape__coluna li a:hover { color: var(--acento); } }
 .rodape__contactos .icone { flex: none; width: 1.1em; height: 1.1em; color: var(--acento); }
-.rodape__nota { display: block; margin: -8px 0 6px 1.7em; font-size: .75rem; color: var(--tinta-2); }
+/* o telefone e, entre parênteses e mais pequena, a nota (DL 59/2021); no WhatsApp só a ligação */
+.rodape__contactos .chamada { display: block; margin: -8px 0 6px 1.7em; font-size: .75rem; }
 .rodape__local { display: inline-flex; align-items: center; gap: .6em; min-height: 40px; font-size: .9375rem; }
 /* a linha legal: no telemóvel as ligações em duas colunas, o botão do livro e os direitos por baixo; do
    tablet para cima o botão à direita; a partir de 1200 px tudo numa linha */
-.rodape__fim { width: min(100% - 2 * var(--margem), var(--largura)); margin-inline: auto; padding: 20px 0 calc(28px + env(safe-area-inset-bottom)); border-top: 1px solid var(--linha-forte); display: grid; grid-template-areas: "legal" "livro" "direitos"; justify-items: start; gap: 16px; font-size: .8125rem; color: var(--tinta-2); }
+.rodape__fim { width: min(100% - 2 * var(--margem), var(--largura)); margin-inline: auto; padding: 20px 0 calc(28px + env(safe-area-inset-bottom)); background: var(--pesponto) top left / 12px 2px repeat-x; display: grid; grid-template-areas: "legal" "livro" "direitos"; justify-items: start; gap: 16px; font-size: .8125rem; color: var(--tinta-2); }
 .rodape__legal { grid-area: legal; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 16px; width: 100%; }
 .rodape__livro { grid-area: livro; }
 .rodape__direitos { grid-area: direitos; margin: 0; }
@@ -526,7 +575,9 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
 .redes--rodape { margin: 2px 0 0; gap: 10px; }
 .redes--rodape a { border: 0; background: var(--rosa); color: var(--acento-escuro); transition: background-color .2s, color .2s; }
 @media (hover: hover) { .redes--rodape a:hover { background: var(--acento); color: var(--branco); } }
-.redes--menu { justify-content: center; }
+.redes--menu { justify-content: center; margin: 0; }
+.redes--menu a { border: 0; background: var(--rosa); color: var(--acento-escuro); }
+@media (hover: hover) { .redes--menu a:hover { background: var(--acento); color: var(--branco); } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: .01ms !important; scroll-behavior: auto !important; }

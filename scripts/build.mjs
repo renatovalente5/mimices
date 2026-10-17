@@ -21,7 +21,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { esc, euros, hojeEmLisboa, markdown, numeroWhatsApp, numeroLegivel, custoChamada, moradaCompleta } from '../src/templates/util.mjs';
+import { esc, euros, hojeEmLisboa, markdown, numeroWhatsApp, numeroLegivel, custoChamada, notaChamada, moradaCompleta } from '../src/templates/util.mjs';
 import { pagina } from '../src/templates/layout.mjs';
 import * as R from '../src/lib/regras.mjs';
 import * as paginas from '../src/templates/paginas.mjs';
@@ -193,7 +193,7 @@ const ctx = {
   absoluto: (c) => `${ORIGEM}${base}${c}`,
   // sem número ainda: o wa.me sem número abre o WhatsApp a pedir o contacto (dá para ensaiar)
   whatsapp: (texto) => `https://wa.me/${numero}?text=${encodeURIComponent(texto)}`,
-  numeroLegivel, custoChamada,
+  numeroLegivel, custoChamada, notaChamada,
   marcador: (desc) => `<mark class="por-confirmar">[por confirmar: ${esc(desc)}]</mark>`,
 };
 
@@ -262,7 +262,9 @@ function resolverMarcadores(fonte, onde) {
     marca: () => esc(site.marca),
     localidade: () => esc(site.local.localidade),
     email: () => (c.email ? guardar(`<a href="mailto:${esc(c.email)}">${esc(c.email)}</a>`) : guardar(ctx.marcador('o email'))),
-    whatsapp: () => (c.whatsapp ? guardar(`WhatsApp <a href="https://wa.me/${numero}">${esc(numeroLegivel(c.whatsapp))}</a> (${esc(custoChamada(c.whatsapp))})`) : guardar(`WhatsApp ${ctx.marcador('o número')}`)),
+    // o WhatsApp só como ligação, sem o número (o Renato, 17 out 2026); o telefone com o número e a nota
+    whatsapp: () => (c.whatsapp ? guardar(`<a href="https://wa.me/${numero}">WhatsApp</a>`) : guardar(`WhatsApp ${ctx.marcador('o número')}`)),
+    telefone: () => (R.numeroPortugues(c.telefone) ? guardar(`<a href="tel:+351${R.numeroPortugues(c.telefone)}">${esc(numeroLegivel(c.telefone))}</a> ${notaChamada(c.telefone)}`) : guardar(ctx.marcador('o telefone'))),
     'empresa.identificacao': () => guardar(identificacao()),
     'empresa.iva': () => (site.empresa.iva ? esc(site.empresa.iva) : guardar(ctx.marcador('IVA incluído à taxa legal, ou «isento de IVA ao abrigo do art. 53.º do CIVA»'))),
     prazo: () => (site.entrega.prazo ? esc(site.entrega.prazo) : guardar(ctx.marcador('quanto tempo leva a fazer e a entregar uma peça'))),
