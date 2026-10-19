@@ -598,10 +598,11 @@ export function problemasDoSite(d, { producao = false } = {}) {
   // --- empresa (os dados que a lei pede) ----------------------------------------
   if (vazio(e.nome)) legal('empresa.nome:vazio', 'empresa', 'empresa.nome', 'Falta o nome da empresa ou do empresário em nome individual (a lei pede-o no site).');
   if (!vazio(e.nif) && !nifValido(e.nif)) bloqueia('empresa.nif', 'empresa', 'empresa.nif', 'O NIF não é um NIF português válido: confira os 9 algarismos.');
-  if (vazio(e.nif)) legal('empresa.nif:vazio', 'empresa', 'empresa.nif', 'Falta o NIF (a lei pede-o no site).');
-  if (vazio(e.morada) || vazio(e.codigoPostal)) legal('empresa.morada:vazio', 'empresa', vazio(e.morada) ? 'empresa.morada' : 'empresa.codigoPostal', 'Falta a morada da sede, com o código postal (a lei pede-a no site).');
+  /* Sem NIF nem IVA, e com a morada só na localidade (19 out 2026): a Mimices não tem atividade aberta,
+     a Susana deu «Morada apenas Azeitão», e o Renato mandou abrir o site assim («A Susana
+     responsabiliza-se»). O NIF só se valida quando existe; a morada pede pelo menos a localidade. */
+  if (vazio(e.morada) && vazio(e.localidade)) legal('empresa.morada:vazio', 'empresa', 'empresa.morada', 'Falta a morada (ou, pelo menos, a localidade) de quem faz as peças: a lei pede-a no site.');
   if (!vazio(e.codigoPostal) && !/^\d{4}-\d{3}$/.test(String(e.codigoPostal).trim())) avisa('empresa.codigoPostal', 'empresa', 'empresa.codigoPostal', 'O código postal tem a forma 2975-000.');
-  if (vazio(e.iva)) legal('empresa.iva:vazio', 'empresa', 'empresa.iva', 'Falta dizer se os preços incluem IVA ou se está isento (art. 53.º do CIVA): os termos dizem-no ao cliente.');
   for (const [k, max, rotulo] of [['nome', TAMANHOS.empresaNome, 'Nome'], ['tipo', TAMANHOS.empresaTipo, 'Tipo'], ['morada', TAMANHOS.morada, 'Morada'], ['localidade', TAMANHOS.localidade, 'Localidade'], ['concelho', TAMANHOS.concelho, 'Concelho'], ['iva', TAMANHOS.iva, 'IVA']]) {
     textoSimples(e[k], `empresa.${k}`, 'empresa', `empresa.${k}`, rotulo, max);
   }

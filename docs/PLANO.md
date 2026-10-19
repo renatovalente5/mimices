@@ -179,6 +179,13 @@ simples é mais!»
   enfeite de Natal para a professora 3,50 €; jogo do galo 2,90 €; caixa de madeira personalizada «desde 23»
   (23 € com tampa de encaixe; + 2 € com fecho ou tampa de vidro, como no conjunto).
 
+## 4-D. Aberto ao Google (19 out 2026)
+
+«Sim abre já o site sem NIF» … «A Susana responsabiliza-se». O `publicar.yml` constrói com `--producao`
+(sem noindex, robots aberto, sitemap e a chave do IndexNow). As regras (regras.mjs) deixaram de pedir o NIF
+e o IVA (a Mimices não tem atividade aberta), e a morada pede pelo menos a localidade. O painel tem de
+receber a cópia nova das regras e o SITE_PRODUCAO = "1".
+
 ## 5. O que falta fazer
 
 - [x] Publicar a pré-visualização (GitHub Pages).

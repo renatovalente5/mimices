@@ -4,11 +4,11 @@
 # nos Custom Domains mimices.pt e www.mimices.pt (o www vai para o domínio sem www, e os vídeos
 # respondem por intervalos para o iPhone: worker/www.js).
 #
-# AINDA FECHADO AOS MOTORES DE BUSCA (16 out 2026): o domínio chegou antes dos dados legais da
-# Susana (nome, NIF, morada, IVA), do prazo e dos portes, por isso constrói-se com --dominio (na
-# raiz de mimices.pt, com noindex e o que falta «[por confirmar]»). Quando estiverem todos, o passo
-# «Construir» passa a --producao (abre ao Google e RECUSA publicar se faltar um dado legal) — e o
-# SITE_PRODUCAO do painel passa a "1" no mesmo dia.
+# ABERTO AOS MOTORES DE BUSCA desde 19 out 2026 (--producao): o Renato mandou abrir sem NIF («Sim abre já
+# o site sem NIF… A Susana responsabiliza-se») — a Mimices não tem atividade aberta, e a morada é só a
+# localidade (Azeitão). Antes, de 16 a 19 out, construía-se com --dominio (noindex e «[por confirmar]»).
+# O --producao RECUSA publicar se faltar um dado que as regras pedem (regras.mjs), e o SITE_PRODUCAO do
+# painel passa a "1" (o test-config do painel confere-o contra este passo).
 #
 # Até 16 out 2026 publicava a pré-visualização no GitHub Pages (renatovalente5.github.io/mimices,
 # com --base=/mimices). Os termos do Pages não deixam lá uma loja: a pré-visualização reencaminha
@@ -68,7 +68,7 @@ jobs:
       - name: Conferir as fotografias
         run: python scripts/imagens.py --verificar
       - name: Construir
-        run: node scripts/build.mjs --dominio
+        run: node scripts/build.mjs --producao
       # O que o job «publicar» precisa, num ficheiro só: o site, o script do www e a
       # configuração do Worker. O job «publicar» não faz checkout: nenhum código do
       # repositório corre ao lado do token.
