@@ -232,7 +232,7 @@ function textoPortes() {
   const zonas = site.entrega.zonas.filter((z) => z.morada);
   const partes = zonas.map((z) => `${esc(z.curto)}: ${Number.isFinite(p[z.id]) ? euros(p[z.id]) : ctx.marcador(`os portes para ${z.curto}`)}`);
   const gratis = Number.isFinite(p.gratisAPartirDe) ? ` Portes grátis no continente a partir de ${euros(p.gratisAPartirDe)} em peças.` : '';
-  return `Enviamos por CTT Expresso. ${partes.join('; ')}.${gratis} O levantamento em ${esc(site.local.localidade)} não tem custos.`;
+  return `Enviamos por CTT Expresso. ${partes.join('; ')}.${gratis} Numa encomenda maior, os portes podem subir com o peso: confirmamos o valor consigo antes do pagamento. O levantamento em ${esc(site.local.localidade)} não tem custos.`;
 }
 
 function identificacao() {
@@ -240,9 +240,12 @@ function identificacao() {
   const partes = [];
   partes.push(e.nome ? `<strong>${esc(e.nome)}</strong>` : ctx.marcador('o nome da empresa ou do empresário'));
   if (e.tipo) partes.push(esc(e.tipo));
-  partes.push(e.nif ? `NIF ${esc(e.nif)}` : `NIF ${ctx.marcador('o NIF')}`);
-  const morada = e.morada ? moradaCompleta(e) : '';
-  partes.push(morada ? `com sede em ${esc(morada)}` : `com sede em ${ctx.marcador('a morada da sede')}`);
+  /* Sem atividade aberta não há NIF (o Renato, 17 out 2026), e a Susana deu só a terra (19 out: «Morada
+     apenas Azeitão»): o NIF só aparece se existir, e a morada pode ser só a localidade. As regras
+     (regras.mjs) continuam a lembrá-los no painel e na construção. */
+  if (e.nif) partes.push(`NIF ${esc(e.nif)}`);
+  const morada = e.morada || e.localidade ? moradaCompleta(e) : '';
+  partes.push(morada ? `em ${esc(morada)}` : `em ${ctx.marcador('a morada')}`);
   return `${partes.join(', ')}, que vende com a marca ${esc(site.marca)}.`;
 }
 
@@ -266,7 +269,7 @@ function resolverMarcadores(fonte, onde) {
     whatsapp: () => (c.whatsapp ? guardar(`<a href="https://wa.me/${numero}">WhatsApp</a>`) : guardar(`WhatsApp ${ctx.marcador('o número')}`)),
     telefone: () => (R.numeroPortugues(c.telefone) ? guardar(`<a href="tel:+351${R.numeroPortugues(c.telefone)}">${esc(numeroLegivel(c.telefone))}</a> ${notaChamada(c.telefone)}`) : guardar(ctx.marcador('o telefone'))),
     'empresa.identificacao': () => guardar(identificacao()),
-    'empresa.iva': () => (site.empresa.iva ? esc(site.empresa.iva) : guardar(ctx.marcador('IVA incluído à taxa legal, ou «isento de IVA ao abrigo do art. 53.º do CIVA»'))),
+    'empresa.iva': () => (site.empresa.iva ? esc(site.empresa.iva) : ''), // sem atividade não há IVA a declarar
     prazo: () => (site.entrega.prazo ? esc(site.entrega.prazo) : guardar(ctx.marcador('quanto tempo leva a fazer e a entregar uma peça'))),
     pagamento: () => (site.entrega.pagamento ? esc(site.entrega.pagamento) : guardar(ctx.marcador('as formas de pagamento (MB WAY, transferência, no levantamento…)'))),
     levantamento: () => esc(site.entrega.levantamento || ''),

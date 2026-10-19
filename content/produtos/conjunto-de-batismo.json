@@ -22,14 +22,14 @@
     "Concha natural com laço em 100 % linho"
   ],
   "medidas": [],
-  "composicao": "Toalha em algodão com linho, ou em 100 % linho (à escolha); laços em 100 % linho.",
+  "composicao": "Toalha em 100 % algodão ou em 100 % linho (à escolha); laços em 100 % linho.",
   "cores": true,
   "opcoes": [
     {
       "nome": "Toalha",
       "valores": [
         {
-          "nome": "Algodão com linho",
+          "nome": "100 % algodão",
           "suplemento": 0
         },
         {

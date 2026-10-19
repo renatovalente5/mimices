@@ -149,6 +149,21 @@ simples é mais!»
   ex.: «55 % linho, 45 % algodão»); se há mínimo de unidades nas lembranças; se o porta-chaves, a
   velinha e a oração do Anjo da Guarda são mesmo 1,90 €; os dados legais e o IVA.
 
+## 4-B. O que a Susana respondeu a 19 out 2026 (WhatsApp, 09:42) — já no site
+
+- **Prazo:** «depende do tipo de trabalho mas apontar 15 dias» → «Cada encomenda fica pronta em cerca de
+  15 dias, conforme a peça.»
+- **Portes (CTT Expresso):** continente 4,80 €, ilhas 10,80 € («depende do peso normalmente»): os textos
+  dizem que numa encomenda maior os portes podem subir e que se confirma o valor antes do pagamento.
+- **Toalha sozinha:** algodão 24 €, linho 28 € (escolha «100 % linho» + 4 €). **As toalhas são 100 %
+  algodão ou 100 % linho** (não «algodão com linho»): a composição e as escolhas dos conjuntos mudaram.
+- **Convite:** desde 1,90 € (a ficha diz que o preço final depende do modelo).
+- **Quem faz as peças:** «Morada apenas Azeitão quem faz as peças Susana» → empresa.nome «Susana» e
+  empresa.localidade «Azeitão». Sem atividade aberta (encerrou-a: a empresa onde trabalhava entrou em
+  insolvência), por isso sem NIF nem IVA: os termos já não mostram «por confirmar» para eles.
+- **Ainda sem resposta:** o preço da caixa sozinha. **Pedidos dela:** juntar mais fotografias; e trocar a
+  coleção de Natal pela de Páscoa (e assim por diante) no painel — o Renato prometeu que ela o pode fazer.
+
 ## 5. O que falta fazer
 
 - [x] Publicar a pré-visualização (GitHub Pages).

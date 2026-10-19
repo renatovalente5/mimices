@@ -299,7 +299,7 @@ export function produto(ctx, p) {
   const e = ctx.site.empresa;
   /* Quem fabrica, com a morada postal e o email, à vista em cada ficha (Regulamento (UE) 2023/988,
      art. 19.º). Sem morada ainda, a marca «por confirmar» (no domínio a construção pára antes). */
-  const fabricante = [e.nome ? esc(`${e.nome} (${ctx.site.marca})`) : esc(ctx.site.marca), e.morada ? esc(moradaCompleta(e)) : ctx.marcador('a morada postal de quem faz as peças'), esc(ctx.site.contactos.email)].filter(Boolean).join(' · ');
+  const fabricante = [e.nome ? esc(`${e.nome} (${ctx.site.marca})`) : esc(ctx.site.marca), e.morada || e.localidade ? esc(moradaCompleta(e)) : ctx.marcador('a morada postal de quem faz as peças'), esc(ctx.site.contactos.email)].filter(Boolean).join(' · ');
   const medidas = p.medidas?.length ? `<table class="medidas"><tbody>${p.medidas.map((l) => `<tr><th scope="row">${esc(l.rotulo)}</th><td>${esc(l.valor)}</td></tr>`).join('')}</tbody></table>` : '';
   const acordeoes = `<div class="acordeoes">
     ${medidas ? `<details><summary>${icones.regua}Medidas</summary><div class="acordeoes__corpo">${medidas}<p class="nota">Medidas aproximadas: cada peça é feita à mão.</p></div></details>` : ''}

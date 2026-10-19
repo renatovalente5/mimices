@@ -16,12 +16,12 @@
     "distrito": "Setúbal"
   },
   "empresa": {
-    "nome": "",
+    "nome": "Susana",
     "tipo": "",
     "nif": "",
     "morada": "",
     "codigoPostal": "",
-    "localidade": "",
+    "localidade": "Azeitão",
     "concelho": "",
     "iva": ""
   },
@@ -153,11 +153,11 @@
       }
     ],
     "portes": {
-      "continente": null,
-      "ilhas": null,
+      "continente": 4.8,
+      "ilhas": 10.8,
       "gratisAPartirDe": null
     },
-    "prazo": "",
+    "prazo": "Cada encomenda fica pronta em cerca de 15 dias, conforme a peça.",
     "pagamento": "O pagamento é feito por MB WAY ou por transferência bancária. Quando confirmarmos a encomenda pelo WhatsApp, enviamos-lhe os dados para o pagamento.",
     "levantamento": "Em Azeitão, sem custos. Combinamos o dia e a hora pelo WhatsApp."
   }
