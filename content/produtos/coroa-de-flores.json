@@ -1,12 +1,12 @@
 {
-  "nome": "Coroa de flores",
+  "nome": "Coroa de flores preservadas",
   "nomeCurto": "Coroa de flores",
   "fotos": [
     "coroa-de-flores"
   ],
-  "resumo": "Coroa de flores pequenas, brancas e rosa, com uma fita para atar.",
-  "descricao": "Uma coroa de flores delicadas, em branco e rosa, com uma fita para atar.",
-  "preco": null,
+  "resumo": "Coroa de flores preservadas, brancas e rosa, com uma fita para atar.",
+  "descricao": "Uma coroa de flores preservadas, em branco e rosa, com uma fita para atar.",
+  "preco": 15.8,
   "precoAnterior": null,
   "promocaoAte": "",
   "inclui": [],

@@ -175,6 +175,9 @@ simples é mais!»
   do galo personalizado.
 - O menu passa a mostrar quatro categorias numa fila.
 - Originais em `_cliente/whatsapp/2026-10-19/`.
+- **Os preços (13:27–13:30):** cinto 100 % linho 12 €; coroa de flores preservadas 15,80 €; touca 18,80 €;
+  enfeite de Natal para a professora 3,50 €; jogo do galo 2,90 €; caixa de madeira personalizada «desde 23»
+  (23 € com tampa de encaixe; + 2 € com fecho ou tampa de vidro, como no conjunto).
 
 ## 5. O que falta fazer
 

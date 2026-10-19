@@ -9,7 +9,7 @@
   ],
   "resumo": "Caixa de madeira com o nome e a data, para guardar a vela, a toalha e a concha do batismo.",
   "descricao": "Para guardar as recordações do batismo: a tampa leva o nome e a data, e por dentro há um lugar para a vela, a toalha e a concha.",
-  "preco": null,
+  "preco": 23,
   "precoAnterior": null,
   "promocaoAte": "",
   "inclui": [
@@ -31,7 +31,7 @@
         },
         {
           "nome": "Com fecho ou tampa de vidro",
-          "suplemento": 0
+          "suplemento": 2
         }
       ]
     }
