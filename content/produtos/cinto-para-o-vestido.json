@@ -1,0 +1,28 @@
+{
+  "nome": "Cinto para o vestido, a condizer com a vela",
+  "nomeCurto": "Cinto para o vestido",
+  "fotos": [
+    "cinto-vestido-vela-rosa"
+  ],
+  "resumo": "Cinto de linho para o vestido do batizado, no tom e com o laço da vela.",
+  "descricao": "Um cinto para o vestido do batizado, no mesmo tom de linho e com o mesmo laço da vela, para tudo condizer.\n\nEscolha o tom de linho. A vela vende-se à parte.",
+  "preco": null,
+  "precoAnterior": null,
+  "promocaoAte": "",
+  "inclui": [],
+  "medidas": [],
+  "cores": true,
+  "opcoes": [],
+  "personalizacao": {
+    "nome": false,
+    "data": false,
+    "frase": false
+  },
+  "quantidadeMinima": 1,
+  "categoria": "acessorios",
+  "video": "",
+  "novidade": true,
+  "publicado": true,
+  "ordem": 1,
+  "composicao": "100 % linho."
+}

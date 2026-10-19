@@ -164,6 +164,18 @@ simples é mais!»
 - **Ainda sem resposta:** o preço da caixa sozinha. **Pedidos dela:** juntar mais fotografias; e trocar a
   coleção de Natal pela de Páscoa (e assim por diante) no painel — o Renato prometeu que ela o pode fazer.
 
+## 4-C. As fotografias e a pasta de acessórios (WhatsApp, 19 out 2026, 10:51–12:06) — já no site
+
+- «Gostava de uma pasta com acessórios/complementos: cinto para vestido igual à vela» → categoria nova
+  **Acessórios** (entre as lembranças e o Natal) com o cinto (100 % linho, como os laços), a coroa de
+  flores e a touca, sem preço por enquanto. Ficaram de fora duas fotografias com bebés.
+- O quadro dos cinco modelos de toalha → na ficha da toalha.
+- Convites (4), lembranças (7; uma já estava no site) e Natal (os guardanapos e enfeites bordados) → nas
+  fichas desses artigos. Duas peças novas, sem preço: o enfeite de Natal (rena) para a professora e o jogo
+  do galo personalizado.
+- O menu passa a mostrar quatro categorias numa fila.
+- Originais em `_cliente/whatsapp/2026-10-19/`.
+
 ## 5. O que falta fazer
 
 - [x] Publicar a pré-visualização (GitHub Pages).

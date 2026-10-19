@@ -1,0 +1,27 @@
+{
+  "nome": "Jogo do galo personalizado",
+  "nomeCurto": "Jogo do galo",
+  "fotos": [
+    "jogo-do-galo-ilustrado"
+  ],
+  "resumo": "Jogo do galo em madeira, com uma ilustração gravada, os nomes e as peças em acrílico.",
+  "descricao": "Um jogo do galo em madeira, com uma ilustração gravada, os nomes e a data, e as peças em acrílico branco.",
+  "preco": null,
+  "precoAnterior": null,
+  "promocaoAte": "",
+  "inclui": [],
+  "medidas": [],
+  "cores": false,
+  "opcoes": [],
+  "personalizacao": {
+    "nome": true,
+    "data": true,
+    "frase": false
+  },
+  "quantidadeMinima": 1,
+  "categoria": "lembrancas",
+  "video": "",
+  "novidade": true,
+  "publicado": true,
+  "ordem": 9
+}

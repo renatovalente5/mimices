@@ -1,0 +1,27 @@
+{
+  "nome": "Coroa de flores",
+  "nomeCurto": "Coroa de flores",
+  "fotos": [
+    "coroa-de-flores"
+  ],
+  "resumo": "Coroa de flores pequenas, brancas e rosa, com uma fita para atar.",
+  "descricao": "Uma coroa de flores delicadas, em branco e rosa, com uma fita para atar.",
+  "preco": null,
+  "precoAnterior": null,
+  "promocaoAte": "",
+  "inclui": [],
+  "medidas": [],
+  "cores": false,
+  "opcoes": [],
+  "personalizacao": {
+    "nome": false,
+    "data": false,
+    "frase": false
+  },
+  "quantidadeMinima": 1,
+  "categoria": "acessorios",
+  "video": "",
+  "novidade": true,
+  "publicado": true,
+  "ordem": 2
+}

@@ -1,0 +1,29 @@
+{
+  "nome": "Enfeite de Natal para a professora",
+  "nomeCurto": "Enfeite para a professora",
+  "fotos": [
+    "enfeite-rena-professora"
+  ],
+  "resumo": "Enfeite de Natal em madeira gravada, com o nome da professora e uma mensagem.",
+  "descricao": "Uma rena em madeira gravada, com o nome da professora, uma mensagem e o nome de quem oferece. Para pendurar na árvore.",
+  "preco": null,
+  "precoAnterior": null,
+  "promocaoAte": "",
+  "inclui": [],
+  "medidas": [],
+  "cores": false,
+  "opcoes": [],
+  "personalizacao": {
+    "nome": true,
+    "data": false,
+    "frase": true,
+    "rotuloNome": "Nome da professora",
+    "rotuloFrase": "Mensagem e nome de quem oferece"
+  },
+  "quantidadeMinima": 1,
+  "categoria": "natal",
+  "video": "",
+  "novidade": true,
+  "publicado": true,
+  "ordem": 7
+}

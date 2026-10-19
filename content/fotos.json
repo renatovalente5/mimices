@@ -274,5 +274,77 @@
   "velinhas-lembranca-anjo": {
     "alt": "Velinhas de lembrança com um anjo e o nome",
     "foco": "50% 50%"
+  },
+  "cinto-vestido-vela-rosa": {
+    "alt": "Vela de batismo com laço rosa e, ao lado, o cinto de linho rosa para o vestido, a condizer",
+    "foco": "50% 50%"
+  },
+  "coroa-de-flores": {
+    "alt": "Coroa de flores pequenas, brancas e rosa, com uma fita branca para atar",
+    "foco": "50% 50%"
+  },
+  "touca-de-batismo": {
+    "alt": "Touca de batismo branca, bordada, com fitas para atar",
+    "foco": "50% 50%"
+  },
+  "toalhas-cinco-modelos": {
+    "alt": "Quadro com os cinco modelos de toalha de batismo",
+    "foco": "50% 50%"
+  },
+  "convite-madeira": {
+    "alt": "Convite de batismo em madeira gravada, com a inicial em acrílico, ao lado de um disco «O meu batismo»",
+    "foco": "50% 50%"
+  },
+  "convite-lacre-pomba": {
+    "alt": "Convites de batismo com selo de lacre castanho e uma pomba em gesso",
+    "foco": "50% 50%"
+  },
+  "convite-laco-rosa": {
+    "alt": "Convite de batismo com laço rosa e selo de lacre branco, ao lado do convite aberto",
+    "foco": "50% 50%"
+  },
+  "convite-lacre-verde": {
+    "alt": "Convite de batismo com selo de lacre verde e um anjo em gesso",
+    "foco": "50% 50%"
+  },
+  "lembranca-anjo-dourado": {
+    "alt": "Lembranças em madeira gravada com o nome e um anjo em acrílico dourado",
+    "foco": "50% 50%"
+  },
+  "lembranca-disco-branco-anjo": {
+    "alt": "Lembrança redonda branca com um anjo gravado e a frase «Lembrança do meu batismo»",
+    "foco": "50% 50%"
+  },
+  "oracao-anjo-da-guarda-recortada": {
+    "alt": "Lembrança recortada em madeira com a Oração do Anjo da Guarda gravada",
+    "foco": "50% 50%"
+  },
+  "lembranca-balao": {
+    "alt": "Lembrança em madeira em forma de balão, com «O meu batismo», o nome e a data",
+    "foco": "50% 50%"
+  },
+  "lembranca-comunhao-calice": {
+    "alt": "Lembrança de comunhão em madeira gravada, com um cálice em acrílico dourado",
+    "foco": "50% 50%"
+  },
+  "iman-arco-acrilico-dourado": {
+    "alt": "Ímanes em arco, em madeira, com o nome em acrílico dourado espelhado",
+    "foco": "50% 50%"
+  },
+  "lembranca-disco-irmas": {
+    "alt": "Lembrança redonda em madeira gravada, «O nosso batismo», com um anjo e dois nomes",
+    "foco": "50% 50%"
+  },
+  "jogo-do-galo-ilustrado": {
+    "alt": "Jogo do galo em madeira com uma ilustração gravada e peças em acrílico branco",
+    "foco": "50% 50%"
+  },
+  "enfeites-e-guardanapos-bordados": {
+    "alt": "Guardanapos de linho e enfeites redondos de Natal bordados com os nomes",
+    "foco": "50% 50%"
+  },
+  "enfeite-rena-professora": {
+    "alt": "Enfeite de Natal em madeira, uma rena com uma mensagem para a professora",
+    "foco": "50% 50%"
   }
 }
