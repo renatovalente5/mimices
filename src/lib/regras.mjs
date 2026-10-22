@@ -86,10 +86,18 @@ export const NOMES_ZONAS = Object.freeze({ continente: 'Portugal Continental', i
    ordem (ordenarComo()); as que já estão no ficheiro ficam onde estão. */
 export const CAMPOS_ARTIGO = Object.freeze([
   'nome', 'nomeCurto', 'fotos', 'resumo', 'descricao',
-  'preco', 'precoAnterior', 'promocaoAte',
+  'preco', 'precoAnterior', 'promocaoDesde', 'promocaoAte',
   'inclui', 'medidas', 'composicao', 'cores', 'opcoes', 'personalizacao', 'quantidadeMinima', 'video',
+  'referencia', 'fabricante', 'avisos', 'perigos', 'idade', 'naoBrinquedo',
   'categoria', 'novidade', 'publicado', 'ordem',
 ]);
+/* A informação legal de cada artigo (22 out 2026, grupo 1 da auditoria legal), toda opcional e só
+   mostrada na ficha quando está preenchida: a referência e o fabricante (Regulamento (UE) 2023/988,
+   art. 19.º: nome, morada e email — vazio, a ficha diz os dados da loja), os avisos de segurança (um por
+   linha, à vista junto do botão), os perigos de uma mistura — velas, gesso perfumado (Regulamento (CE)
+   1272/2008, CLP; um por linha) —, a idade recomendada e «Não é um brinquedo» (DL 43/2011). E a data de
+   início da promoção (DL 70/2007, art. 5.º: o período e o preço mais baixo dos 30 dias anteriores). */
+export const CAMPOS_FABRICANTE = Object.freeze(['nome', 'morada', 'email']);
 /* Sempre escritos pelo painel, com o valor explícito. Ausentes valem o valor por
    omissão (é o que o gerador faz). */
 export const BOOLEANOS_ARTIGO = Object.freeze(['cores', 'novidade', 'publicado']);
@@ -97,7 +105,8 @@ export const POR_OMISSAO = Object.freeze({ publicado: true, novidade: false, cor
 
 export const NOMES_CAMPOS = Object.freeze({
   nome: 'Nome do artigo', nomeCurto: 'Nome curto', fotos: 'Fotografias', resumo: 'Frase curta', descricao: 'Descrição',
-  preco: 'Preço', precoAnterior: 'Preço anterior', promocaoAte: 'Fim da promoção',
+  preco: 'Preço', precoAnterior: 'Preço anterior', promocaoAte: 'Fim da promoção', promocaoDesde: 'Início da promoção',
+  referencia: 'Referência', fabricante: 'Fabricante', avisos: 'Avisos de segurança', perigos: 'Perigos (misturas)', idade: 'Idade recomendada', naoBrinquedo: 'Não é um brinquedo',
   inclui: 'O que inclui', medidas: 'Medidas', composicao: 'Composição dos tecidos', cores: 'Escolher o tom de linho', opcoes: 'Escolhas', personalizacao: 'Personalização',
   quantidadeMinima: 'Quantidade mínima', video: 'Vídeo',
   categoria: 'Categoria', novidade: 'Novidade', publicado: 'Publicado no site', ordem: 'Posição na lista',
@@ -118,6 +127,7 @@ export const LIMITES = Object.freeze({ preco: [0.01, 100000], suplemento: [0, 10
 /* Tamanhos máximos dos textos, em caracteres. */
 export const TAMANHOS = Object.freeze({
   nome: 120, nomeCurto: 40, resumo: 300, descricao: 6000, composicao: 300,
+  referencia: 40, avisos: 600, perigos: 400, idade: 80, fabricanteNome: 120, fabricanteMorada: 200,
   inclui: 12, incluiTexto: 120, medidaRotulo: 40, medidaValor: 60, medidas: 12,
   opcoes: 4, valores: 16, opcaoNome: 40, valorNome: 60, rotulo: 40,
   fotos: 16, nomeFoto: 120, alt: 300,
@@ -432,6 +442,21 @@ export function problemasDoArtigo(a, ctx = {}) {
     else if (vazio(pa)) avisa('promocaoAte', 'promocaoAte', 'Há data de fim da promoção, mas não há preço anterior: escreva o preço anterior, ou apague a data.');
     else if (typeof ctx.hoje === 'string' && ate < ctx.hoje && noSite(a)) lembra('promocao-acabou', 'promocaoAte', `A promoção acabou a ${ate.split('-').reverse().join('/')}: o site já mostra o preço normal (${pa} €). Pode apagar o preço anterior e a data, ou pôr uma data nova.`);
   }
+  /* O INÍCIO DA PROMOÇÃO (DL 70/2007, art. 5.º: a lei pede o período e o preço mais baixo dos 30
+     dias anteriores ao início; o riscado tem de ser esse preço). Com a data, a ficha diz «Promoção
+     de … a … · preço mais baixo nos 30 dias anteriores: …». Sem ela, numa promoção a correr, um
+     lembrete (não pára nada). */
+  const desde = a.promocaoDesde;
+  const emPromocao = typeof p === 'number' && typeof pa === 'number' && pa > p;
+  const acabou = dataValida(ate) && typeof ctx.hoje === 'string' && ate < ctx.hoje;
+  if (!ausente(desde) && desde !== '') {
+    if (!dataValida(desde)) avisa('promocaoDesde', 'promocaoDesde', 'A data de início da promoção não é uma data válida.');
+    else if (vazio(pa)) avisa('promocaoDesde', 'promocaoDesde', 'Há data de início da promoção, mas não há preço anterior: escreva o preço anterior, ou apague a data.');
+    else if (dataValida(ate) && desde > ate) avisa('promocaoDesde', 'promocaoDesde', 'A promoção começa depois de acabar: confira as duas datas.');
+  } else if (emPromocao && !acabou && noSite(a)) {
+    lembra('promocao-sem-inicio', 'promocaoDesde', 'Falta a data de início da promoção: a lei pede o período e o preço mais baixo dos 30 dias anteriores (DL 70/2007). Com a data, a ficha diz «Promoção de … a … · preço mais baixo nos 30 dias anteriores: …».');
+  }
+  if (emPromocao && vazio(ate) && noSite(a)) lembra('promocao-sem-fim', 'promocaoAte', 'Falta a data de fim da promoção: a lei pede o período da promoção (DL 70/2007). Escolha o último dia.');
   const o = a.ordem;
   if (!ausente(o) && o !== '' && (typeof o !== 'number' || !Number.isInteger(o) || o < LIMITES.ordem[0] || o > LIMITES.ordem[1])) {
     avisa('ordem', 'ordem', `A posição é um número inteiro de 0 a ${LIMITES.ordem[1]} (mais baixo aparece primeiro).`);
@@ -541,6 +566,32 @@ export function problemasDoArtigo(a, ctx = {}) {
   texto('resumo', TAMANHOS.resumo, { linha: false });
   texto('descricao', TAMANHOS.descricao, { linha: false });
   texto('composicao', TAMANHOS.composicao);
+
+  // --- a informação legal do artigo (opcional) --------------------------------
+  const fab = a.fabricante;
+  if (!ausente(fab)) {
+    if (!eObjecto(fab)) avisa('fabricante', 'fabricante', 'O fabricante não está gravado como deve ser: escreva-o outra vez.');
+    else {
+      for (const [k, max, rotulo] of [['nome', TAMANHOS.fabricanteNome, 'Nome do fabricante'], ['morada', TAMANHOS.fabricanteMorada, 'Morada do fabricante']]) {
+        const x = fab[k];
+        if (ausente(x) || x === '') continue;
+        if (typeof x !== 'string' || x.length > max || RE_CONTROLO_LINHA.test(x)) avisa(`fabricante.${k}`, `fabricante.${k}`, `«${rotulo}» tem de ser um texto numa linha, até ${max} caracteres.`);
+      }
+      if (!vazio(fab.email) && !emailValido(fab.email)) avisa('fabricante.email', 'fabricante.email', 'O email do fabricante não parece estar certo (ex.: nome@exemplo.pt).');
+      const dados = CAMPOS_FABRICANTE.filter((k) => temTexto(fab[k]));
+      if (dados.length && dados.length < CAMPOS_FABRICANTE.length && noSite(a)) {
+        lembra('fabricante:incompleto', `fabricante.${CAMPOS_FABRICANTE.find((k) => !temTexto(fab[k]))}`, 'O fabricante está incompleto: a lei pede o nome, a morada e o email (Regulamento (UE) 2023/988, art. 19.º). Até estar completo, a ficha mostra os dados da loja.');
+      }
+    }
+  }
+  if (!ausente(a.naoBrinquedo) && typeof a.naoBrinquedo !== 'boolean') avisa('naoBrinquedo', 'naoBrinquedo', '«Não é um brinquedo» tem de ser sim ou não.');
+  texto('referencia', TAMANHOS.referencia);
+  texto('avisos', TAMANHOS.avisos, { linha: false });
+  texto('perigos', TAMANHOS.perigos, { linha: false });
+  texto('idade', TAMANHOS.idade);
+  for (const campo of ['referencia', 'avisos', 'perigos', 'idade']) {
+    if (!ausente(a[campo]) && a[campo] !== '' && typeof a[campo] !== 'string') avisa(`${campo}:tipo`, campo, `«${NOMES_CAMPOS[campo]}» tem de ser texto.`);
+  }
   return out;
 }
 
@@ -603,6 +654,12 @@ export function problemasDoSite(d, { producao = false } = {}) {
      responsabiliza-se»). O NIF só se valida quando existe; a morada pede pelo menos a localidade. */
   if (vazio(e.morada) && vazio(e.localidade)) legal('empresa.morada:vazio', 'empresa', 'empresa.morada', 'Falta a morada (ou, pelo menos, a localidade) de quem faz as peças: a lei pede-a no site.');
   if (!vazio(e.codigoPostal) && !/^\d{4}-\d{3}$/.test(String(e.codigoPostal).trim())) avisa('empresa.codigoPostal', 'empresa', 'empresa.codigoPostal', 'O código postal tem a forma 2975-000.');
+  /* A GUARDA DA IDENTIFICAÇÃO, REPOSTA EM MODO AVISAR (22 out 2026, grupo 1 da auditoria legal): o
+     NIF, a morada completa e o IVA voltam a ser lembrados, sem parar a publicação (DL 7/2004, art. 10.º:
+     nome, morada geográfica, email e NIF, sempre à vista no site). */
+  if (vazio(e.nif)) avisa('empresa.nif:vazio', 'empresa', 'empresa.nif', 'Falta o NIF: a lei pede-o no site (DL 7/2004, art. 10.º). Quando abrir a atividade, escreva-o aqui.', { lembrete: true });
+  if (vazio(e.morada) || vazio(e.codigoPostal)) avisa('empresa.morada:incompleta', 'empresa', vazio(e.morada) ? 'empresa.morada' : 'empresa.codigoPostal', 'A morada está incompleta: a lei pede a morada geográfica, com a rua, o número e o código postal (DL 7/2004, art. 10.º).', { lembrete: true });
+  if (vazio(e.iva)) avisa('empresa.iva:vazio', 'empresa', 'empresa.iva', 'Falta dizer se os preços incluem IVA ou se está isenta (art. 53.º do CIVA): os termos dizem-no ao cliente.', { lembrete: true });
   for (const [k, max, rotulo] of [['nome', TAMANHOS.empresaNome, 'Nome'], ['tipo', TAMANHOS.empresaTipo, 'Tipo'], ['morada', TAMANHOS.morada, 'Morada'], ['localidade', TAMANHOS.localidade, 'Localidade'], ['concelho', TAMANHOS.concelho, 'Concelho'], ['iva', TAMANHOS.iva, 'IVA']]) {
     textoSimples(e[k], `empresa.${k}`, 'empresa', `empresa.${k}`, rotulo, max);
   }

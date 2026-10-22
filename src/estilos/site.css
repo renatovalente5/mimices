@@ -686,21 +686,20 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
 .rodape__local { display: inline-flex; align-items: center; gap: .6em; min-height: 40px; font-size: .9375rem; }
 /* a linha legal: no telemóvel as ligações em duas colunas, o botão do livro e os direitos por baixo; do
    tablet para cima o botão à direita; a partir de 1200 px tudo numa linha */
-.rodape__fim { width: min(100% - 2 * var(--margem), var(--largura)); margin-inline: auto; padding: 20px 0 calc(28px + env(safe-area-inset-bottom)); background: var(--pesponto) top left / 12px 2px repeat-x; display: grid; grid-template-areas: "legal" "livro" "direitos"; justify-items: start; gap: 16px; font-size: .8125rem; color: var(--tinta-2); }
+.rodape__fim { width: min(100% - 2 * var(--margem), var(--largura)); margin-inline: auto; padding: 20px 0 calc(28px + env(safe-area-inset-bottom)); background: var(--pesponto) top left / 12px 2px repeat-x; display: grid; grid-template-areas: "legal" "direitos"; justify-items: start; gap: 16px; font-size: .8125rem; color: var(--tinta-2); }
 .rodape__legal { grid-area: legal; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 16px; width: 100%; }
-.rodape__livro { grid-area: livro; }
 .rodape__direitos { grid-area: direitos; margin: 0; }
 @media (min-width: 700px) {
-  .rodape__fim { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "legal livro" "direitos livro"; align-items: center; gap: 2px 32px; }
+  .rodape__fim { grid-template-columns: minmax(0, 1fr); grid-template-areas: "legal" "direitos"; align-items: center; gap: 2px 32px; }
   .rodape__legal { display: flex; flex-wrap: wrap; gap: 0 22px; }
 }
 @media (min-width: 1200px) {
-  .rodape__fim { grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "direitos legal livro"; gap: 12px 32px; }
+  .rodape__fim { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "direitos legal"; gap: 12px 32px; }
 }
 .rodape__legal a { display: inline-flex; align-items: center; min-height: 36px; color: var(--tinta-2); text-decoration: none; }
 @media (hover: hover) { .rodape__legal a:hover { color: var(--tinta); text-decoration: underline; } }
-.rodape__livro { display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border: 1px solid var(--tinta); border-radius: 999px; color: var(--tinta); font-weight: 500; text-decoration: none; }
-@media (hover: hover) { .rodape__livro:hover { background: var(--tinta); color: var(--branco); } }
+/* O Livro de Reclamações (legal-comum, variante discreta): na linha das ligações legais, com a letra e a
+   cor das vizinhas (.rodape__legal a); só o ícone o distingue. */
 .redes { list-style: none; margin: 14px 0 0; padding: 0; display: flex; gap: 8px; }
 .redes a { display: inline-grid; place-items: center; width: 44px; height: 44px; border: 1px solid rgba(46, 42, 40, .25); border-radius: 50%; color: var(--tinta); }
 @media (hover: hover) { .redes a:hover { border-color: var(--tinta); color: var(--tinta); } }
@@ -714,3 +713,29 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
+
+/* ------------------------------------------------------------------ peças legais (legal-comum, 22 out 2026) */
+/* As reclamações, nos Contactos. */
+.contactos-livro { margin-top: 40px; padding: 24px; background: var(--linho); border-radius: 4px; }
+.contactos-livro h2 { font-size: 1.25rem; margin: 0 0 .4em; }
+.contactos-livro p { margin: 0 0 16px; max-width: 60ch; }
+/* A nota da promoção, por baixo do preço da ficha. */
+.preco__promocao { font-size: .8125rem; color: var(--tinta-2); margin: 6px 0 0; }
+/* A informação legal do artigo, junto do botão (só quando preenchida no painel). */
+.info-legal { margin: 20px 0 0; padding: 16px 18px; border: 1px solid var(--linha-forte); border-radius: 4px; display: grid; gap: 8px; font-size: .9375rem; }
+.info-legal__titulo { font-weight: 600; margin: 0; }
+.info-legal__linha { margin: 0; }
+.info-legal ul { margin: 4px 0 0 20px; padding: 0; }
+/* A política de privacidade: a tabela dos destinatários. */
+.destinatarios { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: .9375rem; }
+.destinatarios th, .destinatarios td { text-align: left; vertical-align: top; padding: 10px 12px 10px 0; border-bottom: 1px solid var(--linha); }
+.destinatarios th { font-weight: 600; }
+@media (max-width: 699px) {
+  .destinatarios, .destinatarios tbody, .destinatarios tr, .destinatarios td { display: block; }
+  .destinatarios thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .destinatarios tr { padding: 12px 0; border-bottom: 1px solid var(--linha); }
+  .destinatarios td { border: 0; padding: 2px 0; }
+  .destinatarios td:first-child { font-weight: 600; }
+}
+/* A frase da privacidade junto do carrinho. */
+.privacidade-formulario { font-size: .8125rem; color: var(--tinta-2); margin: 10px 0 14px; }

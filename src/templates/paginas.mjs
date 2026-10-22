@@ -3,7 +3,8 @@
 import { esc, euros, precoDe, markdown, inline, textoSimples, numeroWhatsApp, numeroLegivel, notaChamada, moradaCompleta } from './util.mjs';
 import { icones } from './icones.mjs';
 import { numeroPortugues, opcoesDe, personalizacaoDe, quantidadeMinimaDe, temSuplementos } from '../lib/regras.mjs';
-import { imagem, preco, cartaoProduto, migalhas, botaoSeta, desconto, promocaoAte, cabecaDePagina, categoriasEmMancha, convite } from './componentes.mjs';
+import { imagem, preco, cartaoProduto, migalhas, botaoSeta, desconto, promocaoAte, cabecaDePagina, categoriasEmMancha, convite, promocaoNota, livroBotao, pecaLegal } from './componentes.mjs';
+import { fraseFormularioHtml } from '../../legal-comum/index.mjs';
 import { categoriasComArtigos } from './layout.mjs';
 
 const produtosDe = (ctx, cat) => ctx.produtos.filter((p) => p.categoria === cat);
@@ -298,8 +299,24 @@ export function produto(ctx, p) {
 
   const e = ctx.site.empresa;
   /* Quem fabrica, com a morada postal e o email, à vista em cada ficha (Regulamento (UE) 2023/988,
-     art. 19.º). Sem morada ainda, a marca «por confirmar» (no domínio a construção pára antes). */
-  const fabricante = [e.nome ? esc(`${e.nome} (${ctx.site.marca})`) : esc(ctx.site.marca), e.morada || e.localidade ? esc(moradaCompleta(e)) : ctx.marcador('a morada postal de quem faz as peças'), esc(ctx.site.contactos.email)].filter(Boolean).join(' · ');
+     art. 19.º): o fabricante do artigo, quando o painel o diz por inteiro (nome, morada e email);
+     senão, a loja. Sem morada ainda, a marca «por confirmar» (no domínio a construção pára antes). */
+  const fab = fabricanteDoArtigo(p);
+  const fabricante = fab
+    ? [fab.nome, fab.morada, fab.email].map(esc).join(' · ')
+    : [e.nome ? esc(`${e.nome} (${ctx.site.marca})`) : esc(ctx.site.marca), e.morada || e.localidade ? esc(moradaCompleta(e)) : ctx.marcador('a morada postal de quem faz as peças'), esc(ctx.site.contactos.email)].filter(Boolean).join(' · ');
+  /* A informação legal do artigo, junto do botão, só quando está preenchida no painel (22 out 2026,
+     grupo 1 da auditoria legal): avisos de segurança e perigos (um por linha), a idade recomendada,
+     «Não é um brinquedo» e a referência. Vazios, nada muda na ficha. */
+  const avisosDaPeca = linhasDe(p.avisos);
+  const perigosDaPeca = linhasDe(p.perigos);
+  const infoLegal = avisosDaPeca.length || perigosDaPeca.length || p.idade || p.naoBrinquedo === true || p.referencia ? `<div class="info-legal">
+    ${avisosDaPeca.length ? `<div class="info-legal__bloco"><p class="info-legal__titulo">Avisos de segurança</p><ul>${avisosDaPeca.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></div>` : ''}
+    ${perigosDaPeca.length ? `<div class="info-legal__bloco"><p class="info-legal__titulo">Perigos</p><ul>${perigosDaPeca.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></div>` : ''}
+    ${p.idade ? `<p class="info-legal__linha"><strong>Idade recomendada:</strong> ${esc(p.idade)}</p>` : ''}
+    ${p.naoBrinquedo === true ? '<p class="info-legal__linha">Não é um brinquedo.</p>' : ''}
+    ${p.referencia ? `<p class="info-legal__linha"><strong>Referência:</strong> ${esc(p.referencia)}</p>` : ''}
+  </div>` : '';
   const medidas = p.medidas?.length ? `<table class="medidas"><tbody>${p.medidas.map((l) => `<tr><th scope="row">${esc(l.rotulo)}</th><td>${esc(l.valor)}</td></tr>`).join('')}</tbody></table>` : '';
   const acordeoes = `<div class="acordeoes">
     ${medidas ? `<details><summary>${icones.regua}Medidas</summary><div class="acordeoes__corpo">${medidas}<p class="nota">Medidas aproximadas: cada peça é feita à mão.</p></div></details>` : ''}
@@ -319,9 +336,11 @@ export function produto(ctx, p) {
       <p class="etiqueta">${esc(c.nome)}</p>
       <h1 class="produto__nome">${esc(p.nome)}</h1>
       ${preco(ctx, p, { grande: true })}
+      ${promocaoNota(ctx, p)}
       <div class="produto__resumo">${markdown(p.descricao, ctx.url)}</div>
       ${inclui}
       ${form}
+      ${infoLegal}
       ${confianca}
       ${acordeoes}
     </div>
@@ -359,8 +378,11 @@ export function produto(ctx, p) {
         ? { '@type': 'MerchantReturnPolicy', applicableCountry: 'PT', returnPolicyCategory: 'https://schema.org/MerchantReturnNotPermitted' }
         : { '@type': 'MerchantReturnPolicy', applicableCountry: 'PT', returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow', merchantReturnDays: 14, returnMethod: 'https://schema.org/ReturnByMail', returnFees: 'https://schema.org/ReturnFeesCustomerResponsibility' },
       ...(v.ate ? { priceValidUntil: v.ate } : {}),
+      ...(v.anterior && /^\d{4}-\d{2}-\d{2}$/.test(p.promocaoDesde || '') ? { validFrom: p.promocaoDesde } : {}),
+      ...(p.referencia ? { sku: p.referencia } : {}),
     };
   }
+  if (p.referencia) ldProduto.sku = p.referencia;
   return {
     caminho,
     titulo: p.nome,
@@ -412,6 +434,7 @@ export function carrinho(ctx) {
         </div>
         <p class="encomenda__aviso">${icones.info}<span>As peças personalizadas (com o nome, a data ou um texto seu) não têm direito de livre resolução (art. 17.º, n.º 1, al. c), do DL 24/2014); as restantes podem ser devolvidas em 14 dias. <a href="${ctx.url('/termos-e-condicoes/')}">Termos e condições</a></span></p>
         <p class="encomenda__aviso">${icones.whatsapp}<span>Ao carregar no botão abre-se o WhatsApp com a sua encomenda escrita. Nada do que escreve aqui fica guardado neste site.</span></p>
+        ${pecaLegal('frase-formulario', fraseFormularioHtml({ urlPolitica: ctx.url('/politica-de-privacidade/'), meses: 36, finalidade: 'preparar a sua encomenda' }))}
         <p class="comprar__erro" data-erro-encomenda role="alert" hidden></p>
         <button class="botao botao--whatsapp botao--largo" type="submit">${icones.whatsapp}<span>Enviar encomenda pelo WhatsApp</span></button>
         <div class="encomenda__enviada" data-enviada hidden>
@@ -507,6 +530,11 @@ export function contactos(ctx) {
     ${principal}
     <ul class="contactos-lista">${outros.join('')}</ul>
   </div>
+  <section class="contactos-livro" aria-labelledby="livro-titulo">
+    <h2 id="livro-titulo">Reclamações</h2>
+    <p>Fale primeiro connosco: resolvemos quase tudo numa conversa. Pode também apresentar a reclamação no Livro de Reclamações Eletrónico.</p>
+    ${livroBotao()}
+  </section>
 </div>`;
   return { caminho: '/contactos/', titulo: 'Contactos', descricao: `Fale com a ${ctx.site.marca}: WhatsApp, ${tel ? 'telefone, ' : ''}email, Instagram e Facebook. ${ctx.site.local.localidade}, ${ctx.site.local.distrito}.`, jsonld: [m.ld, organizacao(ctx)], conteudo };
 }
@@ -519,6 +547,19 @@ export function erro404(ctx) {
 </div>`;
   return { caminho: '/404.html', titulo: 'Página não encontrada', descricao: 'Esta página não existe.', conteudo };
 }
+
+/* O fabricante de um artigo, quando o painel o diz por inteiro (nome, morada e email); senão null,
+   e a ficha diz a loja. */
+export function fabricanteDoArtigo(p) {
+  const f = p.fabricante;
+  if (!f || typeof f !== 'object') return null;
+  const ok = ['nome', 'morada', 'email'].every((k) => typeof f[k] === 'string' && f[k].trim());
+  return ok ? { nome: f.nome.trim(), morada: f.morada.trim(), email: f.email.trim() } : null;
+}
+/* Os avisos de segurança (e os perigos) de um artigo: um por linha do campo. */
+const linhasDe = (v) => String(typeof v === 'string' ? v : '').split(/\n+/).map((t) => t.trim()).filter(Boolean);
+export const avisosDoArtigo = (p) => linhasDe(p.avisos);
+export const perigosDoArtigo = (p) => linhasDe(p.perigos);
 
 // usada pelo build para as páginas de texto com o quadro dos portes
 export { inline };

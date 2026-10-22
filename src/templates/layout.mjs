@@ -3,9 +3,7 @@
 // logótipo ao centro, o carrinho à direita, e um menu que abre de lado.
 import { esc, numeroWhatsApp } from './util.mjs';
 import { icones } from './icones.mjs';
-import { categoriasEmMancha } from './componentes.mjs';
-
-const LIVRO = 'https://www.livroreclamacoes.pt/inicio';
+import { categoriasEmMancha, livroBotao } from './componentes.mjs';
 
 function logotipo(ctx, { alto = 64, classe = 'logo' } = {}) {
   const l = ctx.manifesto.logo;
@@ -147,8 +145,8 @@ function rodape(ctx) {
       ${ligacao('/garantia/', 'Garantia legal')}
       ${ligacao('/resolucao-de-litigios/', 'Resolução de litígios')}
       ${ligacao('/desistir/', 'Desistir de uma compra')}
+      <li>${livroBotao()}</li>
     </ul>
-    <a class="rodape__livro" href="${LIVRO}" target="_blank" rel="noopener">Livro de Reclamações</a>
   </div>
 </footer>`;
 }
