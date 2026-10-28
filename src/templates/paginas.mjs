@@ -3,7 +3,7 @@
 import { esc, euros, precoDe, markdown, inline, textoSimples, numeroWhatsApp, numeroLegivel, notaChamada, moradaCompleta } from './util.mjs';
 import { icones } from './icones.mjs';
 import { numeroPortugues, opcoesDe, personalizacaoDe, quantidadeMinimaDe, temSuplementos } from '../lib/regras.mjs';
-import { imagem, preco, cartaoProduto, migalhas, botaoSeta, desconto, promocaoAte, cabecaDePagina, categoriasEmMancha, convite, promocaoNota, livroBotao, pecaLegal } from './componentes.mjs';
+import { imagem, preco, cartaoProduto, migalhas, botaoSeta, desconto, promocaoAte, cabecaDePagina, categoriasEmMancha, convite, promocaoNota, pecaLegal } from './componentes.mjs';
 import { fraseFormularioHtml } from '../../legal-comum/index.mjs';
 import { categoriasComArtigos } from './layout.mjs';
 
@@ -530,11 +530,6 @@ export function contactos(ctx) {
     ${principal}
     <ul class="contactos-lista">${outros.join('')}</ul>
   </div>
-  <section class="contactos-livro" aria-labelledby="livro-titulo">
-    <h2 id="livro-titulo">Reclamações</h2>
-    <p>Fale primeiro connosco: resolvemos quase tudo numa conversa. Pode também apresentar a reclamação no Livro de Reclamações Eletrónico.</p>
-    ${livroBotao()}
-  </section>
 </div>`;
   return { caminho: '/contactos/', titulo: 'Contactos', descricao: `Fale com a ${ctx.site.marca}: WhatsApp, ${tel ? 'telefone, ' : ''}email, Instagram e Facebook. ${ctx.site.local.localidade}, ${ctx.site.local.distrito}.`, jsonld: [m.ld, organizacao(ctx)], conteudo };
 }

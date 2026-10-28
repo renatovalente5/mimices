@@ -715,10 +715,6 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
 }
 
 /* ------------------------------------------------------------------ peças legais (legal-comum, 22 out 2026) */
-/* As reclamações, nos Contactos. */
-.contactos-livro { margin-top: 40px; padding: 24px; background: var(--linho); border-radius: 4px; }
-.contactos-livro h2 { font-size: 1.25rem; margin: 0 0 .4em; }
-.contactos-livro p { margin: 0 0 16px; max-width: 60ch; }
 /* A nota da promoção, por baixo do preço da ficha. */
 .preco__promocao { font-size: .8125rem; color: var(--tinta-2); margin: 6px 0 0; }
 /* A informação legal do artigo, junto do botão (só quando preenchida no painel). */
