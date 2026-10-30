@@ -346,5 +346,41 @@
   "enfeite-rena-professora": {
     "alt": "Enfeite de Natal em madeira, uma rena com uma mensagem para a professora",
     "foco": "50% 50%"
+  },
+  "estrelas-natal-madeira": {
+    "alt": "Estrelas de Natal em madeira gravada, com o nome e uma fita às riscas para pendurar",
+    "foco": "50% 50%"
+  },
+  "iman-moldura-natal": {
+    "alt": "Íman de Natal em madeira com moldura para uma fotografia e um gorro do Pai Natal, gravado «Feliz Natal Avós»",
+    "foco": "50% 50%"
+  },
+  "enfeite-familia-globo": {
+    "alt": "Enfeite de Natal em madeira em forma de globo de neve, com a família gravada e «Feliz Natal»",
+    "foco": "50% 50%"
+  },
+  "decoracao-familia-presepio": {
+    "alt": "Decoração de Natal em arco, em acrílico, com o nome da família, uma estrela, uma vela e o presépio",
+    "foco": "50% 50%"
+  },
+  "guardanapos-linho-bordados": {
+    "alt": "Guardanapos de linho alentejano bordados com o nome e um ramo de azevinho",
+    "foco": "50% 50%"
+  },
+  "postal-natal-modelo-1": {
+    "alt": "Postal de Natal, modelo 1: asas em gesso com laço vermelho e «Feliz Natal»",
+    "foco": "50% 50%"
+  },
+  "postal-natal-modelo-2": {
+    "alt": "Postal de Natal, modelo 2: asas em gesso com laço vermelho e «Feliz Natal!»",
+    "foco": "50% 50%"
+  },
+  "postal-natal-modelo-3": {
+    "alt": "Postal de Natal, modelo 3: Pai Natal com a barba em gesso",
+    "foco": "50% 50%"
+  },
+  "postal-natal-modelo-4": {
+    "alt": "Postal de Natal, modelo 4: anjo em gesso com laço vermelho, em cartão de correio",
+    "foco": "50% 50%"
   }
 }

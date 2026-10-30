@@ -1,0 +1,28 @@
+{
+  "nome": "Enfeite de Natal «Família»",
+  "nomeCurto": "Enfeite «Família»",
+  "fotos": [
+    "enfeite-familia-globo"
+  ],
+  "resumo": "Enfeite de Natal em madeira, em forma de globo de neve, com a família gravada.",
+  "descricao": "Um enfeite em madeira em forma de globo de neve, com a família gravada, o nome e «Feliz Natal». Para pendurar na árvore.",
+  "preco": 3.9,
+  "precoAnterior": null,
+  "promocaoAte": "",
+  "inclui": [],
+  "medidas": [],
+  "cores": false,
+  "opcoes": [],
+  "personalizacao": {
+    "nome": true,
+    "data": false,
+    "frase": false,
+    "rotuloNome": "Nome da família"
+  },
+  "quantidadeMinima": 1,
+  "categoria": "natal",
+  "video": "",
+  "novidade": true,
+  "publicado": true,
+  "ordem": 10
+}

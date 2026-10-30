@@ -1,0 +1,29 @@
+{
+  "nome": "Íman de Natal com fotografia",
+  "nomeCurto": "Íman com fotografia",
+  "fotos": [
+    "iman-moldura-natal"
+  ],
+  "resumo": "Íman em madeira com moldura para uma fotografia, uma frase e os nomes.",
+  "descricao": "Um íman de frigorífico em madeira, com moldura para uma fotografia, um gorro do Pai Natal, uma frase e os nomes gravados. Um presente para os avós.\n\nA fotografia envia-nos pelo WhatsApp depois de encomendar.",
+  "preco": 6.4,
+  "precoAnterior": null,
+  "promocaoAte": "",
+  "inclui": [],
+  "medidas": [],
+  "cores": false,
+  "opcoes": [],
+  "personalizacao": {
+    "nome": true,
+    "data": false,
+    "frase": true,
+    "rotuloNome": "Nomes",
+    "rotuloFrase": "Frase (ex.: Feliz Natal Avós)"
+  },
+  "quantidadeMinima": 1,
+  "categoria": "natal",
+  "video": "",
+  "novidade": true,
+  "publicado": true,
+  "ordem": 9
+}

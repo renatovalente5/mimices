@@ -1,0 +1,27 @@
+{
+  "nome": "Estrela de Natal com nome",
+  "nomeCurto": "Estrela com nome",
+  "fotos": [
+    "estrelas-natal-madeira"
+  ],
+  "resumo": "Estrela de Natal em madeira gravada, com o nome, para pendurar na árvore.",
+  "descricao": "Uma estrela em madeira gravada com o nome e um desenho, com uma fita para pendurar na árvore de Natal.",
+  "preco": 3.5,
+  "precoAnterior": null,
+  "promocaoAte": "",
+  "inclui": [],
+  "medidas": [],
+  "cores": false,
+  "opcoes": [],
+  "personalizacao": {
+    "nome": true,
+    "data": false,
+    "frase": false
+  },
+  "quantidadeMinima": 1,
+  "categoria": "natal",
+  "video": "",
+  "novidade": true,
+  "publicado": true,
+  "ordem": 8
+}

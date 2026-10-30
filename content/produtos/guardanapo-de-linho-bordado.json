@@ -1,0 +1,33 @@
+{
+  "nome": "Guardanapo de linho alentejano bordado",
+  "nomeCurto": "Guardanapo bordado",
+  "fotos": [
+    "guardanapos-linho-bordados"
+  ],
+  "resumo": "Guardanapo de linho alentejano, 50 × 50 cm, bordado com o nome.",
+  "descricao": "Um guardanapo de linho alentejano bordado com o nome e um ramo de azevinho, para a mesa da Consoada.",
+  "preco": 10.8,
+  "precoAnterior": null,
+  "promocaoAte": "",
+  "inclui": [],
+  "medidas": [
+    {
+      "rotulo": "Tamanho",
+      "valor": "50 × 50 cm"
+    }
+  ],
+  "cores": false,
+  "opcoes": [],
+  "personalizacao": {
+    "nome": true,
+    "data": false,
+    "frase": false
+  },
+  "quantidadeMinima": 1,
+  "categoria": "natal",
+  "video": "",
+  "novidade": true,
+  "publicado": true,
+  "ordem": 12,
+  "composicao": "100 % linho (linho alentejano)."
+}

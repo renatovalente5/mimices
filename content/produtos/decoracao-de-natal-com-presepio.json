@@ -1,0 +1,29 @@
+{
+  "nome": "Decoração de Natal com presépio e vela",
+  "nomeCurto": "Decoração com presépio",
+  "fotos": [
+    "decoracao-familia-presepio"
+  ],
+  "resumo": "Arco em acrílico com o nome da família, uma estrela, o presépio e uma vela.",
+  "descricao": "Uma decoração de Natal em arco, em acrílico, com o nome da família e uma frase, a estrela, o presépio e um lugar para uma vela.",
+  "preco": 19.8,
+  "precoAnterior": null,
+  "promocaoAte": "",
+  "inclui": [],
+  "medidas": [],
+  "cores": false,
+  "opcoes": [],
+  "personalizacao": {
+    "nome": true,
+    "data": false,
+    "frase": true,
+    "rotuloNome": "Nome da família",
+    "rotuloFrase": "Frase"
+  },
+  "quantidadeMinima": 1,
+  "categoria": "natal",
+  "video": "",
+  "novidade": true,
+  "publicado": true,
+  "ordem": 11
+}
