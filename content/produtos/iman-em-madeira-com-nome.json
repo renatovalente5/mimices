@@ -38,6 +38,7 @@
     "frase": true
   },
   "quantidadeMinima": 1,
+  "naoBrinquedo": true,
   "categoria": "lembrancas",
   "video": "",
   "novidade": false,

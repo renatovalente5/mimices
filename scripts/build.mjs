@@ -119,7 +119,9 @@ const fotoExiste = (f) => fotos[f] && dadosRegras.ficheirosFotos.includes(f);
 {
   const e = site.empresa || {};
   const FORMAS = [[/nome individual|\beni\b/i, 'eni'], [/unipessoal/i, 'unipessoal'], [/\blda\b|limitada/i, 'lda'], [/\bs\.?\s?a\b|an[óo]nima/i, 'sa']];
-  const forma = FORMAS.find(([re]) => re.test(e.tipo || ''))?.[1];
+  /* Sem NIF não há atividade aberta (o Renato, 17 out 2026): a guarda recebe «sem-actividade» e avisa que
+     o site não devia fechar vendas até lá (RGIT, art. 123.º), em vez de pedir só a forma jurídica. */
+  const forma = FORMAS.find(([re]) => re.test(e.tipo || ''))?.[1] || (!e.nif ? 'sem-actividade' : undefined);
   const r = verificarIdentificacao({
     nome: e.nome, formaJuridica: forma, nif: e.nif,
     morada: [e.morada, [e.codigoPostal, e.localidade].filter(Boolean).join(' ')].filter(Boolean).join(', '),
@@ -305,6 +307,7 @@ function botoesDesistencia() {
 const CONFIG_PRIVACIDADE = {
   alojamento: 'cloudflare', dns: 'cloudflare', email: 'google',
   whatsapp: true, instagram: true, facebookPage: true,
+  manutencao: { nome: 'Renato Valente', papel: 'subcontratante' },
   repositorioPublico: true,
 };
 const TRANSFERENCIA = { DPF: 'EUA: consta da lista do Data Privacy Framework (decisão de adequação da Comissão Europeia)', UE: 'Sem transferência: os dados ficam na União Europeia' };
@@ -333,13 +336,14 @@ function resolverMarcadores(fonte, onde) {
     portes: () => guardar(textoPortes()),
     botoesDesistencia: () => guardar(botoesDesistencia()),
     /* A política de privacidade (RGPD, art. 13.º), pela biblioteca legal-comum: os destinatários reais
-       (o alojamento e o DNS na Cloudflare, o código e a publicação no GitHub, o Gmail da Mimices e a
-       Meta), os prazos, e as frases da Meta e do repositório público. */
+       (o alojamento e o DNS na Cloudflare, o código e a publicação no GitHub, o Gmail da Mimices, a Meta,
+       e o Renato, que mantém o site e o painel: RGPD, art. 28.º), os prazos, e as frases da Meta e do
+       repositório público. */
     'privacidade.destinatarios': () => guardar(pecaLegal('privacidade-destinatarios', destinatariosComExtras())),
     'privacidade.prazos': () => guardar(pecaLegal('privacidade-prazos', `<ul>${[
       'Pedidos de informação que não chegam a encomenda: 12 meses depois da última mensagem.',
       'Conversas e dados de uma encomenda: enquanto forem precisos para ela e para a garantia, até 3 anos depois da entrega.',
-      PRAZOS_LEGAIS.encomendas.texto.replace('Encomendas e facturas', 'Faturas'),
+      // Sem atividade aberta não há faturas (8 nov 2026): o prazo fiscal de 10 anos (PRAZOS_LEGAIS.encomendas) volta quando houver.
       PRAZOS_LEGAIS.registosTecnicos.texto,
     ].map((t) => `<li>${esc(t)}</li>`).join('')}</ul>`)),
     'privacidade.frases': () => guardar(pecaLegal('privacidade-frases', frasesPrivacidade(CONFIG_PRIVACIDADE).map((t) => `<p>${esc(t)}</p>`).join(''))),

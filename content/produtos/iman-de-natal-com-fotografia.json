@@ -21,6 +21,7 @@
     "rotuloFrase": "Frase (ex.: Feliz Natal Avós)"
   },
   "quantidadeMinima": 1,
+  "naoBrinquedo": true,
   "categoria": "natal",
   "video": "",
   "novidade": true,

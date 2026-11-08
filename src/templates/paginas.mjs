@@ -421,7 +421,6 @@ export function carrinho(ctx) {
             <div class="campo"><label for="e-cp">Código postal</label><input id="e-cp" name="codigoPostal" type="text" autocomplete="postal-code" maxlength="12" data-obrigatorio-envio></div>
             <div class="campo"><label for="e-local">Localidade</label><input id="e-local" name="localidade" type="text" autocomplete="address-level2" maxlength="60" data-obrigatorio-envio></div>
           </div>
-          <div class="campo"><label for="e-nif">NIF para a fatura <span class="campo__opcional">(opcional)</span></label><input id="e-nif" name="nif" type="text" inputmode="numeric" maxlength="12" autocomplete="off"></div>
           <div class="campo"><label for="e-notas">Observações <span class="campo__opcional">(opcional)</span></label><textarea id="e-notas" name="notas" rows="3" maxlength="500"></textarea></div>
         </fieldset>
         <div class="seguir">

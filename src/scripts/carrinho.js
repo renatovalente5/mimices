@@ -4,7 +4,7 @@
    com a encomenda escrita. Nada sai do aparelho da pessoa até ela enviar a mensagem; no
    armazenamento local fica só o carrinho (peças, personalização, entrega) e, depois de abrir o
    WhatsApp, a hora a que o abriu, para a página dizer «Encomenda enviada» quando a pessoa volta
-   — nunca o nome, a morada ou o NIF (a política de privacidade promete isto).
+   — nunca o nome ou a morada (a política de privacidade promete isto).
    Os preços nunca se guardam: lêem-se sempre do catálogo publicado (assets/catalogo-*.json),
    para um preço mudado no painel valer logo. (A base é o carrinho da Pokóto Wood.) */
 (function () {
@@ -338,7 +338,7 @@
   // ---------------------------------------------------------------- a mensagem e o envio
   function mensagem(cat, c, dados) {
     const z = cat.zonas.find((x) => x.id === estado.zona);
-    const linhas = [`Olá ${cat.marca}! Gostava de fazer esta encomenda:`, ''];
+    const linhas = ['Olá! Quero fazer esta encomenda:', ''];
     for (const d of c.validas) {
       linhas.push(`*${d.linha.qtd}× ${d.p.nome}* — ${d.total === null ? 'preço a confirmar' : euros(d.total)}`);
       for (const t of pormenores(d)) linhas.push(`   ${t}`);
@@ -349,11 +349,12 @@
     else linhas.push(`Entrega: ${z.nome} — ${c.portesPorConfirmar ? 'portes a confirmar' : euros(c.portes)}`);
     const confirmar = c.porConfirmar || (estado.zona !== 'levantamento' && c.portesPorConfirmar);
     linhas.push(confirmar ? '*Total: a confirmar consigo*' : `*Total: ${euros(c.total)}*`);
+    // A forma de pagamento vai na mensagem (DL 24/2014, art. 5.º): a mesma que a ficha e o carrinho dizem.
+    linhas.push('Pagamento: MB WAY ou transferência');
     linhas.push('');
     linhas.push(`Cliente: ${dados.nome}`);
     if (dados.dataCelebracao) linhas.push(`Data da celebração: ${dataPorExtenso(dados.dataCelebracao)}`);
     if (z.morada) linhas.push(`Morada: ${dados.morada}, ${dados.codigoPostal} ${dados.localidade}`);
-    if (dados.nif) linhas.push(`NIF: ${dados.nif}`);
     if (dados.notas) linhas.push(`Observações: ${dados.notas}`);
     return linhas.join('\n');
   }
@@ -392,7 +393,7 @@
         campos[0].focus();
         return;
       }
-      const dados = Object.fromEntries(['nome', 'dataCelebracao', 'morada', 'codigoPostal', 'localidade', 'nif', 'notas'].map((n) => [n, form.elements[n].value.trim().replace(/\s+/g, ' ')]));
+      const dados = Object.fromEntries(['nome', 'dataCelebracao', 'morada', 'codigoPostal', 'localidade', 'notas'].map((n) => [n, form.elements[n].value.trim().replace(/\s+/g, ' ')]));
       ultimaMensagem = mensagem(cat, c, dados);
       // A marca «enviada» grava-se antes de abrir: no telemóvel a página pode sair logo a seguir.
       estado.enviada = { em: new Date().toISOString(), carrinho: assinatura() };

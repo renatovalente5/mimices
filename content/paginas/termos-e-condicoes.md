@@ -1,6 +1,6 @@
 titulo: Termos e condições
 descricao: As condições das encomendas feitas na Mimices: quem vende, preços, portes, como se encomenda pelo WhatsApp, prazos, peças personalizadas, desistência e garantia.
-atualizado: 2026-10-16
+atualizado: 2026-11-08
 ---
 ## Quem vende
 
@@ -12,7 +12,7 @@ Estas condições aplicam-se às encomendas feitas a partir deste site. Nada nel
 
 ## As peças
 
-As peças são feitas por nós, à mão: as velas, as toalhas bordadas, as conchas com os laços, as caixas e as lembranças. Por isso, cada uma tem pequenas diferenças de outra e da fotografia: o tom do linho de um lote para outro, a posição de um laço ou de uma flor. Não são defeitos: é o que distingue uma peça feita à mão.
+As peças são feitas por nós, à mão: as velas, as toalhas bordadas, as conchas com os laços, as caixas e as lembranças. Por isso, cada uma tem pequenas variações de cor, de forma e de medida em relação a outra e à fotografia: o tom do linho de um lote para outro, a posição de um laço ou de uma flor. São as marcas do trabalho à mão. Isto não afeta a garantia legal.
 
 As cores no seu ecrã podem não ser exatamente as do linho. A composição dos tecidos de cada peça está na página dela.
 
@@ -20,7 +20,7 @@ As cores no seu ecrã podem não ser exatamente as do linho. A composição dos 
 
 Os preços estão em euros e são os preços finais. {{empresa.iva}}
 
-Quando uma peça está em promoção, mostramos o preço anterior riscado e a data em que a promoção acaba. Nas lembranças, o preço é por unidade e há um número mínimo, indicado na página de cada uma.
+Quando uma peça está em promoção, mostramos o preço anterior riscado e a data em que a promoção acaba. Nas lembranças, o preço é por unidade.
 
 Os portes não estão incluídos no preço das peças e são por encomenda: {{portes}}
 
@@ -28,10 +28,11 @@ Os portes não estão incluídos no preço das peças e são por encomenda: {{po
 
 1. Junta ao carrinho as peças, com o tom de linho e a personalização de cada uma.
 2. No carrinho escolhe a entrega e vê os portes e o total.
-3. Ao carregar em «Enviar encomenda pelo WhatsApp», abre-se o WhatsApp com a encomenda escrita, para a enviar para nós.
-4. Respondemos a confirmar as peças, a personalização (exatamente como a vamos fazer), o total, o prazo e o pagamento.
+3. Ao carregar em «Enviar encomenda pelo WhatsApp», abre-se o WhatsApp com a encomenda escrita (as peças, o total, os portes e a forma de pagamento), para a enviar para nós.
+4. Respondemos com o resumo da encomenda: as peças e a personalização (exatamente como a vamos fazer), o total, os portes, o prazo e a forma de pagamento.
+5. A encomenda fica feita quando confirmar esse resumo por mensagem. Depois enviamos-lhe a confirmação por email, com estas condições.
 
-**O contrato só fica celebrado quando confirmarmos a encomenda pelo WhatsApp e a aceitar.** Até lá, pode alterá-la ou desistir sem qualquer custo. Se uma peça não puder ser feita a tempo, dizemos-lho antes de confirmar.
+**O contrato só fica celebrado quando confirmar, por mensagem, o resumo que lhe enviamos.** Até lá, pode alterar a encomenda ou desistir sem qualquer custo. Se uma peça não puder ser feita a tempo, dizemos-lho antes de enviar o resumo.
 
 Reservamo-nos o direito de corrigir erros manifestos de preço. Se isso acontecer, avisamos antes de confirmar a encomenda e pode desistir sem qualquer custo.
 
@@ -67,7 +68,7 @@ Isto não afeta a garantia, que se aplica a todas as peças.
 
 As peças têm a garantia legal de conformidade de 3 anos a contar da entrega (Decreto-Lei n.º 84/2021). Se uma peça não estiver conforme, contacte-nos com uma fotografia: pode ter direito à reparação ou à substituição e, em certos casos, à redução do preço ou ao reembolso. [Ver o aviso da garantia legal](/garantia/).
 
-As diferenças próprias do trabalho à mão, descritas acima, não são falta de conformidade.
+As pequenas variações de cor, de forma e de medida próprias do trabalho à mão, descritas acima, fazem parte de cada peça. Isto não afeta a garantia legal.
 
 ## Segurança
 

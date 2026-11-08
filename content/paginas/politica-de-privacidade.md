@@ -1,6 +1,6 @@
 titulo: Política de privacidade
 descricao: Que dados pessoais tratamos, para quê e por quanto tempo: as encomendas seguem pelo WhatsApp e este site não guarda nada do que escreve.
-atualizado: 2026-10-22
+atualizado: 2026-11-08
 ---
 ## Quem trata os seus dados
 
@@ -8,16 +8,15 @@ atualizado: 2026-10-22
 
 ## O que este site guarda
 
-**Nada do que escreve no carrinho fica guardado neste site.** O nome, a morada, o NIF e as observações que escreve no carrinho servem apenas para compor a mensagem da encomenda, no seu próprio aparelho. Quando carrega em «Enviar encomenda pelo WhatsApp», essa mensagem passa para o WhatsApp, e é você que a envia.
+**Nada do que escreve no carrinho fica guardado neste site.** O nome, a morada e as observações que escreve no carrinho servem apenas para compor a mensagem da encomenda, no seu próprio aparelho. Quando carrega em «Enviar encomenda pelo WhatsApp», essa mensagem passa para o WhatsApp, e é você que a envia.
 
 O carrinho (as peças, o tom de linho, a personalização e a entrega escolhida e, depois de abrir o WhatsApp com a encomenda, o dia e a hora em que o abriu) fica guardado no armazenamento local do seu browser, para não se perder se fechar a página. Não sai do seu aparelho, e apaga-se ao esvaziar o carrinho ou ao limpar os dados do site no browser. Os dados pessoais do formulário não são guardados aí.
 
 ## O que tratamos quando nos contacta
 
-Quando nos envia uma encomenda ou uma mensagem, pelo WhatsApp, por email ou nas redes sociais, tratamos os dados que nos dá (nome, contacto, morada, NIF, a data da celebração, a personalização e o histórico da conversa) para:
+Quando nos envia uma encomenda ou uma mensagem, pelo WhatsApp, por email ou nas redes sociais, tratamos os dados que nos dá (nome, contacto, morada, a data da celebração, a personalização e o histórico da conversa) para:
 
-- responder e fazer a encomenda (fundamento: execução de um contrato ou diligências pré-contratuais a seu pedido);
-- emitir a fatura e cumprir as obrigações fiscais (fundamento: obrigação legal);
+- responder-lhe e preparar, combinar e entregar a encomenda (fundamento: execução de um contrato ou diligências pré-contratuais a seu pedido);
 - tratar de uma garantia ou de uma reclamação (fundamento: obrigação legal).
 
 Não usamos os seus dados para publicidade nem os vendemos a ninguém.
@@ -29,7 +28,6 @@ Não usamos os seus dados para publicidade nem os vendemos a ninguém.
 ## Com quem partilhamos
 
 - **A transportadora (CTT Expresso)**, quando há envio: o nome, a morada e o contacto necessários para a entrega.
-- **Contabilista e Autoridade Tributária**, para a faturação.
 
 E os fornecedores que usamos para o site, o email e as conversas:
 
