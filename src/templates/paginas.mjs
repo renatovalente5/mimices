@@ -3,8 +3,7 @@
 import { esc, euros, precoDe, markdown, inline, textoSimples, numeroWhatsApp, numeroLegivel, notaChamada, moradaCompleta } from './util.mjs';
 import { icones } from './icones.mjs';
 import { numeroPortugues, opcoesDe, personalizacaoDe, quantidadeMinimaDe, temSuplementos } from '../lib/regras.mjs';
-import { imagem, preco, cartaoProduto, migalhas, botaoSeta, desconto, promocaoAte, cabecaDePagina, categoriasEmMancha, convite, promocaoNota, pecaLegal } from './componentes.mjs';
-import { fraseFormularioHtml } from '../../legal-comum/index.mjs';
+import { imagem, preco, cartaoProduto, migalhas, botaoSeta, desconto, promocaoAte, cabecaDePagina, categoriasEmMancha, convite, promocaoNota } from './componentes.mjs';
 import { categoriasComArtigos } from './layout.mjs';
 
 const produtosDe = (ctx, cat) => ctx.produtos.filter((p) => p.categoria === cat);
@@ -433,7 +432,6 @@ export function carrinho(ctx) {
         </div>
         <p class="encomenda__aviso">${icones.info}<span>As peças personalizadas (com o nome, a data ou um texto seu) não têm direito de livre resolução (art. 17.º, n.º 1, al. c), do DL 24/2014); as restantes podem ser devolvidas em 14 dias. <a href="${ctx.url('/termos-e-condicoes/')}">Termos e condições</a></span></p>
         <p class="encomenda__aviso">${icones.whatsapp}<span>Ao carregar no botão abre-se o WhatsApp com a sua encomenda escrita. Nada do que escreve aqui fica guardado neste site.</span></p>
-        ${pecaLegal('frase-formulario', fraseFormularioHtml({ urlPolitica: ctx.url('/politica-de-privacidade/'), meses: 36, finalidade: 'preparar a sua encomenda' }))}
         <p class="comprar__erro" data-erro-encomenda role="alert" hidden></p>
         <button class="botao botao--whatsapp botao--largo" type="submit">${icones.whatsapp}<span>Enviar encomenda pelo WhatsApp</span></button>
         <div class="encomenda__enviada" data-enviada hidden>

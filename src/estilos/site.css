@@ -734,4 +734,3 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
   .destinatarios td:first-child { font-weight: 600; }
 }
 /* A frase da privacidade junto do carrinho. */
-.privacidade-formulario { font-size: .8125rem; color: var(--tinta-2); margin: 10px 0 14px; }
