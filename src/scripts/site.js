@@ -260,6 +260,13 @@
     form.addEventListener('input', mostrarTotal);
     form.addEventListener('change', mostrarTotal);
     mostrarTotal();
+    /* O aviso das peças personalizadas aparece quando se escreve um nome, uma data ou uma frase (o Renato,
+       8 nov 2026); o carrinho volta a dizê-lo antes do botão. */
+    const avisoPers = $('[data-aviso-ao-escrever]', form);
+    const pintarAviso = () => { if (avisoPers) avisoPers.hidden = !$$('.personaliza input, .personaliza textarea', form).some((c) => String(c.value || '').trim() !== ''); };
+    form.addEventListener('input', pintarAviso);
+    form.addEventListener('change', pintarAviso);
+    pintarAviso();
     /* A frase do erro aparece junto ao campo que falta (o tom, uma escolha, o nome…): por baixo do
        botão ficava fora do ecrã, porque a página salta para o campo. */
     const errar = (campo, texto) => {
@@ -293,6 +300,7 @@
       if ((parseInt(form.elements.quantidade.value, 10) || 0) < minimo) form.elements.quantidade.value = minimo;
       await window.MimicesCarrinho.juntar({ produto: slug, cor: cor ? Number(cor.value) : null, opcoes: escolhas(), pers, qtd: q });
       for (const k of ['nome', 'data', 'frase']) if (form.elements[k]) form.elements[k].value = '';
+      pintarAviso();
       form.elements.quantidade.value = minimo;
       mostrarTotal();
       abrir('carrinho', $('button[type="submit"]', form));

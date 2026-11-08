@@ -258,9 +258,10 @@ export function produto(ctx, p) {
     ${campos.map((k) => {
       if (k.id === 'data') return `<div class="campo"><label for="${idCampo('data')}">${esc(k.rotulo)}</label><input id="${idCampo('data')}" name="data" type="date" required data-sem-passado></div>`;
       if (k.id === 'frase') return `<div class="campo"><label for="${idCampo('frase')}">${esc(k.rotulo)} <span class="campo__opcional">(opcional)</span></label><textarea id="${idCampo('frase')}" name="frase" rows="2" maxlength="160" spellcheck="true"></textarea></div>`;
-      return `<div class="campo"><label for="${idCampo('nome')}">${esc(k.rotulo)}</label><input id="${idCampo('nome')}" name="nome" type="text" maxlength="40" autocomplete="off" autocapitalize="words" autocorrect="off" spellcheck="false" required aria-describedby="${idCampo('nome')}-ajuda"><p class="campo__ajuda" id="${idCampo('nome')}-ajuda">Como vai ficar escrito na peça.</p></div>`;
+      return `<div class="campo"><label for="${idCampo('nome')}">${esc(k.rotulo)}</label><input id="${idCampo('nome')}" name="nome" type="text" maxlength="40" autocomplete="off" autocapitalize="words" autocorrect="off" spellcheck="false" required aria-describedby="pz-aviso-${p.slug}"></div>`;
     }).join('')}
-    <p class="aviso-pers">Peça personalizada: não tem devolução por desistência. Um defeito ou um erro nosso, resolvemos sempre.</p>
+    ${/* Aparece quando se escreve (o Renato, 8 nov 2026: menos texto na ficha); o carrinho volta a dizê-lo
+        antes do botão. Saiu também «Como vai ficar escrito na peça.». */ ''}<p class="aviso-pers" id="pz-aviso-${p.slug}" data-aviso-ao-escrever hidden>Peça personalizada: não tem devolução por desistência. Um defeito ou um erro nosso, resolvemos sempre.</p>
   </fieldset>` : '';
 
   const minimo = quantidadeMinimaDe(p);
