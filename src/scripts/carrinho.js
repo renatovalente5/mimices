@@ -263,11 +263,12 @@
       s.textContent = typeof v === 'number' ? euros(v) : 'a confirmar';
     });
     $('[data-totais]', form).innerHTML = totaisHtml(c, cat, estado.zona);
-    // a data da celebração: por omissão, a primeira data escrita numa peça (a pessoa só a escreve uma vez)
+    // a data da celebração: por omissão, a primeira data escrita numa peça (a pessoa só a escreve uma vez);
+    // o carrinho guarda-a aaaa-mm-dd, o campo mostra-a dd/mm/aaaa
     const dataCel = form.elements.dataCelebracao;
     if (dataCel && !dataCel.value) {
       const comData = estado.linhas.find((l) => l.pers && l.pers.data);
-      if (comData) dataCel.value = comData.pers.data;
+      if (comData) dataCel.value = window.MimicesDatas.dataCurta(comData.pers.data);
     }
     const comMorada = (cat.zonas.find((z) => z.id === estado.zona) || {}).morada;
     $$('[data-so-envio]', form).forEach((e) => { e.hidden = !comMorada; });
@@ -389,9 +390,11 @@
 
   if (form) {
     const erro = $('[data-erro-encomenda]', form);
+    const avisoData = $('[data-aviso-data]', form);
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       erro.hidden = true;
+      avisoData.hidden = true;
       $$('[aria-invalid]', form).forEach((i) => i.removeAttribute('aria-invalid'));
       let cat = catalogoPronto;
       if (!cat) {
@@ -407,7 +410,18 @@
         campos[0].focus();
         return;
       }
-      const dados = Object.fromEntries(['nome', 'dataCelebracao', 'morada', 'codigoPostal', 'localidade', 'notas'].map((n) => [n, form.elements[n].value.trim().replace(/\s+/g, ' ')]));
+      // a data da celebração escreve-se dd/mm/aaaa; o aviso aparece junto do campo, e a mensagem di-la por extenso
+      const dataCel = form.elements.dataCelebracao;
+      const data = dataCel.value.trim() ? window.MimicesDatas.lerData(dataCel.value) : { iso: '' };
+      if (data.aviso) {
+        dataCel.setAttribute('aria-invalid', 'true');
+        avisoData.textContent = data.aviso;
+        avisoData.hidden = false;
+        dataCel.focus();
+        return;
+      }
+      const dados = Object.fromEntries(['nome', 'morada', 'codigoPostal', 'localidade', 'notas'].map((n) => [n, form.elements[n].value.trim().replace(/\s+/g, ' ')]));
+      dados.dataCelebracao = data.iso;
       ultimaMensagem = mensagem(cat, c, dados);
       // A marca «enviada» grava-se antes de abrir: no telemóvel a página pode sair logo a seguir.
       estado.enviada = { em: new Date().toISOString(), carrinho: assinatura() };

@@ -7,6 +7,31 @@
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const menosMovimento = window.matchMedia('(prefers-reduced-motion: reduce)');
   const hojeLisboa = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Lisbon', year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
+  /* A data escrita num campo como em Portugal («12/12/2026», «1-5-26», «12122026») em «2026-12-12», o que
+     o carrinho guarda: '' se não se percebe; null se não existe (31/02). */
+  function isoDe(texto) {
+    const t = String(texto || '').trim();
+    const m = /^(\d{1,2})\s*[/.\-\s]\s*(\d{1,2})\s*[/.\-\s]\s*(\d{4}|\d{2})$/.exec(t) || /^(\d{2})(\d{2})(\d{4})$/.exec(t);
+    if (!m) return '';
+    const dia = Number(m[1]);
+    const mes = Number(m[2]);
+    const ano = m[3].length === 2 ? 2000 + Number(m[3]) : Number(m[3]);
+    const d = new Date(Date.UTC(ano, mes - 1, dia));
+    if (d.getUTCFullYear() !== ano || d.getUTCMonth() !== mes - 1 || d.getUTCDate() !== dia) return null;
+    return `${ano}-${String(mes).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
+  }
+  const dataCurta = (iso) => { const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || ''); return m ? `${m[3]}/${m[2]}/${m[1]}` : ''; };
+  /* O que se guarda de uma data escrita: { iso }, ou { aviso } com a frase que aparece junto do campo. O
+     exemplo do aviso é o próximo 12 de dezembro: nunca uma data que já passou. */
+  function lerData(texto) {
+    const iso = isoDe(texto);
+    const hoje = hojeLisboa();
+    if (iso === null) return { aviso: 'Essa data não existe.' };
+    if (!iso) return { aviso: `Escreva a data assim: 12/12/${Number(hoje.slice(0, 4)) + (hoje.slice(5) > '12-12' ? 1 : 0)}.` };
+    if (iso < hoje) return { aviso: 'Essa data já passou.' };
+    return { iso };
+  }
+  window.MimicesDatas = { dataCurta, lerData }; // a data da celebração, no carrinho.js
   const ICONE_PAUSA = '<svg class="icone" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M9 6.5v11M15 6.5v11"/></svg>';
   const ICONE_TOCAR = '<svg class="icone" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M8 5.5v13l10.5-6.5L8 5.5Z"/></svg>';
 
@@ -240,9 +265,41 @@
     f.addEventListener('focusin', () => f.classList.remove('cores--sem-dica'));
   });
 
-  // ---------------------------------------------------------------- datas sem dias passados
-  // A data da peça e a da celebração: o calendário não oferece dias que já passaram.
-  $$('input[type="date"][data-sem-passado], input[name="dataCelebracao"]').forEach((i) => { i.min = hojeLisboa(); });
+  // ---------------------------------------------------------------- a data
+  // A da peça e a da celebração: um campo de texto dd/mm/aaaa, para a data aparecer como em Portugal
+  // seja qual for a língua do browser. O calendário é o do telemóvel ou do computador: o <input
+  // type="date"> invisível por cima do ícone, sem os dias que já passaram.
+  $$('[data-data]').forEach((caixa) => {
+    const texto = $('input[type="text"]', caixa);
+    const calendario = $('input[type="date"]', caixa);
+    // a barra entra sozinha depois do dia e do mês (só a escrever no fim): no telemóvel, o teclado é só de números
+    texto.addEventListener('input', (e) => {
+      if (e.inputType !== 'insertText' || texto.selectionStart !== texto.value.length) return;
+      let v = texto.value.replace(/\/{2,}/g, '/');
+      if (/^\d{2}$|^\d{1,2}\/\d{2}$/.test(v)) v += '/';
+      if (v !== texto.value) texto.value = v;
+    });
+    texto.addEventListener('blur', () => { const iso = isoDe(texto.value); if (iso) texto.value = dataCurta(iso); });
+    // o calendário abre no dia escrito
+    const preparar = () => { calendario.min = hojeLisboa(); calendario.value = isoDe(texto.value) || ''; };
+    preparar();
+    calendario.addEventListener('pointerdown', (e) => {
+      preparar();
+      // sem showPicker, o rato só punha o cursor no campo invisível: vai para o de texto
+      if (typeof calendario.showPicker !== 'function' && e.pointerType === 'mouse') { e.preventDefault(); texto.focus(); }
+    });
+    calendario.addEventListener('focus', preparar);
+    calendario.addEventListener('click', () => {
+      if (typeof calendario.showPicker === 'function') { try { calendario.showPicker(); } catch (_) { /* o browser abre-o sozinho */ } }
+    });
+    const escolhida = () => {
+      if (!calendario.value) return;
+      texto.value = dataCurta(calendario.value);
+      texto.dispatchEvent(new Event('input', { bubbles: true }));
+    };
+    calendario.addEventListener('input', escolhida);
+    calendario.addEventListener('change', escolhida);
+  });
 
   // ---------------------------------------------------------------- juntar ao carrinho
   $$('form[data-comprar]').forEach((form) => {
@@ -263,7 +320,7 @@
     /* O aviso das peças personalizadas aparece quando se escreve um nome, uma data ou uma frase (o Renato,
        8 nov 2026); o carrinho volta a dizê-lo antes do botão. */
     const avisoPers = $('[data-aviso-ao-escrever]', form);
-    const pintarAviso = () => { if (avisoPers) avisoPers.hidden = !$$('.personaliza input, .personaliza textarea', form).some((c) => String(c.value || '').trim() !== ''); };
+    const pintarAviso = () => { if (avisoPers) avisoPers.hidden = !$$('.personaliza [name]', form).some((c) => String(c.value || '').trim() !== ''); }; // o calendário da data não tem nome
     form.addEventListener('input', pintarAviso);
     form.addEventListener('change', pintarAviso);
     pintarAviso();
@@ -291,9 +348,14 @@
       for (const k of ['nome', 'data', 'frase']) {
         const i = form.elements[k];
         if (!i) continue;
-        const v = i.value.trim();
+        let v = i.value.trim();
         if (i.required && !v) { errar(i, k === 'data' ? 'Escolha a data que vai na peça.' : `Escreva o ${$(`label[for="${i.id}"]`, form).textContent.trim().toLowerCase()} como quer que fique na peça.`); return; }
-        if (k === 'data' && v && v < hojeLisboa()) { errar(i, 'Essa data já passou: escolha a data da celebração.'); return; }
+        // a data escreve-se dd/mm/aaaa e guarda-se aaaa-mm-dd (a mensagem diz «12 de dezembro de 2026»)
+        if (k === 'data' && v) {
+          const data = lerData(v);
+          if (data.aviso) { errar(i, data.aviso); return; }
+          v = data.iso;
+        }
         if (v) pers[k] = v;
       }
       const q = quantidade();

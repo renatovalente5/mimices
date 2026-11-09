@@ -14,6 +14,14 @@ const paragrafos = (t) => String(t || '').split(/\n{2,}/).map((p) => p.trim()).f
    pronto em …». Sem prazo dito, a marca «por confirmar» (em produção a construção pára antes). */
 const prazoCurto = (ctx) => String(ctx.site.entrega.prazo || '').trim().split(/(?<=\.)\s+/)[0];
 
+/* A data (a que vai na peça e a da celebração, no carrinho): um campo de texto dd/mm/aaaa, e não o
+   <input type="date">, que mostrava «mm/dd/yyyy» no Chrome em inglês e, no Safari, o dia de hoje a
+   cinzento, como se já estivesse escolhido. O calendário é o do sistema: um <input type="date">
+   invisível por cima do ícone (site.js, «a data»). */
+function campoData(id, nome, { obrigatorio = false, ajuda = '' } = {}) {
+  return `<div class="data" data-data><input id="${id}" name="${nome}" type="text" inputmode="numeric" placeholder="dd/mm/aaaa" maxlength="10" autocomplete="off" aria-describedby="${id}-forma${ajuda ? ` ${ajuda}` : ''}"${obrigatorio ? ' required' : ''}><input class="data__calendario" type="date" tabindex="-1" aria-hidden="true"><span class="data__icone" aria-hidden="true">${icones.calendario}</span></div><span class="visualmente-escondido" id="${id}-forma">dia, mês e ano</span>`;
+}
+
 // ---------------------------------------------------------------- página inicial
 /* A CAPA, como a do ithos: um filme a toda a largura, uma frase e um botão por cima (16 out 2026, a
    pedido do Renato: «na foto de capa quero um vídeo como no ithos»). O filme é o do
@@ -256,7 +264,7 @@ export function produto(ctx, p) {
   const blocoPers = campos.length ? `<fieldset class="campo personaliza">
     <legend>Personalização</legend>
     ${campos.map((k) => {
-      if (k.id === 'data') return `<div class="campo"><label for="${idCampo('data')}">${esc(k.rotulo)}</label><input id="${idCampo('data')}" name="data" type="date" required data-sem-passado></div>`;
+      if (k.id === 'data') return `<div class="campo"><label for="${idCampo('data')}">${esc(k.rotulo)}</label>${campoData(idCampo('data'), 'data', { obrigatorio: true })}</div>`;
       if (k.id === 'frase') return `<div class="campo"><label for="${idCampo('frase')}">${esc(k.rotulo)} <span class="campo__opcional">(opcional)</span></label><textarea id="${idCampo('frase')}" name="frase" rows="2" maxlength="160" spellcheck="true"></textarea></div>`;
       return `<div class="campo"><label for="${idCampo('nome')}">${esc(k.rotulo)}</label><input id="${idCampo('nome')}" name="nome" type="text" maxlength="40" autocomplete="off" autocapitalize="words" autocorrect="off" spellcheck="false" required aria-describedby="pz-aviso-${p.slug}"></div>`;
     }).join('')}
@@ -415,7 +423,7 @@ export function carrinho(ctx) {
         <fieldset class="encomenda__dados">
           <legend>Os seus dados</legend>
           <div class="campo"><label for="e-nome">Nome</label><input id="e-nome" name="nome" type="text" autocomplete="name" required maxlength="80"></div>
-          <div class="campo"><label for="e-data">Data da celebração <span class="campo__opcional">(opcional)</span></label><input id="e-data" name="dataCelebracao" type="date" aria-describedby="e-data-ajuda"><p class="campo__ajuda" id="e-data-ajuda">Para sabermos até quando precisa da encomenda.</p></div>
+          <div class="campo"><label for="e-data">Data da celebração <span class="campo__opcional">(opcional)</span></label>${campoData('e-data', 'dataCelebracao', { ajuda: 'e-data-ajuda' })}<p class="comprar__erro" data-aviso-data role="alert" hidden></p><p class="campo__ajuda" id="e-data-ajuda">Para sabermos até quando precisa da encomenda.</p></div>
           <div class="campo" data-so-envio><label for="e-morada">Morada</label><input id="e-morada" name="morada" type="text" autocomplete="street-address" maxlength="160" data-obrigatorio-envio></div>
           <div class="campos-lado" data-so-envio>
             <div class="campo"><label for="e-cp">Código postal</label><input id="e-cp" name="codigoPostal" type="text" autocomplete="postal-code" maxlength="12" data-obrigatorio-envio></div>
