@@ -456,7 +456,9 @@ dialog::backdrop { background: rgba(46, 42, 40, .45); }
 .campo input[type="text"], .campo input[type="date"], .campo input:not([type]), .campo textarea, .campo select, .encomenda input[type="text"], .encomenda textarea { width: 100%; min-height: 48px; padding: .7em .9em; border: 1px solid var(--linha-campo); border-radius: var(--raio-pequeno); background: var(--branco); font-size: 1rem; }
 .campo textarea { min-height: 0; resize: vertical; }
 .campo input:focus, .campo textarea:focus { border-color: var(--acento); }
-.campo [aria-invalid="true"] { border-color: #A3352C; box-shadow: 0 0 0 1px #A3352C; }
+/* com o input e o textarea no seletor: só .campo [aria-invalid] perdia para .campo input[type="text"]
+   (a borda ficava cinzenta, ou da cor do foco) */
+.campo input[aria-invalid="true"], .campo textarea[aria-invalid="true"] { border-color: #A3352C; box-shadow: 0 0 0 1px #A3352C; }
 .campo__ajuda { font-size: .8125rem; color: var(--tinta-2); margin: 0; }
 .campo__opcional { font-weight: 400; color: var(--tinta-2); }
 .personaliza { gap: 16px; }

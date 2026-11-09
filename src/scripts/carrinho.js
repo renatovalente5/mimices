@@ -46,10 +46,12 @@
   }
   let estado = ler();
   let anuncio = ''; // o que o leitor de ecrã diz depois de uma acção; nunca vai para o armazenamento
-  const chaveLinha = (l) => JSON.stringify([l.produto, l.cor ?? null, l.opcoes || [], ['nome', 'data', 'frase'].map((k) => ((l.pers || {})[k] || '').trim().toLowerCase())]);
+  // «B & A» e «b & a» são duas linhas: a peça leva o nome como foi escrito, com as maiúsculas (os termos dizem-no)
+  const chaveLinha = (l) => JSON.stringify([l.produto, l.cor ?? null, l.opcoes || [], ['nome', 'data', 'frase'].map((k) => ((l.pers || {})[k] || '').trim())]);
   // «Encomenda enviada» vale para ESTE carrinho: mudar uma peça, a quantidade, a personalização
   // ou a entrega apaga a marca (a encomenda que seguiu já não é esta), e ao fim de 14 dias também.
-  const assinatura = () => JSON.stringify([estado.linhas.map((l) => [chaveLinha(l), l.qtd]), estado.zona]);
+  // A assinatura fica em minúsculas, como a das marcas gravadas antes de 9 nov 2026: essas continuam a valer.
+  const assinatura = () => JSON.stringify([estado.linhas.map((l) => [chaveLinha(l).toLowerCase(), l.qtd]), estado.zona]);
   function enviada() {
     const env = estado.enviada;
     if (!env) return null;
@@ -129,13 +131,17 @@
   }
 
   // ---------------------------------------------------------------- API para o site.js
+  /* Depois de enviada, uma peça nova começa outra encomenda (com a mesma entrega): a que seguiu pelo
+     WhatsApp não se repete na mensagem seguinte. */
   async function juntar({ produto, cor = null, opcoes = [], pers = {}, qtd = 1 }) {
+    const nova = Boolean(enviada());
+    if (nova) { estado = { v: 1, linhas: [], zona: estado.zona }; ultimaMensagem = ''; }
     const limpo = Object.fromEntries(['nome', 'data', 'frase'].map((k) => [k, String(pers[k] || '').trim().slice(0, k === 'frase' ? 160 : 60)]).filter(([, v]) => v));
-    const nova = { produto, cor: Number.isInteger(cor) ? cor : null, opcoes: opcoes.map(Number), pers: limpo, qtd: Math.max(1, Math.min(MAX_QTD, qtd)) };
-    const igual = estado.linhas.find((l) => chaveLinha(l) === chaveLinha(nova));
-    if (igual) igual.qtd = Math.min(MAX_QTD, igual.qtd + nova.qtd);
-    else estado.linhas.push(nova);
-    anuncio = 'Peça juntada ao carrinho.';
+    const linha = { produto, cor: Number.isInteger(cor) ? cor : null, opcoes: opcoes.map(Number), pers: limpo, qtd: Math.max(1, Math.min(MAX_QTD, qtd)) };
+    const igual = estado.linhas.find((l) => chaveLinha(l) === chaveLinha(linha));
+    if (igual) igual.qtd = Math.min(MAX_QTD, igual.qtd + linha.qtd);
+    else estado.linhas.push(linha);
+    anuncio = nova ? 'Nova encomenda: peça juntada ao carrinho.' : 'Peça juntada ao carrinho.';
     return guardar();
   }
   async function totalDe({ produto, opcoes = [], qtd = 1 }) {
@@ -211,6 +217,8 @@
     }
     const zona = estado.zona || 'levantamento';
     const c = contas(cat, estado.linhas, zona);
+    // a gaveta redesenha-se por inteiro: a entrega (o <select>), se tinha o foco, volta a tê-lo
+    const naEntrega = document.activeElement && document.activeElement.id === 'gaveta-zona';
     alvo.innerHTML = `${aviso}
       <ul class="linhas">${c.detalhe.map((d) => linhaHtml(d)).join('')}</ul>
       <div class="gaveta__zonas">
@@ -223,6 +231,7 @@
         <a class="botao botao--cheio" href="${esc(cat.carrinho)}">${enviada() ? 'Ver a encomenda' : 'Finalizar a encomenda'}</a>
         <button class="botao botao--contorno" type="button" data-fechar>Continuar a ver</button>
       </div>`;
+    if (naEntrega) $('#gaveta-zona', alvo).focus();
   }
 
   // ---------------------------------------------------------------- página do carrinho
@@ -271,7 +280,12 @@
     $('#encomenda-titulo').textContent = env ? 'Encomenda enviada' : 'Finalizar a encomenda';
     if (env) {
       $('[data-enviada-quando]', form).textContent = quando(env.em);
-      $('[data-copiar]', form).hidden = !ultimaMensagem; // o texto só vive nesta página: não se guarda
+      /* O texto da mensagem só vive nesta página (os dados da pessoa não se guardam). Depois de
+         recarregar já não existe: em vez de um WhatsApp vazio, «Enviar outra vez» volta ao formulário. */
+      $('[data-continuar]', form).hidden = !ultimaMensagem;
+      $('[data-copiar]', form).hidden = !ultimaMensagem;
+      $('[data-alterar]', form).hidden = !ultimaMensagem;
+      $('[data-reenviar]', form).hidden = Boolean(ultimaMensagem);
     }
   }
   // « hoje, às 21:34» ou « a 12 de outubro, às 21:34» (em Lisboa)
@@ -402,11 +416,10 @@
       await desenho;
       focarTitulo();
     });
-    // «Continuar no WhatsApp»: a mesma mensagem, se a página ainda a tem; depois de recarregar já
-    // não a tem (os dados da pessoa não se guardam), e abre-se só a conversa.
+    // «Continuar no WhatsApp»: a mesma mensagem (o botão só aparece enquanto a página a tem).
     $('[data-continuar]', form).addEventListener('click', () => {
       const numero = (catalogoPronto && catalogoPronto.whatsapp) || '';
-      abrirWhatsApp(`https://wa.me/${numero}${ultimaMensagem ? `?text=${encodeURIComponent(ultimaMensagem)}` : ''}`);
+      abrirWhatsApp(`https://wa.me/${numero}?text=${encodeURIComponent(ultimaMensagem)}`);
     });
     $('[data-copiar]', form).addEventListener('click', async (e) => {
       const b = e.currentTarget; // guardado antes do await: depois dele vale null
@@ -417,12 +430,15 @@
         b.lastElementChild.textContent = 'Não foi possível copiar';
       }
     });
-    // «Alterar a encomenda»: o formulário outra vez, com o carrinho como está.
-    $('[data-alterar]', form).addEventListener('click', async () => {
+    // «Alterar a encomenda» (e «Enviar outra vez», depois de recarregar): o formulário outra vez, com o
+    // carrinho como está.
+    const alterar = async () => {
       delete estado.enviada;
       await guardar();
       focarTitulo();
-    });
+    };
+    $('[data-alterar]', form).addEventListener('click', alterar);
+    $('[data-reenviar]', form).addEventListener('click', alterar);
     // «Fazer outra encomenda»: o carrinho fica vazio.
     $('[data-esvaziar]', form).addEventListener('click', async () => {
       estado = { v: 1, linhas: [], zona: estado.zona };

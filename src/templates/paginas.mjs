@@ -440,6 +440,7 @@ export function carrinho(ctx) {
           <p>Se ainda não carregou em enviar na conversa, faça-o lá. A encomenda fica feita quando a confirmarmos consigo pelo WhatsApp, com o total, o pagamento e o prazo.</p>
           ${ctx.site.contactos.instagram ? `<p class="encomenda__instagram">${icones.instagram}<span>Enquanto espera, veja os conjuntos que vão saindo no nosso Instagram: <a href="https://www.instagram.com/${esc(ctx.site.contactos.instagram)}/" target="_blank" rel="noopener">@${esc(ctx.site.contactos.instagram)}</a></span></p>` : ''}
           <button class="botao botao--whatsapp botao--largo" type="button" data-continuar>${icones.whatsapp}<span>Continuar no WhatsApp</span></button>
+          <button class="botao botao--whatsapp botao--largo" type="button" data-reenviar hidden>${icones.whatsapp}<span>Enviar outra vez</span></button>
           <button class="botao botao--contorno botao--largo" type="button" data-copiar>${icones.copiar}<span>Copiar a mensagem</span></button>
           <p class="encomenda__enviada-mais"><button class="botao botao--texto" type="button" data-alterar>Alterar a encomenda</button><button class="botao botao--texto" type="button" data-esvaziar>Fazer outra encomenda</button></p>
         </div>
