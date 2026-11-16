@@ -319,8 +319,11 @@ function destinatariosComExtras() {
 
 function resolverMarcadores(fonte, onde) {
   const c = site.contactos;
+  /* Cada marcador vira um «token» (o HTML só entra depois do markdown, para não ser mexido). Os de BLOCO (os
+     botões, o quadro, a lista, os parágrafos e a figura) saem do <p> em que o markdown os pôs; os de texto
+     ficam dentro dele (um parágrafo que era só «{{portes}}» saía sem <p> e colava-se ao seguinte). */
   const tokens = [];
-  const guardar = (html) => { tokens.push(html); return `\u0000${tokens.length - 1}\u0000`; };
+  const guardar = (html, bloco = false) => { tokens.push({ html, bloco }); return `\u0000${tokens.length - 1}\u0000`; };
   const valores = {
     marca: () => esc(site.marca),
     localidade: () => esc(site.local.localidade),
@@ -334,20 +337,20 @@ function resolverMarcadores(fonte, onde) {
     pagamento: () => (site.entrega.pagamento ? esc(site.entrega.pagamento) : guardar(ctx.marcador('as formas de pagamento (MB WAY, transferência, no levantamento…)'))),
     levantamento: () => esc(site.entrega.levantamento || ''),
     portes: () => guardar(textoPortes()),
-    botoesDesistencia: () => guardar(botoesDesistencia()),
+    botoesDesistencia: () => guardar(botoesDesistencia(), true),
     /* A política de privacidade (RGPD, art. 13.º), pela biblioteca legal-comum: os destinatários reais
        (o alojamento e o DNS na Cloudflare, o código e a publicação no GitHub, o Gmail da Mimices, a Meta,
        e o Renato, que mantém o site e o painel: RGPD, art. 28.º), os prazos, e as frases da Meta e do
        repositório público. */
-    'privacidade.destinatarios': () => guardar(pecaLegal('privacidade-destinatarios', destinatariosComExtras())),
+    'privacidade.destinatarios': () => guardar(pecaLegal('privacidade-destinatarios', destinatariosComExtras()), true),
     'privacidade.prazos': () => guardar(pecaLegal('privacidade-prazos', `<ul>${[
       'Pedidos de informação que não chegam a encomenda: 12 meses depois da última mensagem.',
       'Conversas e dados de uma encomenda: enquanto forem precisos para ela e para a garantia, até 3 anos depois da entrega.',
       // Sem atividade aberta não há faturas (8 nov 2026): o prazo fiscal de 10 anos (PRAZOS_LEGAIS.encomendas) volta quando houver.
       PRAZOS_LEGAIS.registosTecnicos.texto,
-    ].map((t) => `<li>${esc(t)}</li>`).join('')}</ul>`)),
-    'privacidade.frases': () => guardar(pecaLegal('privacidade-frases', frasesPrivacidade(CONFIG_PRIVACIDADE).map((t) => `<p>${esc(t)}</p>`).join(''))),
-    avisoGarantia: () => guardar(`<figure class="aviso-garantia"><img src="${ctx.asset('legal/aviso-garantia-legal-pt.svg')}" width="600" height="848" alt="${esc(AVISO_ALT)}" loading="lazy"><figcaption><a href="${ctx.asset('legal/aviso-garantia-legal-pt.pdf')}">Descarregar o aviso oficial (PDF)</a> · <a href="https://europa.eu/youreurope/garantias" target="_blank" rel="noopener">europa.eu/youreurope/garantias</a></figcaption></figure>`),
+    ].map((t) => `<li>${esc(t)}</li>`).join('')}</ul>`), true),
+    'privacidade.frases': () => guardar(pecaLegal('privacidade-frases', frasesPrivacidade(CONFIG_PRIVACIDADE).map((t) => `<p>${esc(t)}</p>`).join('')), true),
+    avisoGarantia: () => guardar(`<figure class="aviso-garantia"><img src="${ctx.asset('legal/aviso-garantia-legal-pt.svg')}" width="600" height="848" alt="${esc(AVISO_ALT)}" loading="lazy"><figcaption><a href="${ctx.asset('legal/aviso-garantia-legal-pt.pdf')}">Descarregar o aviso oficial (PDF)</a> · <a href="https://europa.eu/youreurope/garantias" target="_blank" rel="noopener">europa.eu/youreurope/garantias</a></figcaption></figure>`, true),
   };
   const texto = fonte.replace(/\{\{([\w.]+)\}\}/g, (todo, chave) => {
     if (!valores[chave]) { erros.push(`${onde}: o marcador «${todo}» não existe (existem: ${Object.keys(valores).join(', ')})`); return todo; }
@@ -361,9 +364,13 @@ function paginaMarkdown(ficheiro) {
   const [cabeca, ...corpo] = fonte.split(/\n---\n/);
   const meta = Object.fromEntries(cabeca.split('\n').filter(Boolean).map((l) => { const i = l.indexOf(':'); return [l.slice(0, i).trim(), l.slice(i + 1).trim()]; }));
   const { texto, tokens } = resolverMarcadores(corpo.join('\n---\n'), `Páginas › ${ficheiro}`);
-  // um marcador sozinho num parágrafo (quadro, figura, botões) sai do <p> que o Markdown lhe põe
-  let html = markdown(texto, ctx.url).replace(/<p>\u0000(\d+)\u0000<\/p>/g, (_, i) => tokens[Number(i)]);
-  html = html.replace(/\u0000(\d+)\u0000/g, (_, i) => tokens[Number(i)]);
+  // um marcador de bloco sozinho num parágrafo (botões, quadro, lista, figura) sai do <p> que o Markdown lhe
+  // põe; um de texto («{{portes}}») fica no <p>, a não ser que venha vazio (não deixa um <p> vazio)
+  let html = markdown(texto, ctx.url).replace(/<p>\u0000(\d+)\u0000<\/p>/g, (todo, i) => {
+    const t = tokens[Number(i)];
+    return t.bloco || !t.html.trim() ? t.html : todo;
+  });
+  html = html.replace(/\u0000(\d+)\u0000/g, (_, i) => tokens[Number(i)].html);
   const slug = ficheiro.replace(/\.md$/, '');
   if (meta.foto && !fotoExiste(meta.foto)) erros.push(`Páginas › ${ficheiro}: a fotografia «${meta.foto}» não existe`);
   // «indexar: não» no cabeçalho tira a página do Google (noindex e fora do sitemap); continua no site

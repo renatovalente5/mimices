@@ -31,6 +31,7 @@ python3 -m http.server 4830 --directory _site
 node scripts/build.mjs --dominio               # mimices.pt ainda fechado aos motores de busca (o CI, por agora)
 node scripts/build.mjs --producao              # mimices.pt aberto (recusa dados legais por preencher)
 node scripts/build.mjs --base=/mimices         # a antiga pré-visualização no GitHub Pages
+node scripts/testar.mjs                        # os testes do gerador (numa pasta temporária; o CI ainda não os corre)
 ```
 
 O GitHub Actions (`.github/workflows/publicar.yml`) constrói o site e publica-o na Cloudflare a cada
